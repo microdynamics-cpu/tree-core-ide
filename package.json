@@ -3,7 +3,7 @@
     "displayName": "TreeCore IDE",
     "description": "The next generation integrated development environment for processor.",
     "version": "1.0.0",
-    "icon": "",
+    "icon": "./resources/logos/treecore_logo_256x256.png",
     "engines": {
         "vscode": "^1.42.0"
     },
@@ -36,7 +36,7 @@
         "email": "myyerrol@126.com",
         "url": "https://myyerrol.io"
     },
-    "main": "./extension.js",
+    "main": "./src/extension.js",
     "activationEvents": [
         "*"
     ],
@@ -44,7 +44,26 @@
         "commands": [{
             "command": "tree-core-ide.helloWorld",
             "title": "Hello World"
-        }]
+        }],
+        // "menus": {
+
+        // },
+        "viewsContainers": {
+            "activitybar": [{
+                "id": "treecore",
+                "title": "TreeCore",
+                "icon": "./resources/logos/treecore_logo_activity.svg"
+            }]
+        },
+        "views": {
+            "treecore": [{
+                "id": "treecore.project_tasks",
+                "name": "Project Tasks"
+            }, {
+                "id": "treecore.quick_access",
+                "name": "Quick Access"
+            }]
+        }
     },
     "scripts": {
         "lint": "eslint .",
