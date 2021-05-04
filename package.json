@@ -1,25 +1,50 @@
 {
     "name": "tree-core-ide",
-    "displayName": "tree-core-ide",
+    "displayName": "TreeCore IDE",
     "description": "The next generation integrated development environment for processor.",
-    "version": "0.0.1",
+    "version": "1.0.0",
+    "icon": "",
     "engines": {
-        "vscode": "^1.27.0"
+        "vscode": "^1.42.0"
     },
     "categories": [
-        "Other"
+        "Programming Languages",
+        "Snippets",
+        "Formatters",
+        "Linters"
     ],
-    "activationEvents": [
-        "onCommand:tree-core-ide.helloWorld"
+    "keywords": [
+        "cpu",
+        "verilog",
+        "vhdl",
+        "fpga",
+        ""
     ],
+    "publisher": "microdynamics",
+    "homepage": "",
+    "license": "GPL-3.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/microdynamics-cpu/tree-core-ide"
+    },
+    "bugs": {
+        "url": "https://github.com/microdynamics-cpu/tree-core-ide/issues",
+        "email": "microdynamics@126.com"
+    },
+    "author": {
+        "name": "myyerrol",
+        "email": "myyerrol@126.com",
+        "url": "https://myyerrol.io"
+    },
     "main": "./extension.js",
+    "activationEvents": [
+        "*"
+    ],
     "contributes": {
-        "commands": [
-            {
-                "command": "tree-core-ide.helloWorld",
-                "title": "Hello World"
-            }
-        ]
+        "commands": [{
+            "command": "tree-core-ide.helloWorld",
+            "title": "Hello World"
+        }]
     },
     "scripts": {
         "lint": "eslint .",
@@ -27,7 +52,7 @@
         "test": "node ./test/runTest.js"
     },
     "devDependencies": {
-        "@types/vscode": "^1.55.0",
+        "@types/vscode": "^1.42.0",
         "@types/glob": "^7.1.3",
         "@types/mocha": "^8.0.4",
         "@types/node": "^12.11.7",
