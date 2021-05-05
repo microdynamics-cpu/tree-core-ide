@@ -57,13 +57,33 @@
         },
         "views": {
             "treecore": [{
-                "id": "treecore.project_tasks",
+                "id": "treecore.activityBar.projectTasks",
                 "name": "Project Tasks"
             }, {
-                "id": "treecore.quick_access",
+                "id": "treecore.activityBar.quickAccess",
                 "name": "Quick Access"
             }]
-        }
+        },
+        "configuration":[{
+            "type": "object",
+            "title": "TreeCore IDE Configuration",
+            "properties": {
+                "treecore.config.showHomePageAtStartup": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show TreeCore Home page at startup."
+                },
+                "treecore.config.switchIDELanguage": {
+                    "type": "string",
+                    "enum": [
+                        "English",
+                        "中文"
+                    ],
+                    "default": "English",
+                    "description": "Switch TreeCore IDE language."
+                }
+            }
+        }]
     },
     "scripts": {
         "lint": "eslint .",

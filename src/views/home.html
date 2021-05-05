@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义欢迎页</title>
+    <link rel="stylesheet" href="../../lib/bootstrap-3.3.1/css/bootstrap.min.css">
+    <style>
+        html, body, #app {
+            height: 100%;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px
+        }
+
+        ::-webkit-scrollbar-track {
+            border-radius: 10px;
+            background-color: #d8dce5
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            background-color: #adadad
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #929292
+        }
+
+        ::-webkit-scrollbar-thumb:active {
+            background-color: #666363
+        }
+
+        ::-webkit-scrollbar-corner {
+            background-color: #535353
+        }
+
+        ::-webkit-scrollbar-resizer {
+            background-color: #ff6e00
+        }
+        .page-title {
+            margin-bottom: 20px;
+        }
+
+        .control-label {
+            font-weight: normal;
+        }
+
+        .btn-primary {
+            background-color: #1890ff;
+            border-color: #1890ff;
+            outline: none;
+        }
+
+        .btn-primary:focus,
+        .btn-primary:hover {
+            background-color: #40a9ff;
+            border-color: #40a9ff;
+            outline: none;
+        }
+
+        .btn-primary.active,
+        .btn-primary:active {
+            background-color: #096dd9;
+            border-color: #096dd9;
+            color: #fff;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="container-fluid">
+        <h3 class="page-title">自定义欢迎页</h3>
+        <p class="alert alert-success" style="width: 300px;">{{userName}}，{{time}}好！</p>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" v-model="show"> 启动时显示自定义欢迎页
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <script src="../../lib/jquery/jquery.min.js"></script>
+    <script src="../../lib/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+    <script src="../../lib/vue-2.5.17/vue.js"></script>
+    <script src="../util/util_view.js"></script>
+    <script src="./home.js"></script>
+</body>
+</html>
