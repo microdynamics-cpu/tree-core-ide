@@ -1,9 +1,12 @@
+// @ts-ignore
 const vscodeLite = acquireVsCodeApi();
 
+// @ts-ignore
 window.addEventListener("message", event => {
     handleMessageFromExtension(event);
 });
 
+// @ts-ignore
 new Vue({
     el: "#app",
     data: {

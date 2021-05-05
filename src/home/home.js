@@ -1,5 +1,5 @@
 const vscode   = require("vscode");
-const utilExtn = require("../util/util_extn");
+const utilExtn = require("../utils/util_extn");
 
 module.exports = function(context) {
     context.subscriptions.push(
