@@ -99,8 +99,17 @@ module.exports = {
         html = html.replace(
             /(<link.+?href="|<script.+?src="|<img.+?src=")(.+?)"/g,
             (m, $1, $2) => {
-                return $1 + vscode.Uri.file(path.resolve(dirPath, $2)).with({
-                    scheme: "vscode-resource" }).toString() + '"';
+                if ($2.indexOf("http") != -1) {
+                    return m;
+                }
+                else {
+                    let resPath = path.resolve(dirPath, $2);
+                    return $1 + vscode.Uri.file(resPath).with({
+                        scheme: "vscode-resource"
+                    }).toString() + '"';
+                }
+                // return $1 + vscode.Uri.file(path.resolve(dirPath, $2)).with({
+                //     scheme: "vscode-resource" }).toString() + '"';
         });
         return html;
     },
