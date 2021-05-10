@@ -97,7 +97,7 @@ module.exports = {
         // Because vscode does not support loading local resources directly,
         // some of its contents need to be replaced with proprietary path format
         html = html.replace(
-            /(<link.+?href="|<script.+?src="|<img.+?src=")(.+?)"/g,
+            /(<link.+?href="|<script.+?src="|<img.+?src="|<v-img.+?src=")(.+?)"/g,
             (m, $1, $2) => {
                 if ($2.indexOf("http") != -1) {
                     return m;

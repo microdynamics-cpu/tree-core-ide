@@ -7,19 +7,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>TreeCore IDE Home</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" />
     <style type="text/css">
+        .v-list-item {
+            padding: 0 10px;
+        }
+        .v-list--dense .v-list-item .v-list-item__icon {
+            margin-bottom: 0px;
+        }
     </style>
 </head>
 <body>
     <div id="app">
         <v-app>
-            <v-main>
-                <v-container>
-                    Hello World!
-                </v-container>
-            </v-main>
+            <v-card app dark height="100%">
+                <v-navigation-drawer app mini-variant mini-variant-width="75" permanent>
+                    <v-list>
+                        <v-list-item>
+                            <v-list-item-avatar tile>
+                                <v-img src="../../resources/logos/treecore_logo_main.svg"></v-img>
+                            </v-list-item-avatar>
+                        </v-list-item>
+                    </v-list>
+                    <v-divider></v-divider>
+                    <v-list dense>
+                        <v-list-item-group color="primary">
+                            <v-list-item v-for="item in items" :key="item.title" link>
+                                <v-list-item-content>
+                                    <v-list-item-icon class="px-1">
+                                        <v-icon>{{ item.icon }}</v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </v-list-item-group>
+                    </v-list>
+                </v-navigation-drawer>
+            </v-card>
         </v-app>
     </div>
     <!-- JavaScript -->
