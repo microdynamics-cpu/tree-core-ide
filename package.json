@@ -3,7 +3,7 @@
     "displayName": "TreeCore IDE",
     "description": "The next generation integrated development environment for processor.",
     "version": "1.0.0",
-    "icon": "./resources/logos/treecore_logo_256x256.png",
+    "icon": "./resources/logos/treecore_logo_200x200.png",
     "engines": {
         "vscode": "^1.42.0"
     },

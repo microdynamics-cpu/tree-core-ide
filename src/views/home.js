@@ -38,6 +38,15 @@ new Vue({
                 title: "Team E-mail",
                 icon: "mdi-email",
                 href: "mailto:microdynamics@126.com"
+            }],
+            footerListItems: [{
+                title: "Team"
+            }, {
+                title: "Development "
+            }, {
+                title: "Support"
+            }, {
+                title: "Community"
             }]
         }
     },
