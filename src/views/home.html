@@ -10,11 +10,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" />
     <style type="text/css">
-        .v-list-item {
-            padding: 0 10px;
-        }
-        .v-list--dense .v-list-item .v-list-item__icon {
-            margin-bottom: 0px;
+        .vscode-dark {
+            padding: 0px;
         }
     </style>
 </head>
@@ -22,9 +19,9 @@
     <div id="app">
         <v-app>
             <v-card app dark height="100%">
-                <v-navigation-drawer app mini-variant mini-variant-width="75" permanent>
+                <v-navigation-drawer app mini-variant mini-variant-width="60" permanent>
                     <v-list>
-                        <v-list-item>
+                        <v-list-item class="px-0">
                             <v-list-item-avatar tile>
                                 <v-img src="../../resources/logos/treecore_logo_main.svg"></v-img>
                             </v-list-item-avatar>
@@ -32,18 +29,34 @@
                     </v-list>
                     <v-divider></v-divider>
                     <v-list dense>
-                        <v-list-item-group color="primary">
-                            <v-list-item v-for="item in items" :key="item.title" link>
+                        <v-list-item-group>
+                            <v-list-item class="px-0 text-center" v-for="item in navListItems" :key="item.title" link>
                                 <v-list-item-content>
-                                    <v-list-item-icon class="px-1">
+                                    <v-list-item-icon class="mb-0 ml-4">
                                         <v-icon>{{ item.icon }}</v-icon>
                                     </v-list-item-icon>
-                                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                                    <v-list-item-title style="font-size:0.75rem;">{{ item.title }}</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </v-list-item-group>
                     </v-list>
                 </v-navigation-drawer>
+                <v-app-bar app height="60">
+                    <div v-for="item in appBarItems">
+                        <v-btn class="mr-2" :href="item.href" :title="item.title" target="_blank" outlined small>
+                            <v-icon>{{ item.icon }}</v-icon>
+                        </v-btn>
+                    </div>
+                    <v-spacer></v-spacer>
+                    <v-btn title="Personal Account" fab outlined small>
+                        <v-icon>mdi-account</v-icon>
+                    </v-btn>
+                </v-app-bar>
+                <v-main>
+                    <v-container fluid>
+                        Test
+                    </v-container>
+                </v-main>
             </v-card>
         </v-app>
     </div>

@@ -13,12 +13,32 @@ new Vue({
     vuetify: new Vuetify(),
     data: () => {
         return {
-            items: [
-              { title: "Home", icon: "mdi-home" },
-              { title: "Projects", icon: "mdi-code-greater-than-or-equal" },
-              { title: "Libraries", icon: "mdi-book" },
-              { title: "Settings", icon: "mdi-cog" }
-            ]
+            navListItems: [{
+                title: "Home",
+                icon: "mdi-home"
+            }, { title:
+                "Projects",
+                icon: "mdi-code-greater-than-or-equal"
+            }, { title:
+                "Libraries",
+                icon: "mdi-book"
+            }, {
+                title: "Settings",
+                icon: "mdi-cog"
+            }],
+            appBarItems: [{
+                title: "Project Website",
+                icon: "mdi-web",
+                href: ""
+            }, {
+                title: "Project GitHub",
+                icon: "mdi-github",
+                href: "https://github.com/microdynamics-cpu"
+            }, {
+                title: "Team E-mail",
+                icon: "mdi-email",
+                href: "mailto:microdynamics@126.com"
+            }]
         }
     },
     mounted: () => {
