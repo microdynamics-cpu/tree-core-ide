@@ -41,7 +41,7 @@
                         </v-list-item-group>
                     </v-list>
                 </v-navigation-drawer>
-                <v-app-bar app height="60">
+                <v-app-bar app height="60px">
                     <div v-for="item in appBarItems">
                         <v-btn class="mr-2" target="_blank" :title="item.title" :href="item.href" outlined small>
                             <v-icon>{{ item.icon }}</v-icon>
@@ -54,25 +54,27 @@
                 </v-app-bar>
                 <v-main>
                     <v-container fluid>
-                        内容
+                        内容测试
                         <v-divider class="my-4"></v-divider>
                         <v-footer color="#1e1e1e" padless>
                             <v-row justify="center" no-gutters color="black">
-                                <v-col v-for="item in footerListItems" md="2">
-                                    <v-list>
-                                        <v-title>{{ item.title }}</v-title>
+                                <v-col v-for="item in footerListItems" :key="item.title" md="2">
+                                    <v-list dense>
+                                        <div class="mb-2 text-md-h6">{{ item.title }}</div>
                                         <v-list-item-group>
-                                            <v-list-item>
-
+                                            <v-list-item class="pl-0" v-for="it in item.list" :key="it.title" style="min-height:30px;">
+                                                <v-list-item-icon class="mr-3" v-if="it.icon" style="height:10px;">
+                                                    <v-icon>{{ it.icon }}</v-icon>
+                                                </v-list-item-icon>
+                                                <v-list-item-content>
+                                                    <v-list-item-title>{{ it.title }}</v-list-item-title>
+                                                </v-list-item-content>
                                             </v-list-item>
                                         </v-list-item-group>
                                     </v-list>
                                 </v-col>
-                                <!-- <v-col class="my-2" md="12">
-                                    <v-divider></v-divider>
-                                </v-col> -->
                                 <v-col class="py-2 text-center" md="12">
-                                    <div class="py-0">
+                                    </v-card-text class="py-0">
                                         The next generation integrated development environment for processor.
                                     </v-card-text>
                                     <v-card-text class="pt-0">

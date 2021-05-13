@@ -31,6 +31,10 @@ new Vue({
                 icon: "mdi-web",
                 href: ""
             }, {
+                title: "Project Forum",
+                icon: "mdi-forum",
+                href: ""
+            }, {
                 title: "Project GitHub",
                 icon: "mdi-github",
                 href: "https://github.com/microdynamics-cpu"
@@ -40,13 +44,65 @@ new Vue({
                 href: "mailto:microdynamics@126.com"
             }],
             footerListItems: [{
-                title: "Team"
+                title: "Team",
+                list: [{
+                    title: "About Us",
+                    icon: ""
+                }, {
+                    title: "Contact Us",
+                    icon: ""
+                }, {
+                    title: "Team Blog",
+                    icon: ""
+                }]
             }, {
-                title: "Development "
+                title: "Development",
+                list: [{
+                    title: "TreeCore IDE",
+                    icon: ""
+                }, {
+                    title: "Projects",
+                    icon: ""
+                }, {
+                    title: "Libraries",
+                    icon: ""
+                }, {
+                    title: "Settings",
+                    icon: ""
+                }]
             }, {
-                title: "Support"
+                title: "Support",
+                list: [{
+                    title: "Documents",
+                    icon: ""
+                }, {
+                    title: "WiKi",
+                    icon: ""
+                }, {
+                    title: "Ask Questions",
+                    icon: ""
+                }, {
+                    title: "Report Bugs",
+                    icon: ""
+                }, {
+                    title: "Donate",
+                    icon: ""
+                }]
             }, {
-                title: "Community"
+                title: "Community",
+                list: [{
+                    title: "Website",
+                    icon: "mdi-web"
+                }, {
+                    title: "Forum",
+                    icon: "mdi-forum"
+                }, {
+                    title: "GitHub",
+                    icon: "mdi-github",
+                }, {
+                    title: "E-mail",
+                    icon: "mdi-email"
+                }]
             }]
         }
     },
