@@ -19,7 +19,7 @@
     <div id="app">
         <v-app>
             <v-card app dark height="100%">
-                <v-navigation-drawer app mini-variant mini-variant-width="60" permanent>
+                <v-navigation-drawer app mini-variant mini-variant-width="60px">
                     <v-list>
                         <v-list-item class="px-0">
                             <v-list-item-avatar tile>
@@ -57,12 +57,13 @@
                         内容测试
                         <v-divider class="my-4"></v-divider>
                         <v-footer color="#1e1e1e" padless>
-                            <v-row justify="center" no-gutters color="black">
+                            <v-row justify="center" no-gutters>
                                 <v-col v-for="item in footerListItems" :key="item.title" md="2">
                                     <v-list dense>
                                         <div class="mb-2 text-md-h6">{{ item.title }}</div>
                                         <v-list-item-group>
-                                            <v-list-item class="pl-0" v-for="it in item.list" :key="it.title" style="min-height:30px;">
+                                            <v-list-item class="pl-0" v-for="it in item.list" :key="it.title"
+                                                         style="min-height:30px;">
                                                 <v-list-item-icon class="mr-3" v-if="it.icon" style="height:10px;">
                                                     <v-icon>{{ it.icon }}</v-icon>
                                                 </v-list-item-icon>
@@ -74,13 +75,13 @@
                                     </v-list>
                                 </v-col>
                                 <v-col class="py-2 text-center" md="12">
-                                    </v-card-text class="py-0">
+                                    <div class="text-md-body1">
                                         The next generation integrated development environment for processor.
-                                    </v-card-text>
-                                    <v-card-text class="pt-0">
+                                    </div>
+                                    <div class="text-md-body1">
                                         2017-{{ new Date().getFullYear() }} Developed by
                                         <strong>Team MicroDyanmics</strong>
-                                    </v-card-text>
+                                    </div>
                                 </v-col>
                             </v-row>
                         </v-footer>
