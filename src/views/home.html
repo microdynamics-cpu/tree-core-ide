@@ -13,13 +13,23 @@
         .vscode-dark {
             padding: 0px;
         }
+        .tc-card-title-span-20px {
+            position: relative;
+            top: 1px;
+            margin-left: 4px;
+        }
+        .tc-card-title-span-14px {
+            position: relative;
+            top: 1px;
+            margin-left: 2px;
+        }
     </style>
 </head>
 <body>
     <div id="app">
         <v-app>
             <v-card app dark height="100%">
-                <v-navigation-drawer app mini-variant mini-variant-width="60px">
+                <v-navigation-drawer app mini-variant mini-variant-width="60px" permanent>
                     <v-list>
                         <v-list-item class="px-0">
                             <v-list-item-avatar tile>
@@ -30,7 +40,8 @@
                     <v-divider></v-divider>
                     <v-list dense>
                         <v-list-item-group>
-                            <v-list-item class="px-0 text-center" v-for="item in navListItems" :key="item.title">
+                            <v-list-item class="px-0 text-center" v-for="item in tcNavListItems" :key="item.title"
+                                         color="lime darken-2">
                                 <v-list-item-content>
                                     <v-list-item-icon class="mb-0 ml-4">
                                         <v-icon>{{ item.icon }}</v-icon>
@@ -42,7 +53,7 @@
                     </v-list>
                 </v-navigation-drawer>
                 <v-app-bar app height="60px">
-                    <div v-for="item in appBarItems">
+                    <div v-for="item in tcAppBarItems">
                         <v-btn class="mr-2" target="_blank" :title="item.title" :href="item.href" outlined small>
                             <v-icon>{{ item.icon }}</v-icon>
                         </v-btn>
@@ -54,37 +65,128 @@
                 </v-app-bar>
                 <v-main>
                     <v-container fluid>
-                        内容测试
-                        <v-divider class="my-4"></v-divider>
-                        <v-footer color="#1e1e1e" padless>
-                            <v-row justify="center" no-gutters>
-                                <v-col v-for="item in footerListItems" :key="item.title" md="2">
-                                    <v-list dense>
-                                        <div class="mb-2 text-md-h6">{{ item.title }}</div>
-                                        <v-list-item-group>
-                                            <v-list-item class="pl-0" v-for="it in item.list" :key="it.title"
-                                                         style="min-height:30px;">
-                                                <v-list-item-icon class="mr-3" v-if="it.icon" style="height:10px;">
-                                                    <v-icon>{{ it.icon }}</v-icon>
-                                                </v-list-item-icon>
-                                                <v-list-item-content>
-                                                    <v-list-item-title>{{ it.title }}</v-list-item-title>
-                                                </v-list-item-content>
-                                            </v-list-item>
-                                        </v-list-item-group>
-                                    </v-list>
-                                </v-col>
-                                <v-col class="py-2 text-center" md="12">
-                                    <div class="text-md-body1">
-                                        The next generation integrated development environment for processor.
-                                    </div>
-                                    <div class="text-md-body1">
-                                        2017-{{ new Date().getFullYear() }} Developed by
-                                        <strong>Team MicroDyanmics</strong>
-                                    </div>
-                                </v-col>
-                            </v-row>
-                        </v-footer>
+                        <v-row no-gutters>
+                            <v-col md="12">
+                                <v-row>
+                                    <v-col md="4">
+                                        <v-card height="100%" outlined>
+                                            <v-card-text class="text-md-center">
+                                                <v-avatar size="250px" tile>
+                                                    <v-img src="../../resources/logos/treecore_logo_main.svg"></v-img>
+                                                </v-avatar>
+                                                <div class="my-4 text-md-h5 font-weight-bold white--text">下一代处理器集成开发环境</div>
+                                                <v-checkbox class="white--text" v-model="tcCheckbox"
+                                                            color="lime darken-2" label="是否在启动时显示主页"></v-checkbox>
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-col>
+                                    <v-col md="4">
+                                        <v-card outlined>
+                                            <v-card-title>
+                                                <v-icon color="lime darken-2" small>mdi-square</v-icon>
+                                                <span class="tc-card-title-span-20px">概述</span>
+                                            </v-card-title>
+                                            <v-card-text class="white--text">
+                                                <strong>木心IDE是一款功能强大的处理器通用开发平台</strong>，它集成有智能化的开发、调试和管理模块（目前还在开发中），不仅支持我们团队自研的<strong>木心系列处理器</strong>，未来还将面向所有符合标准的第三方处理器和外设模块。最后，我们开发木心IDE的初衷是希望<strong>它能构建与激发爱好者们对处理器领域的信心与兴趣</strong>，并改变当下处理器学习与开发效率相对低下的窘迫局面，<strong>我们始终坚信半导体会像互联网那样借助开源的力量而迎来发展的黄金时代</strong>，为此我们愿意贡献出自己的一份力量。
+                                            </v-card-text>
+                                        </v-card>
+                                        <!-- <v-divider></v-divider> -->
+                                        <v-card outlined>
+                                            <v-card-title>
+                                                <v-icon color="lime darken-2" small>mdi-square</v-icon>
+                                                <span class="tc-card-title-span-20px">特性</span>
+                                            </v-card-title>
+                                            <v-card-text>
+                                                <v-row>
+                                                    <v-col v-for="item in tcFuncItems" :key="item.title" md=6>
+                                                        <div class="font-weight-bold white--text">
+                                                            <v-icon color="lime darken-2" small>
+                                                                {{ item.icon }}
+                                                            </v-icon>
+                                                            <span class="tc-card-title-span-14px">{{ item.title }}</span>
+                                                        </div>
+                                                        <div class="text-md-caption">
+                                                            {{ item.text }}
+                                                        </div>
+                                                    </v-col>
+                                                </v-row>
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-col>
+                                    <v-col md="4">
+                                        <v-card height="100%" outlined>
+                                            <v-card-title>
+                                                <v-icon color="lime darken-2" small>mdi-square</v-icon>
+                                                <span class="tc-card-title-span-20px">计划</span>
+                                            </v-card-title>
+                                            <v-card-text>
+                                                <div class="mb-2 ml-8 font-weight-bold white--text">
+                                                    今天
+                                                </div>
+                                                <v-timeline align-top dense>
+                                                    <v-timeline-item v-for="item in tcTimelineItems" :key="item.date"
+                                                                     color="lime darken-2" small>
+                                                        <v-row>
+                                                            <v-col class="pl-0" md="3" style="padding-top:14px;">
+                                                                <div class="font-weight-bold white--text">
+                                                                    {{ item.date }}
+                                                                </div>
+                                                            </v-col>
+                                                            <v-col md="9" style="padding-top:14px;">
+                                                                <div class="font-weight-bold white--text">
+                                                                    {{ item.title }}
+                                                                </div>
+                                                                <div class="text-md-caption">
+                                                                    {{ item.text }}
+                                                                </div>
+                                                            </v-col>
+                                                        </v-row>
+                                                    </v-timeline-item>
+                                                </v-timeline>
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
+                            <v-col md="12">
+                                <v-divider class="my-4"></v-divider>
+                            </v-col>
+                            <v-col md="12">
+                                <v-divider class="my-4"></v-divider>
+                            </v-col>
+                            <v-col md="12">
+                                <v-footer color="#1e1e1e" padless>
+                                    <v-row justify-md="center" no-gutters>
+                                        <v-col v-for="item in tcFooterItems" :key="item.title" md="2">
+                                            <v-list dense>
+                                                <div class="mb-2 text-md-h6">{{ item.title }}</div>
+                                                <v-list-item-group>
+                                                    <v-list-item class="pl-0" v-for="it in item.list" :key="it.title"
+                                                                 style="min-height:30px;">
+                                                        <v-list-item-icon class="mr-3" v-if="it.icon"
+                                                                          style="height:10px;">
+                                                            <v-icon>{{ it.icon }}</v-icon>
+                                                        </v-list-item-icon>
+                                                        <v-list-item-content>
+                                                            <v-list-item-title>{{ it.title }}</v-list-item-title>
+                                                        </v-list-item-content>
+                                                    </v-list-item>
+                                                </v-list-item-group>
+                                            </v-list>
+                                        </v-col>
+                                        <v-col class="py-2 text-md-center" md="12">
+                                            <div class="text-md-body1">
+                                                The next generation integrated development environment for processor.
+                                            </div>
+                                            <div class="text-md-body1">
+                                                2021-{{ new Date().getFullYear() }} Developed by
+                                                <strong>Team MicroDyanmics</strong>
+                                            </div>
+                                        </v-col>
+                                    </v-row>
+                                </v-footer>
+                            </v-col>
+                        </v-row>
                     </v-container>
                 </v-main>
             </v-card>
