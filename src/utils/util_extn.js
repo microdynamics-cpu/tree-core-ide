@@ -38,6 +38,12 @@ module.exports = {
     getExtensionFileAbsolutePath: function(context, relativePath) {
         return path.join(context.extensionPath, relativePath);
     },
+    // 获取某个扩展文件的绝对路径（VS Code URL）
+    // Get the absolute path of an extension file (VS Code URL)
+    getExtensionFileAbsolutePathUrl: function(context, relativePath) {
+        return vscode.Uri.file(
+            this.getExtensionFileAbsolutePath(context, relativePath));
+    },
     // 获取当前工程的名字
     // Get the name of the current project
     getProjectName: function(projectPath) {
@@ -108,8 +114,6 @@ module.exports = {
                         scheme: "vscode-resource"
                     }).toString() + '"';
                 }
-                // return $1 + vscode.Uri.file(path.resolve(dirPath, $2)).with({
-                //     scheme: "vscode-resource" }).toString() + '"';
         });
         return html;
     },

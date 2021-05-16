@@ -1,5 +1,6 @@
-const vscode   = require("vscode");
-const utilExtn = require("../utils/util_extn");
+const path      = require("path");
+const vscode    = require("vscode");
+const utilExtn  = require("../utils/util_extn");
 
 module.exports = function(context) {
     context.subscriptions.push(
@@ -13,6 +14,9 @@ module.exports = function(context) {
                 }
             );
             let global = { panel };
+            panel.iconPath = utilExtn.getExtensionFileAbsolutePathUrl(
+                context,
+                "resources/logos/treecore_logo_main.svg");
             panel.webview.html = utilExtn.getWebViewContent(
                 context,
                 "src/views/home.html");

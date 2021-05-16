@@ -65,7 +65,7 @@ new Vue({
                 text: "基于VS Code编辑器进行搭建，可跨平台运行在Windows、Linux和Mac系统上。"
             }],
             tcTimelineItems: [{
-                date: "2021-04-2021-05",
+                date: "2021-05",
                 title: "开发代码",
                 text: "根据之前确定的软件需求，团队成员开始分模块编写木心IDE。"
             }, {
@@ -140,15 +140,12 @@ new Vue({
         // sendDataToExtension({
         //     cmd: "getExtensionConfig",
         //     key: "treecore.config.showHomePageAtStartup"
-        // }, show => this.show = show, vscodeLite);
+        // }, tcCheckbox => this.tcCheckbox = tcCheckbox, vscodeLite);
     },
     methods: {
-        toggleShowTip() {
-            this.show = !this.show;
-        }
     },
     watch: {
-        // show(valNew, valOld) {
+        // tcCheckbox(valNew, valOld) {
         //     sendDataToExtension({
         //         cmd: "setExtensionConfig",
         //         key: "treecore.config.showHomePageAtStartup",
