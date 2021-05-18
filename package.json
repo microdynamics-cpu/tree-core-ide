@@ -36,69 +36,95 @@
         "email": "myyerrol@126.com",
         "url": "https://myyerrol.io"
     },
-    "main": "./src/extension.js",
+    "main": "./dist/extension",
     "activationEvents": [
         "*"
     ],
     "contributes": {
-        "commands": [{
-            "command": "tree-core-ide.helloWorld",
-            "title": "Hello World"
-        }],
-        // "menus": {
-
-        // },
+        "commands": [
+            {
+                "command": "tree-core-ide.helloWorld",
+                "title": "Hello World"
+            }
+        ],
         "viewsContainers": {
-            "activitybar": [{
-                "id": "treecore",
-                "title": "TreeCore",
-                "icon": "./resources/logos/treecore_logo_activity.svg"
-            }]
+            "activitybar": [
+                {
+                    "id": "treecore",
+                    "title": "TreeCore",
+                    "icon": "./resources/logos/treecore_logo_activity.svg"
+                }
+            ]
         },
         "views": {
-            "treecore": [{
-                "id": "treecore.activityBar.projectTasks",
-                "name": "Project Tasks"
-            }, {
-                "id": "treecore.activityBar.quickAccess",
-                "name": "Quick Access"
-            }]
-        },
-        "configuration":[{
-            "type": "object",
-            "title": "TreeCore IDE Configuration",
-            "properties": {
-                "treecore.config.showHomePageAtStartup": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Show TreeCore Home page at startup."
+            "treecore": [
+                {
+                    "id": "treecore.activityBar.projectTasks",
+                    "name": "Project Tasks"
                 },
-                "treecore.config.switchIDELanguage": {
-                    "type": "string",
-                    "enum": [
-                        "English",
-                        "中文"
-                    ],
-                    "default": "English",
-                    "description": "Switch TreeCore IDE language."
+                {
+                    "id": "treecore.activityBar.quickAccess",
+                    "name": "Quick Access"
+                }
+            ]
+        },
+        "configuration": [
+            {
+                "type": "object",
+                "title": "TreeCore IDE Configuration",
+                "properties": {
+                    "treecore.config.showHomePageAtStartup": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "Show TreeCore Home page at startup."
+                    },
+                    "treecore.config.switchIDELanguage": {
+                        "type": "string",
+                        "enum": [
+                            "English",
+                            "中文"
+                        ],
+                        "default": "English",
+                        "description": "Switch TreeCore IDE language."
+                    }
                 }
             }
-        }]
+        ]
     },
     "scripts": {
-        "lint": "eslint .",
-        "pretest": "npm run lint",
-        "test": "node ./test/runTest.js"
+        "build": "webpack --mode production",
+        "lint": "eslint .eslintrc.js src",
+        "format": "prettier --single-quote --print-width 88 --write \"src/**/*.js\"",
+        "vscode:package": "webpack --mode production && vsce package"
     },
     "devDependencies": {
-        "@types/vscode": "^1.42.0",
+        "@babel/core": "^7.14.3",
         "@types/glob": "^7.1.3",
         "@types/mocha": "^8.0.4",
         "@types/node": "^12.11.7",
+        "@types/vscode": "^1.42.0",
+        "babel-eslint": "^10.1.0",
+        "babel-loader": "^8.2.2",
+        "babel-plugin-transform-class-properties": "^6.24.1",
+        "babel-preset-env": "^1.7.0",
+        "deepmerge": "^4.2.2",
         "eslint": "^7.19.0",
+        "eslint-import-resolver-webpack": "^0.13.1",
+        "eslint-plugin-import": "^2.23.2",
         "glob": "^7.1.6",
         "mocha": "^8.2.1",
+        "prettier": "^2.3.0",
+        "sass": "^1.32.13",
+        "sass-loader": "^11.1.1",
         "typescript": "^4.1.3",
-        "vscode-test": "^1.5.0"
+        "vsce": "^1.88.0",
+        "vscode-test": "^1.5.0",
+        "webpack": "^5.37.0",
+        "webpack-cli": "^4.7.0"
+    },
+    "dependencies": {
+        "echarts": "^5.1.1",
+        "fs-plus": "^3.1.1",
+        "vuetify": "^2.5.0"
     }
 }
