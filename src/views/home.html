@@ -74,9 +74,16 @@
                                                 <v-avatar size="250px" tile>
                                                     <v-img src="../../resources/logos/treecore_logo_main.svg"></v-img>
                                                 </v-avatar>
-                                                <div class="my-4 text-md-h5 font-weight-bold white--text">下一代处理器集成开发环境</div>
+                                                <div class="mt-8 text-md-h5 font-weight-bold white--text">木心集成开发环境</div>
+                                                <div class="mt-2 text-md-body1 white--text">下一代处理器集成开发环境</div>
+                                                <div class="mt-4 mb-8">
+                                                    <img alt="license" src="https://img.shields.io/github/license/microdynamics-cpu/tree-core-ide.svg" />
+                                                    <img alt="stars" src="https://img.shields.io/github/stars/microdynamics-cpu/tree-core-ide.svg" />
+                                                    <img alt="forks" src="https://img.shields.io/github/forks/microdynamics-cpu/tree-core-ide.svg" />
+                                                    <img alt="version" src="https://img.shields.io/badge/version-1.0.0-FF69B4.svg" />
+                                                </div>
                                                 <v-divider></v-divider>
-                                                <v-checkbox class="white--text" v-model="tcCheckbox"
+                                                <v-checkbox class="white--text" v-model="tcModelCheckbox"
                                                             color="lime darken-2" label="是否在启动时显示主页"></v-checkbox>
                                             </v-card-text>
                                         </v-card>
@@ -128,7 +135,7 @@
                                                     <v-timeline-item v-for="item in tcTimelineItems" :key="item.date"
                                                                      color="lime darken-2" small>
                                                         <v-row>
-                                                            <v-col class="pl-0 pr-0" md="3" style="padding-top:14px;">
+                                                            <v-col class="px-0" md="3" style="padding-top:14px;">
                                                                 <div class="font-weight-bold white--text">
                                                                     {{ item.date }}
                                                                 </div>

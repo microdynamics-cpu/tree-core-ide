@@ -1,6 +1,5 @@
-const path      = require("path");
-const vscode    = require("vscode");
-const utilExtn  = require("../utils/util_extn");
+const vscode   = require("vscode");
+const utilExtn = require("../utils/util_extn");
 
 module.exports = function(context) {
     context.subscriptions.push(
@@ -19,7 +18,8 @@ module.exports = function(context) {
                 "resources/logos/treecore_logo_main.svg");
             panel.webview.html = utilExtn.getWebViewContent(
                 context,
-                "src/views/home.html");
+                // "src/views/home.html");
+                "src/views/libraries.html");
             panel.webview.onDidReceiveMessage(message => {
                 utilExtn.handleMessageFromWebview(global, message);
             }, undefined, context.subscriptions);

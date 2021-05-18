@@ -11,7 +11,7 @@ new Vue({
     el: "#app",
     // @ts-ignore
     vuetify: new Vuetify(),
-    data: () => {
+    data: function() {
         return {
             tcNavListItems: [{
                 title: "Home",
@@ -46,7 +46,6 @@ new Vue({
                 icon: "mdi-email",
                 href: "mailto:microdynamics@126.com"
             }],
-            tcCheckbox: true,
             tcFuncItems: [{
                 title: "简单易学",
                 icon: "mdi-circle",
@@ -133,24 +132,25 @@ new Vue({
                     title: "E-mail",
                     icon: "mdi-email"
                 }]
-            }]
+            }],
+            tcModelCheckbox: true,
         }
     },
-    mounted: () => {
-        // sendDataToExtension({
-        //     cmd: "getExtensionConfig",
-        //     key: "treecore.config.showHomePageAtStartup"
-        // }, tcCheckbox => this.tcCheckbox = tcCheckbox, vscodeLite);
-    },
-    methods: {
-    },
     watch: {
-        // tcCheckbox(valNew, valOld) {
+        // tcCheckbox: function(valNew, valOld) {
         //     sendDataToExtension({
         //         cmd: "setExtensionConfig",
         //         key: "treecore.config.showHomePageAtStartup",
         //         val: valNew
         //     }, null, vscodeLite);
         // }
+    },
+    mounted: function() {
+        // sendDataToExtension({
+        //     cmd: "getExtensionConfig",
+        //     key: "treecore.config.showHomePageAtStartup"
+        // }, tcCheckbox => this.tcCheckbox = tcCheckbox, vscodeLite);
+    },
+    methods: {
     }
 });
