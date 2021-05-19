@@ -1,4 +1,3 @@
-
 const fs   = require("fs");
 const path = require("path");
 
@@ -9,12 +8,19 @@ externals.push("vscode");
 
 module.exports = {
     mode: "production",
-    entry: __dirname + "/src/main.js",
+    entry: "./src/index.js",
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: "extension.js",
-        libraryTarget: "commonjs2"
+        libraryTarget: "commonjs2",
+        clean: true
     },
+    devtool: "source-map",
+    target: "node",
+    node: {
+        fs: "empty"
+    },
+    externals: externals,
     module: {
         rules: [{
             test: /\.s(c|a)ss$/,
@@ -23,21 +29,22 @@ module.exports = {
                 "css-loader",
                 {
                     loader: "sass-loader",
-                    // Requires sass-loader@^7.0.0
-                    options: {
-                        implementation: require("sass"),
-                        indentedSyntax: true // optional
-                    },
-                    // Requires >= sass-loader@^8.0.0
-                    // @ts-ignore
                     options: {
                         implementation: require("sass"),
                         sassOptions: {
-                            indentedSyntax: true // optional
+                            indentedSyntax: true
                         },
                     },
                 },
             ]
+        }, {
+            test: /\.js$/,
+            loader: "babel-loader",
+            exclude: /node_modules/
         }]
+    },
+    resolve: {
+        modules: [path.resolve("./node_modules"), path.resolve("./src")],
+        extensions: [".js"]
     }
 }

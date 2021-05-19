@@ -1,9 +1,10 @@
-// const vscode   = require("vscode");
-// const utilExtn = require("../../utils/util_extn");
-import vscode from "vscode";
-import * as utilExtn from "../../utils/util_extn";
+const vscode   = require("vscode");
+const utilExtn = require("../../utils/util_extn");
 
-export default function showHomePage(context) {
+// import vscode from "vscode";
+// import * as utilExtn from "../../utils/util_extn";
+
+module.exports = function(context) {
     context.subscriptions.push(
         vscode.commands.registerCommand("treecore.cmd.showHomePage", function() {
             const panel = vscode.window.createWebviewPanel(
@@ -20,7 +21,7 @@ export default function showHomePage(context) {
                 "resources/logos/treecore_logo_main.svg");
             panel.webview.html = utilExtn.getWebViewContent(
                 context,
-                "src/views/libraries.html");
+                "src/views/home.html");
             panel.webview.onDidReceiveMessage(message => {
                 utilExtn.handleMessageFromWebview(global, message);
             }, undefined, context.subscriptions);
@@ -33,7 +34,7 @@ export default function showHomePage(context) {
     }
 }
 
-// module.exports = function(context) {
+// export default function showHomePage(context) {
 //     context.subscriptions.push(
 //         vscode.commands.registerCommand("treecore.cmd.showHomePage", function() {
 //             const panel = vscode.window.createWebviewPanel(

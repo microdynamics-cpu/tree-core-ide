@@ -1,0 +1,12 @@
+{
+    "plugins": [
+        "transform-class-properties"
+    ],
+    "presets": [[
+        "env", {
+            "targets": {
+                "node": "8"
+            }
+        }
+    ]]
+}
