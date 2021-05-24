@@ -1,0 +1,426 @@
+{
+    "PARAMETER": {
+        "prefix": "parameter",
+        "body": [
+            "parameter $1=$0"
+        ],
+        "description": "parameter keywords"
+    },
+    "WIRE": {
+        "prefix": "wire",
+        "body": [
+            "wire $0"
+        ],
+        "description": "wire keywords"
+    },
+    "WIRE ARRAY": {
+        "prefix": ["wirearray", "wire ["],
+        "body": [
+            "wire [$1:$2] $3;"
+        ],
+        "description": "wire [N:0] wire_name;"
+    },
+    "ARRAY": {
+        "prefix": "array",
+        "body": "[${1:8}:${2:0}]$0",
+        "description": "insert [x:y]"
+    },
+    "REG": {
+        "prefix": "reg",
+        "body": [
+            "reg $0"
+        ],
+        "description": "reg keywords"
+    },
+    "REG ARRAY": {
+        "prefix": ["regarray", "reg ["],
+        "body": [
+            "reg [$1:$2] $3;"
+        ],
+        "description": "reg [N:0] reg_name;"
+    },
+    "REG MEM": {
+        "prefix": ["regmemory","memory"],
+        "body": [
+            "reg [$1:$2] $3 [$4:$5];"
+        ],
+        "description": "reg [N:0] reg_name [0:M];"
+    },
+    "INTEGER": {
+        "prefix": "integer",
+        "body": "integer $1;",
+        "description": "integer int_name"
+    },
+    "SIGNED": {
+        "prefix": "signed",
+        "body": "signed $1 $2;",
+        "description": "signed datatype name"
+    },
+    "LOCALPARAM": {
+        "prefix": "localparam",
+        "body": [
+            "localparam $1 = $0"
+        ],
+        "description": "localparam keywords"
+    },
+    "ASSIGN": {
+        "prefix": "assign",
+        "body": [
+            "assign $0;"
+        ],
+        "description": "assign keywords"
+    },
+    "GENVAR": {
+        "prefix": "genvar",
+        "body": [
+            "genvar $0;"
+        ],
+        "description": "genvar keywords"
+    },
+
+
+    "INCLUDE": {
+        "prefix": ["include", "`include"],
+        "body": [
+            "`include \"$1\""
+        ],
+        "description": "`include \"..\""
+    },
+    "DEFINE": {
+        "prefix": ["def", "define", "`define"],
+        "body": [
+            "`define ${1:macro}"
+        ],
+        "description": "`define macro"
+    },
+    "IFDEF": {
+        "prefix": ["ifdef", "`ifdef"],
+        "body": "`ifdef ${1:macro}",
+        "description": "`ifdef macro"
+    },
+    "IFNDEF": {
+        "prefix": ["ifndef", "`ifndef"],
+        "body": "`ifndef ${1:macro}",
+        "description": "`ifndef macro"
+    },
+    "ELSIF": {
+        "prefix": ["elsif", "`elsif"],
+        "body": "`elsif ${1:macro}",
+        "description": "`elsif macro"
+    },
+    "ENDIF": {
+        "prefix": ["endif", "`endif"],
+        "body": "`endif ${1:macro}",
+        "description": "`endif macro"
+    },
+    "UNDEF": {
+        "prefix": ["undef", "`undef"],
+        "body": "`undef ${1:macro}",
+        "description": "`undef macro"
+    },
+    "TIMESCALE": {
+        "prefix": ["ts", "timescale", "`timescale"],
+        "body": [
+            "`timescale ${1:1ps}/${2:1ps}$0"
+        ]
+    },
+    "DEFAULT NETTYPE": {
+        "prefix": ["default_nettype", "`default_nettype"],
+        "body": "`default_nettype ${1:none}",
+        "description": "Set default nettype"
+    },
+
+
+    "INPUT": {
+        "prefix": "input",
+        "body": [
+            "input ${1|wire,reg|} $0"
+        ],
+        "description": "INPUT statement"
+    },
+    "OUTPUT": {
+        "prefix": "output",
+        "body": [
+            "output ${1|wire,reg|} $0"
+        ],
+        "description": "output statement"
+    },
+    "BEGIN/END": {
+        "prefix": "begin",
+        "body": [
+            "begin",
+                "\t$0",
+            "end"
+        ],
+        "description": "begin statement"
+    },
+    "END": {
+        "prefix": "end",
+        "body": "end",
+        "description": "Insert end keyword"
+    },
+
+
+    "TERNARY": {
+        "prefix": "ternary",
+        "body": [
+            "$1 ? $2 : $3"
+        ],
+        "description": "a ? b : c"
+    },
+    "IF": {
+        "prefix": "if",
+        "body": [
+            "if($1) begin",
+                "\t$0",
+            "end"
+        ],
+        "description": "if statement"
+    },
+    "IFELSE": {
+        "prefix": "ifelse",
+        "body": [
+            "if($1) begin",
+                "\t$2",
+            "end else begin",
+                "\t$0",
+            "end"
+        ],
+        "description": "if else statement"
+    },
+    "ELSEIF": {
+        "prefix": "elif",
+        "body": [
+            "else if($1) begin",
+                "\t$0",
+            "end"
+        ],
+        "description": "else if statement"
+    },
+    "ELSE": {
+        "prefix": "else",
+        "body": [
+            "else",
+                "\t$0"
+        ],
+        "description": "else statement"
+    },
+    "ELSEBEGIN": {
+        "prefix": "elseBegin",
+        "body": [
+            "else begin",
+                "\t$0",
+            "end"
+        ],
+        "description": "else begin statement"
+    },
+
+
+    "FOR LOOP": {
+        "prefix": "for",
+        "body": [
+            "for ($1 = $2; $3; $4) begin",
+            "\t$0",
+            "end"
+        ],
+        "description": "for (...) begin ... end"
+    },
+    "WHILE LOOP": {
+        "prefix": "while",
+        "body": [
+            "while ($1) begin",
+            "\t$2",
+            "end"
+        ],
+        "description": "while (...) begin ... end"
+    },
+    "FOREVER": {
+        "prefix": "forever",
+        "body": [
+            "forever begin",
+            "\t$0",
+            "end"
+        ],
+        "description": "forever begin ... end"
+    },
+    "CASE": {
+        "prefix": "case",
+        "body": [
+            "case (${1:param})",
+            "\t$2: $3",
+            "\tdefault: $4",
+            "endcase"
+        ],
+        "description": "case () ... endcase"
+    },
+    "CASEX": {
+        "prefix": "casex",
+        "body": [
+            "casex (${1:param})",
+            "\t$2: $3",
+            "\tdefault: $4",
+            "endcase"
+        ],
+        "description": "casex () ... endcase"
+    },
+    "CASEZ": {
+        "prefix": "casez",
+        "body": [
+            "casez (${1:param})",
+            "\t$2: $3",
+            "\tdefault: $4",
+            "endcase"
+        ],
+        "description": "casez () ... endcase"
+    },
+    "DEFAULT": {
+        "prefix": "default",
+        "body": [
+            "default $1",
+                "\t$0"
+        
+        ],
+        "description": "always case statement"
+    },
+
+
+    "FUNCTION": {
+        "prefix": "function",
+        "body": [
+            "function $1;",
+            "\t$2;",
+            "\t$3",
+            "endfunction"
+        ],
+        "description": "function (...) ... endfunction"
+    },
+    "GENERATE": {
+        "prefix": "generate",
+        "body": [
+            "generate",
+                "\t$0",
+            "endgenerate"
+        ],
+        "description": "generate keywords"
+    },
+    "INITIAL BLOCK": {
+        "prefix": "initial",
+        "body": [
+            "initial begin",
+            "\t$0",
+            "end"
+        ],
+        "description": "initial begin ... end"
+    },
+    "ALWAYS": {
+        "prefix": "always",
+        "body": [
+            "always @(${1|posedge clk or negedge rstn,posedge clk,negedge clk,negedge clk or posedge rstn, *|}) begin",
+                "\t$0",
+            "end"
+        ],
+        "description": "always statement"
+    },
+    "ALWAYS POS CLK": {
+        "prefix": ["alclk", "alwaysposclk"],
+        "body": [
+            "always @(posedge clk$1) begin",
+            "\t$2",
+            "end"
+        ],
+        "description": "always @(posedge clk)"
+    },
+    "ALWAYS NEG CLK": {
+        "prefix": ["alnegclk", "alwaysnegclk"],
+        "body": [
+            "always @(negedge clk$1) begin",
+            "\t$2",
+            "end"
+        ],
+        "description": "always @(negedge clk)"
+    },
+    "ALWAYS CASE": {
+        "prefix": "always @ case",
+        "body": [
+            "always @(${1|posedge clk or negedge rstn,negedge clk or posedge rstn ,*|}) begin",
+                "\tcase $2",
+                    "\t\t$0",
+                "\tendcase",
+            "end"
+        
+        ],
+        "description": "always case statement"
+    },
+
+    "MODULE WITH PARAMETERS": {
+        "prefix": ["paramod", "module #"],
+        "body": [
+            "module ${1:moduleName} #(",
+            "\t${2:parameters}",
+            ") (",
+            "\t${3:ports}",
+            ");",
+            "\t$0",
+            "endmodule"
+        ],
+        "description": "Insert a module with parameter"
+    },
+    "MOUDLE WITHOUT PARAMETERS": {
+        "prefix": "module",
+        "body": [
+            "module ${1:moduleName} (",
+            "\t${2:ports}",
+            ");",
+            "\t$0",
+            "endmodule"
+        ],
+        "description": "Insert a module without parameter"
+    },
+    "INSTANTIATE MODULE": {
+        "prefix": ["set module", "instantiate module"],
+        "body": [
+            "${1:mod_name} ${2:instance_name} (${3:.*}$0);"
+        ],
+        "description": "set module, mod i0 (.*);"
+    },
+    "TESTBENCH TEMPLATE": {
+        "prefix": ["tb", "testbench"],
+        "body": [
+            "`include \"$1.v\"",
+            "`default_nettype none",
+            "",
+            "module tb_$1;",
+            "reg clk;",
+            "reg rst_n;",
+            "",
+            "$1 $3",
+            "(",
+            "\t.rst_n (rst_n),",
+            "\t.clk (clk),",
+            ");",
+            "",
+            "localparam CLK_PERIOD = 10;",
+            "always #(CLK_PERIOD/2) clk = ~clk;",
+            "",
+            "initial begin",
+            "\t\\$dumpfile(\"tb_$1.vcd\");",
+            "\t\\$dumpvars(0, tb_$1);",
+            "end",
+            "",
+            "initial begin",
+            "\t#1 rst_n <= 1'bx;clk <= 1'bx;",
+            "\t#(CLK_PERIOD*3) rst_n <= 1;",
+            "\t#(CLK_PERIOD*3) rst_n <= 0;clk <= 0;",
+            "\trepeat(5) @(posedge clk);",
+            "\trst_n<=1;",
+            "\t@(posedge clk);",
+            "\trepeat(2) @(posedge clk);",
+            "\t\\$finish(2);",
+            "end",
+            "",
+            "endmodule",
+            "`default_nettype wire"
+        ],
+        "description": "testbench template"
+    }
+}
