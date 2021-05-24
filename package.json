@@ -17,9 +17,10 @@
         "cpu",
         "verilog",
         "vhdl",
-        "fpga"
+        "fpga",
+        "waveform"
     ],
-    "publisher": "microdynamics",
+    "publisher": "Team Microdynamics",
     "homepage": "",
     "license": "GPL-3.0",
     "repository": {
@@ -31,12 +32,11 @@
         "email": "microdynamics@126.com"
     },
     "author": {
-        "name": "myyerrol",
+        "name": "myyerrol and maksyuki",
         "email": "myyerrol@126.com",
         "url": "https://myyerrol.io"
     },
     "main": "./src/main.js",
-    // "main": "./dist/extension.js",
     "activationEvents": [
         "*"
     ],
@@ -45,6 +45,74 @@
             {
                 "command": "tree-core-ide.helloWorld",
                 "title": "Hello World"
+            },
+            {
+                "command": "waveviewer.start",
+                "title": "Start wave viewer session",
+                "category": "[TreeCore] wave viewer"
+            }
+        ],
+        "languages": [
+            {
+                "id": "verilog",
+                "aliases": [
+                    "Verilog",
+                    "verilog"
+                ],
+                "extensions": [
+                    ".v",
+                    ".vh",
+                    ".vl"
+                ],
+                "configuration": "./config/verilog.configuration.json"
+            },
+            {
+                "id": "systemverilog",
+                "aliases": [
+                  "System Verilog",
+                  "systemverilog"
+                ],
+                "extensions": [
+                  ".sv",
+                  ".SV"
+                ],
+                "configuration": "./config/systemverilog.configuration.json"
+              },
+              {
+                "id": "bluespec-system-verilog",
+                "aliases": [
+                  "BluespecSystemVerilog",
+                  "Bluespec SystemVerilog",
+                  "BSV"
+                ],
+                "extensions": [
+                  ".bsv",
+                  ".BSV"
+                ],
+                "configuration": "./bluespec-system-verilog.configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "verilog",
+                "scopeName": "source.verilog",
+                "path": "./syntaxes/verilog.tmLanguage"
+            },
+            {
+                "language": "systemverilog",
+                "scopeName": "source.systemverilog",
+                "path": "./syntaxes/system-verilog.tmLanguage"
+            },
+            {
+                "language": "bluespec-system-verilog",
+                "scopeName": "source.bluespec-system-verilog",
+                "path": "./syntaxes/bluespec-system-verilog.tmLanguage"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "verilog",
+                "path": "./snippets/verilog.json"
             }
         ],
         "viewsContainers": {
