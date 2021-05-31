@@ -5,7 +5,7 @@ on:
       - feature-prj-config
 
 jobs:
-  setup environment:
+  setup-env:
     name: setup - ${{ matrix.os }} - ${{ matrix.node-version }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -35,7 +35,7 @@ jobs:
     - name: install npm libraries
       run: npm i
 
-  unit test:
+  unit-test:
     needs: setup environment
     name: unit test - ${{ matrix.os }} - ${{ matrix.node-version }}
     runs-on: ${{ matrix.os }}
