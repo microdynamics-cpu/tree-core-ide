@@ -23,6 +23,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    - name: restore
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.node-version }}-nodemodules-
+      
     - name: install npm libraries
       run: npm ci
 
