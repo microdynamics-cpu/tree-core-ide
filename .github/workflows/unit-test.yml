@@ -2,13 +2,14 @@ name: unit-test
 on:
   push:
     branches:
-      - dev
+      - feature-prj-config
 
 jobs:
   setup:
     name: setup(${{ matrix.os }}-${{ matrix.node-version }})
     runs-on: ${{ matrix.os }}
     strategy:
+      max-parallel: 6
       matrix:
         node-version: [12.x, 14.x, 16.x]
         os: [windows-latest, windows-2016, ubuntu-latest, ubuntu-18.04, macos-latest]
@@ -40,9 +41,10 @@ jobs:
     name: test(${{ matrix.os }}-${{ matrix.node-version }})
     runs-on: ${{ matrix.os }}
     strategy:
-        matrix:
-          node-version: [12.x, 14.x, 16.x]
-          os: [windows-latest, windows-2016, ubuntu-latest, ubuntu-18.04, macos-latest]
+      max-parallel: 6
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+        os: [windows-latest, windows-2016, ubuntu-latest, ubuntu-18.04, macos-latest]
 
     steps:
       - name: checkout dev commits
