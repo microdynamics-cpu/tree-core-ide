@@ -36,7 +36,7 @@ jobs:
       run: npm i
 
   unit-test:
-    needs: setup environment
+    needs: setup-env
     name: unit test - ${{ matrix.os }} - ${{ matrix.node-version }}
     runs-on: ${{ matrix.os }}
     strategy:
