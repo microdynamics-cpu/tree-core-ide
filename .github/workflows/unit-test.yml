@@ -2,13 +2,13 @@ name: unit-test
 on:
   push:
     branches:
-      - dev
+      - feature-prj-config
 
 jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
-      max-parallel: 3
+      max-parallel: 2
       matrix:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         node-version: [12.x, 14.x, 16.x]
