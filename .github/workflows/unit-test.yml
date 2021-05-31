@@ -11,8 +11,8 @@ jobs:
     strategy:
       max-parallel: 5
       matrix:
-        node-version: [16.x]
-        os: [ubuntu-latest, ubuntu-18.04, macos-latest, windows-latest, windows-2016]
+        node-version: [12.x, 14.x, 16.x]
+        os: [ubuntu-latest, ubuntu-18.04, macos-latest, windows-2016]
 
     steps:
     - name: checkout dev commits
@@ -44,7 +44,7 @@ jobs:
       max-parallel: 5
       matrix:
         node-version: [12.x, 14.x, 16.x]
-        os: [ubuntu-latest, ubuntu-18.04, macos-latest, windows-latest, windows-2016]
+        os: [ubuntu-latest, ubuntu-18.04, macos-latest, windows-2016]
 
     steps:
       - name: checkout dev commits
