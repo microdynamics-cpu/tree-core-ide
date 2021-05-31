@@ -6,7 +6,7 @@ on:
 
 jobs:
   setup:
-    name: SETUP(${{ matrix.os }}-${{ matrix.node-version }})
+    name: SETUP (${{ matrix.os }}-${{ matrix.node-version }})
     runs-on: ${{ matrix.os }}
     strategy:
       max-parallel: 5
@@ -38,13 +38,13 @@ jobs:
 
   test:
     needs: setup
-    name: TEST(${{ matrix.os }}-${{ matrix.node-version }})
+    name: TEST (${{ matrix.os }}-${{ matrix.node-version }})
     runs-on: ${{ matrix.os }}
     strategy:
       max-parallel: 5
       matrix:
         node-version: [12.x, 14.x, 16.x]
-        os: [windows-latest, windows-2016, ubuntu-latest, ubuntu-18.04, macos-latest]
+        os: [ubuntu-latest, ubuntu-18.04, macos-latest, windows-latest, windows-2016]
 
     steps:
       - name: checkout dev commits
