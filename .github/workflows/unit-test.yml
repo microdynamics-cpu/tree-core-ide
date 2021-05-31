@@ -11,7 +11,6 @@ jobs:
       matrix:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         node-version: [12.x, 14.x, 15.x, 16.x]
-        npm: 7
         os: [windows-latest, windows-2016, ubuntu-latest, ubuntu-18.04, macos-latest]
         
 
