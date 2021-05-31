@@ -2,7 +2,7 @@ name: unit-test
 on:
   push:
     branches:
-      - feature-prj-config
+      - dev
 
 jobs:
   setup:
