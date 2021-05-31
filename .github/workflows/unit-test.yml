@@ -2,11 +2,11 @@ name: unit-test
 on:
   push:
     branches:
-      - feature-prj-config
+      - dev
 
 jobs:
-  setup-env:
-    name: setup-env(${{ matrix.os }}-${{ matrix.node-version }})
+  setup:
+    name: setup(${{ matrix.os }}-${{ matrix.node-version }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -35,9 +35,9 @@ jobs:
     - name: install npm libraries
       run: npm i
 
-  unit-test:
-    needs: setup-env
-    name: unit-test(${{ matrix.os }}-${{ matrix.node-version }})
+  test:
+    needs: setup
+    name: test(${{ matrix.os }}-${{ matrix.node-version }})
     runs-on: ${{ matrix.os }}
     strategy:
         matrix:
