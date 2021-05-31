@@ -5,12 +5,11 @@ on:
       - dev
 
 jobs:
-  build:
+  setup:
+    name: setup(${{ matrix.os }}-${{ matrix.node-version }})
     runs-on: ${{ matrix.os }}
     strategy:
-      max-parallel: 3
       matrix:
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         node-version: [12.x, 14.x, 16.x]
         os: [windows-latest, windows-2016, ubuntu-latest, ubuntu-18.04, macos-latest]
 
@@ -18,13 +17,49 @@ jobs:
     - name: checkout dev commits
       uses: actions/checkout@v2
 
-    - name: use Node.js ${{ matrix.node-version }}
+    - name: use node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
 
+    - name: restore
+      uses: actions/cache@v2
+      with:
+        path: |
+          node_modules
+          */*/node_modules
+        key: ${{ runner.os }}-${{ hashFiles('**/package.json') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ matrix.node-version }}-nodemodules-
+      
     - name: install npm libraries
       run: npm i
 
-    - name: run npm unit testcases
-      run: npm test
+  test:
+    needs: setup
+    name: test(${{ matrix.os }}-${{ matrix.node-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+        matrix:
+          node-version: [12.x, 14.x, 16.x]
+          os: [windows-latest, windows-2016, ubuntu-latest, ubuntu-18.04, macos-latest]
+
+    steps:
+      - name: checkout dev commits
+        uses: actions/checkout@v2
+
+      - name: use node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: load node_modules
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package.json') }}
+
+      - name: run npm unit testcases
+        run: npm test
