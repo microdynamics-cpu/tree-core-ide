@@ -6,7 +6,7 @@ on:
 
 jobs:
   setup-env:
-    name: setup - ${{ matrix.os }} - ${{ matrix.node-version }}
+    name: setup-env(${{ matrix.os }}-${{ matrix.node-version }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -37,7 +37,7 @@ jobs:
 
   unit-test:
     needs: setup-env
-    name: unit test - ${{ matrix.os }} - ${{ matrix.node-version }}
+    name: unit-test(${{ matrix.os }}-${{ matrix.node-version }})
     runs-on: ${{ matrix.os }}
     strategy:
         matrix:
