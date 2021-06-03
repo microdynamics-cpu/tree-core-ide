@@ -69,25 +69,25 @@
             {
                 "id": "systemverilog",
                 "aliases": [
-                  "System Verilog",
-                  "systemverilog"
+                    "System Verilog",
+                    "systemverilog"
                 ],
                 "extensions": [
-                  ".sv",
-                  ".SV"
+                    ".sv",
+                    ".SV"
                 ],
                 "configuration": "./config/systemverilog.configuration.json"
-              },
-              {
+            },
+            {
                 "id": "bluespec-system-verilog",
                 "aliases": [
-                  "BluespecSystemVerilog",
-                  "Bluespec SystemVerilog",
-                  "BSV"
+                    "BluespecSystemVerilog",
+                    "Bluespec SystemVerilog",
+                    "BSV"
                 ],
                 "extensions": [
-                  ".bsv",
-                  ".BSV"
+                    ".bsv",
+                    ".BSV"
                 ],
                 "configuration": "./bluespec-system-verilog.configuration.json"
             }
@@ -170,12 +170,16 @@
     "scripts": {
         "build": "webpack --mode production",
         "lint": "eslint .eslintrc.js src",
+        "test": "jest",
+        "coverage": "jest --coverage",
         "format": "prettier --single-quote --print-width 88 --write \"src/**/*.js\"",
         "vscode:package": "webpack --mode production && vsce package"
     },
     "devDependencies": {
         "@babel/core": "^7.14.3",
+        "@babel/preset-env": "^7.14.4",
         "@types/glob": "^7.1.3",
+        "@types/jest": "^26.0.23",
         "@types/mocha": "^8.0.4",
         "@types/node": "^12.11.7",
         "@types/vscode": "^1.42.0",
@@ -188,6 +192,7 @@
         "eslint-import-resolver-webpack": "^0.13.1",
         "eslint-plugin-import": "^2.23.2",
         "glob": "^7.1.6",
+        "jest": "^27.0.3",
         "mocha": "^8.2.1",
         "prettier": "^2.3.0",
         "sass": "^1.32.13",
