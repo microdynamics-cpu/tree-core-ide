@@ -25,12 +25,12 @@ class ProjectManagerProvider {
         }
 
         if (element) {
-            const dataJsonPath = path.join(this.workspaceRoot, 'data.json');
-            return Promise.resolve(this.getDepsInPackageJson(dataJsonPath, element.id));
+            const dataJsonPath = path.join(this.workspaceRoot, '/demo/data.json');
+            return Promise.resolve(this.getDepsInPackageJson(dataJsonPath, element.vid));
         }
 
         else {
-            const dataJsonPath = path.join(this.workspaceRoot, 'data.json');
+            const dataJsonPath = path.join(this.workspaceRoot, '/demo/data.json');
             if (this.pathExists(dataJsonPath)) {
                 return Promise.resolve(this.getDepsInPackageJson(dataJsonPath));
             }
@@ -47,35 +47,48 @@ class ProjectManagerProvider {
     getDepsInPackageJson(dataJsonPath, str = '') {
         if (this.pathExists(dataJsonPath)) {
             const dataJson = JSON.parse(fs.readFileSync(dataJsonPath, 'utf-8'));
+            const structJson = JSON.parse(fs.readFileSync(path.join(this.workspaceRoot, '/demo/struct.json'), 'utf-8'));
 
-            const getModule = (obj, id) => {
-                if (obj.children && obj.children.length > 0) {
-                    return new Dependency(id, obj.moduleName, vscode.TreeItemCollapsibleState.Collapsed);
+            const getModule = (vid, obj, filePath) => {
+                if (obj.children && Object.keys(obj.children).length > 0) {
+                    return new Dependency(vid, obj.instName, filePath, vscode.TreeItemCollapsibleState.Collapsed);
                 }
                 else {
-                    return new Dependency(id, obj.moduleName, vscode.TreeItemCollapsibleState.None, {
+                    return new Dependency(vid, obj.instName, filePath, vscode.TreeItemCollapsibleState.None, {
                         command: 'extension.openPackageOnNpm',
                         title: '',
-                        arguments: [obj.moduleName]
+                        arguments: [filePath]
                     });
                 }
             };
-            
+
             const moduleName = [];
-            if(str === '') {
+            if (str === '') {
                 for (let id in dataJson) {
-                    if(dataJson[id].parent) continue;
-                    moduleName.push(getModule(dataJson[id], id));
-                    
+                    if (dataJson[id].parent) continue;
+                    moduleName.push(getModule(id, dataJson[id], structJson[dataJson[id].moduleName]));
                 }
             }
             else {
-                for (let val in dataJson[str].children) {
-
-                    let id = dataJson[str].children[val];
-                    console.log(id);
-                    moduleName.push(getModule(dataJson[id], id));
+                let obj;
+                let isFirst = true
+                // get the parent's node pos
+                for (let val in structJson[str]) {
+                    if (isFirst) {
+                        isFirst = false;
+                        obj = dataJson[structJson[str][val]];
+                    }
+                    else {
+                        if(obj) {
+                            obj = obj.children[structJson[str][val]];
+                        }
+                    }
                 }
+
+                for(let chd in obj.children) {
+                    moduleName.push(getModule(chd, obj.children[chd], structJson[obj.children[chd].moduleName]));
+                }
+
             }
 
             return moduleName;
@@ -97,10 +110,11 @@ class ProjectManagerProvider {
 }
 
 class Dependency extends vscode.TreeItem {
-    constructor(vid, label, collapsibleState, command) {
+    constructor(vid, label, filePath, collapsibleState, command) {
         super(label, collapsibleState);
         this.vid = vid;
         this.label = label;
+        this.filePath = filePath;
         this.collapsibleState = collapsibleState;
         this.command = command;
         this.iconPath = {
@@ -110,7 +124,7 @@ class Dependency extends vscode.TreeItem {
 
         this.contextValue = 'dependency';
         this.tooltip = `${this.label}`;
-        this.description = this.label;
+        this.description = `${this.filePath}`;
     }
 }
 
