@@ -104,7 +104,7 @@ module.exports = {
         html = html.replace(
             /(<link.+?href="|<script.+?src="|<img.+?src="|<v-img.+?src=")(.+?)"/g,
             (m, $1, $2) => {
-                if ($2.indexOf("http") != -1) {
+                if ($2.indexOf("http") != -1 || $1.indexOf(":src") != -1) {
                     return m;
                 }
                 else {

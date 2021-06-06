@@ -1,11 +1,9 @@
-import * as utilView from "../utils/util_view"
-
 // @ts-ignore
 // const vscodeLite = acquireVsCodeApi();
 
 // @ts-ignore
 window.addEventListener("message", event => {
-    utilView.handleMessageFromExtension(event);
+    handleMessageFromExtension(event);
 });
 
 // @ts-ignore
@@ -57,7 +55,7 @@ new Vue({
                     align: "center",
                     sortable: false,
                 }, {
-                    text: "内容",
+                    text: "数值",
                     value: "text",
                     align: "center",
                     sortable: false,
@@ -91,18 +89,51 @@ new Vue({
                     text: "10"
                 }, {
                     name: "测试10",
-                    text: "0"
+                    text: "9"
                 }]
             }, {
                 title: "评分高低",
                 headers: [{
                     text: "名称",
+                    value: "name",
                     align: "center",
                     sortable: false,
                 }, {
-                    text: "内容",
+                    text: "数值",
+                    value: "text",
                     align: "center",
                     sortable: false,
+                }],
+                items: [{
+                    name: "测试1",
+                    text: "4.9"
+                }, {
+                    name: "测试2",
+                    text: "4.9"
+                }, {
+                    name: "测试3",
+                    text: "4.6"
+                }, {
+                    name: "测试4",
+                    text: "4.5"
+                }, {
+                    name: "测试5",
+                    text: "4.4"
+                }, {
+                    name: "测试6",
+                    text: "4.4"
+                }, {
+                    name: "测试7",
+                    text: "4.3"
+                }, {
+                    name: "测试8",
+                    text: "4.2"
+                }, {
+                    name: "测试9",
+                    text: "4.2"
+                }, {
+                    name: "测试10",
+                    text: "4.1"
                 }]
             }],
             tcFooterItems: [{
@@ -167,9 +198,34 @@ new Vue({
                 }]
             }],
             tcModelLibTabs: null,
+            tcModelSelectItems: "基础模块"
         }
     },
     watch: {
+    },
+    created: function() {
+        var chart = document.getElementById("chart");
+        console.log(chart);
+        var myChart = echarts.init(chart);
+        var option = {
+            title: {
+                text: 'ECharts 入门示例'
+            },
+            tooltip: {},
+            legend: {
+                data:['销量']
+            },
+            xAxis: {
+                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20]
+            }]
+        };
+        myChart.setOption(option);
     },
     mounted: function() {
     },

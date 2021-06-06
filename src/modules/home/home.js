@@ -35,9 +35,9 @@ module.exports = function (context) {
     }
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('waveviewer.start', () => {
+        vscode.commands.registerCommand("waveviewer.start", () => {
             const panel = vscode.window.createWebviewPanel(
-                'Wave Viewer',
+                "Wave Viewer",
                 "Wave Viewer",
                 vscode.ViewColumn.One,
                 {
@@ -47,7 +47,7 @@ module.exports = function (context) {
             );
 
             panel.webview.html = utilExtn.getWebViewContent(context,
-                'src/modules/viewer/waveform/WaveViewer.html');
+                "src/modules/viewer/waveform/WaveViewer.html");
         }
     ));
 

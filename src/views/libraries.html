@@ -80,9 +80,11 @@
                                             <v-row>
                                                 <v-col class="mt-4" md="4">
                                                     <v-card outlined>
-                                                        <v-select class="mx-4" :items="tcSelectItems" label="请选择软件库类型" dense outlined></v-select>
+                                                        <v-select v-model="tcModelSelectItems" class="mx-4"
+                                                                  :items="tcSelectItems" label="请选择软件库类型"
+                                                                  dense outlined></v-select>
                                                         <v-divider></v-divider>
-                                                        <div id="main"style="width:200px; height:200px;"></div>
+                                                        <div id="chart" style="height:350px;"></div>
                                                     </v-card>
                                                 </v-col>
                                                 <v-col class="mt-4" v-for="item in tcRankTableItems" :key="item.title" md="4">
@@ -156,7 +158,7 @@
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.1/dist/echarts.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.1/dist/echarts.min.js"></script>
     <script src="../utils/util_view.js"></script>
     <script src="./libraries.js"></script>
 </body>
