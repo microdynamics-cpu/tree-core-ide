@@ -17,9 +17,10 @@
         "cpu",
         "verilog",
         "vhdl",
-        "fpga"
+        "fpga",
+        "waveform"
     ],
-    "publisher": "microdynamics",
+    "publisher": "Team Microdynamics",
     "homepage": "",
     "license": "GPL-3.0",
     "repository": {
@@ -31,12 +32,11 @@
         "email": "microdynamics@126.com"
     },
     "author": {
-        "name": "myyerrol",
+        "name": "myyerrol and maksyuki",
         "email": "myyerrol@126.com",
         "url": "https://myyerrol.io"
     },
     "main": "./src/main.js",
-    // "main": "./dist/extension.js",
     "activationEvents": [
         "*"
     ],
@@ -45,6 +45,74 @@
             {
                 "command": "tree-core-ide.helloWorld",
                 "title": "Hello World"
+            },
+            {
+                "command": "waveviewer.start",
+                "title": "Start wave viewer session",
+                "category": "[TreeCore] wave viewer"
+            }
+        ],
+        "languages": [
+            {
+                "id": "verilog",
+                "aliases": [
+                    "Verilog",
+                    "verilog"
+                ],
+                "extensions": [
+                    ".v",
+                    ".vh",
+                    ".vl"
+                ],
+                "configuration": "./config/verilog.configuration.json"
+            },
+            {
+                "id": "systemverilog",
+                "aliases": [
+                    "System Verilog",
+                    "systemverilog"
+                ],
+                "extensions": [
+                    ".sv",
+                    ".SV"
+                ],
+                "configuration": "./config/systemverilog.configuration.json"
+            },
+            {
+                "id": "bluespec-system-verilog",
+                "aliases": [
+                    "BluespecSystemVerilog",
+                    "Bluespec SystemVerilog",
+                    "BSV"
+                ],
+                "extensions": [
+                    ".bsv",
+                    ".BSV"
+                ],
+                "configuration": "./bluespec-system-verilog.configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "verilog",
+                "scopeName": "source.verilog",
+                "path": "./syntaxes/verilog.tmLanguage"
+            },
+            {
+                "language": "systemverilog",
+                "scopeName": "source.systemverilog",
+                "path": "./syntaxes/system-verilog.tmLanguage"
+            },
+            {
+                "language": "bluespec-system-verilog",
+                "scopeName": "source.bluespec-system-verilog",
+                "path": "./syntaxes/bluespec-system-verilog.tmLanguage"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "verilog",
+                "path": "./snippets/verilog.json"
             }
         ],
         "viewsContainers": {
@@ -94,12 +162,16 @@
     "scripts": {
         "build": "webpack --mode production",
         "lint": "eslint .eslintrc.js src",
+        "test": "jest",
+        "coverage": "jest --coverage",
         "format": "prettier --single-quote --print-width 88 --write \"src/**/*.js\"",
         "vscode:package": "webpack --mode production && vsce package"
     },
     "devDependencies": {
         "@babel/core": "^7.14.3",
+        "@babel/preset-env": "^7.14.4",
         "@types/glob": "^7.1.3",
+        "@types/jest": "^26.0.23",
         "@types/mocha": "^8.0.4",
         "@types/node": "^12.11.7",
         "@types/vscode": "^1.42.0",
@@ -112,6 +184,7 @@
         "eslint-import-resolver-webpack": "^0.13.1",
         "eslint-plugin-import": "^2.23.2",
         "glob": "^7.1.6",
+        "jest": "^27.0.3",
         "mocha": "^8.2.1",
         "prettier": "^2.3.0",
         "sass": "^1.32.13",

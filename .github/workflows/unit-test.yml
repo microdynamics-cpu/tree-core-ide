@@ -1,0 +1,67 @@
+name: unit-test
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  setup:
+    name: SETUP (${{ matrix.os }}-${{ matrix.node-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      max-parallel: 5
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+        os: [ubuntu-latest, ubuntu-18.04, macos-latest, windows-2016]
+
+    steps:
+    - name: checkout dev commits
+      uses: actions/checkout@v2
+
+    - name: use node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: restore
+      uses: actions/cache@v2
+      with:
+        path: |
+          node_modules
+          */*/node_modules
+        key: ${{ runner.os }}-${{ hashFiles('**/package.json') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ matrix.node-version }}-nodemodules-
+      
+    - name: install npm libraries
+      run: npm i
+
+  test:
+    needs: setup
+    name: TEST (${{ matrix.os }}-${{ matrix.node-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      max-parallel: 5
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+        os: [ubuntu-latest, ubuntu-18.04, macos-latest, windows-2016]
+
+    steps:
+      - name: checkout dev commits
+        uses: actions/checkout@v2
+
+      - name: use node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: load node_modules
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package.json') }}
+
+      - name: run npm unit testcases
+        run: npm test
