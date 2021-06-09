@@ -34,20 +34,22 @@ const OPERATE_CONFIG = {
     },
 };
 
+
+const cache = `
+<button type="button" id="zoom_fit">zoom fit</button>
+<button type="button" id="zoom_in">zoom in</button>
+<button type="button" id="zoom_out">zoom out</button>
+<button type="button" id="auto">auto</button>
+<button type="button" id="pre_rising_edge">pre rising edge</button>
+<button type="button" id="pre_falling_edge">pre falling edge</button>
+<button type="button" id="aft_rising_edge">aft rising edge</button>
+<button type="button" id="aft_falling_edge">aft rising edge</button>
+`
 class Waveform extends HTMLElement {
     constructor() {
         super();
 
-        this.innerHTML = `<input type="file" id="file-input" />
-        <button type="button" id="zoom_fit">zoom fit</button>
-        <button type="button" id="zoom_in">zoom in</button>
-        <button type="button" id="zoom_out">zoom out</button>
-        <button type="button" id="auto">auto</button>
-        <button type="button" id="pre_rising_edge">pre rising edge</button>
-        <button type="button" id="pre_falling_edge">pre falling edge</button>
-        <button type="button" id="aft_rising_edge">aft rising edge</button>
-        <button type="button" id="aft_falling_edge">aft rising edge</button>
-        `;
+        this.innerHTML = `<treecore-waveform-toolkits></treecore-waveform-toolkits>`;
 
         this.ready = false;
         this.activeSignal = null;
@@ -97,7 +99,7 @@ class Waveform extends HTMLElement {
             passive: !0
         });
 
-        document.getElementById('file-input').addEventListener('change', this.getData.bind(this), false);
+        document.getElementById('select-file').addEventListener('change', this.getData.bind(this), false);
     }
 
     getData(e) {
