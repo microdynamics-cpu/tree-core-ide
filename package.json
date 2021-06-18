@@ -50,8 +50,56 @@
                 "command": "waveviewer.start",
                 "title": "Start wave viewer session",
                 "category": "[TreeCore] wave viewer"
+            },
+            {
+                "command": "treecore.activityBar.rtlproject.refreshEntry",
+                "title": "Refresh",
+                "icon": {
+                    "light": "resources/light/refresh.svg",
+                    "dark": "resources/dark/refresh.svg"
+                }
+            },
+            {
+                "command": "treecore.activityBar.rtlproject.addEntry",
+                "title": "Add"
+            },
+            {
+                "command": "treecore.activityBar.rtlproject.editEntry",
+                "title": "Edit",
+                "icon": {
+                    "light": "resources/light/edit.svg",
+                    "dark": "resources/dark/edit.svg"
+                }
+            },
+            {
+                "command": "treecore.activityBar.rtlproject.deleteEntry",
+                "title": "Delete"
             }
         ],
+        "menus": {
+            "view/title": [
+                {
+                    "command": "treecore.activityBar.rtlproject.refreshEntry",
+                    "when": "view == treecore.activityBar.rtlproject",
+                    "group": "navigation"
+                },
+                {
+                    "command": "treecore.activityBar.rtlproject.addEntry",
+                    "when": "view == treecore.activityBar.rtlproject"
+                }
+            ],
+            "view/item/context": [
+                {
+                    "command": "treecore.activityBar.rtlproject.editEntry",
+                    "when": "view == treecore.activityBar.rtlproject && viewItem == dependency",
+                    "group": "inline"
+                },
+                {
+                    "command": "treecore.activityBar.rtlproject.deleteEntry",
+                    "when": "view == treecore.activityBar.rtlproject && viewItem == dependency"
+                }
+            ]
+        },
         "languages": [
             {
                 "id": "verilog",
@@ -126,6 +174,10 @@
         },
         "views": {
             "treecore": [
+                {
+                    "id": "treecore.activityBar.rtlproject",
+                    "name": "RTL Project"
+                },
                 {
                     "id": "treecore.activityBar.projectTasks",
                     "name": "Project Tasks"
