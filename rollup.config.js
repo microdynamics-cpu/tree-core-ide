@@ -15,7 +15,9 @@ export default {
     }
   },
   plugins: [
-    replace({'Reflect.decorate': 'undefined'}),
+    replace({
+      'Reflect.decorate': 'undefined',
+    }),
     resolve(),
     terser({
       ecma: 2017,
