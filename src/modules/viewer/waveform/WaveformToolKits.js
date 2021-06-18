@@ -154,8 +154,7 @@ class WaveformToolKits extends HTMLElement {
         super();
         this.fileChanged = false;
 
-        this.innerHTML = `${allStyle}${allElement}
-        `;
+        this.innerHTML = `${allStyle}${allElement}`;
 
         document.getElementById('reload').addEventListener('click', this.reload);
         document.getElementById('settings').addEventListener('click', this.settings);
