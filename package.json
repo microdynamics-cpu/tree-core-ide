@@ -50,7 +50,12 @@
                 "command": "waveviewer.start",
                 "title": "Start wave viewer session",
                 "category": "[TreeCore] wave viewer"
-            }
+            },
+            {
+                "command": "schviewer.start",
+                "title": "Start sch viewer session",
+                "category": "sch viewer"
+              }
         ],
         "languages": [
             {
