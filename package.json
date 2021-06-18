@@ -74,6 +74,11 @@
             {
                 "command": "treecore.activityBar.rtlproject.deleteEntry",
                 "title": "Delete"
+            },
+            {
+                "command": "schviewer.start",
+                "title": "Start sch viewer session",
+                "category": "sch viewer"
             }
         ],
         "menus": {
