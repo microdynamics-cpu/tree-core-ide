@@ -1,6 +1,7 @@
-# tree-core-ide README
+# TreeCore IDE
+![feature X](resources/logos/treecore_logo_200x200.png)
 
-This is the README for your extension "tree-core-ide". After writing up a brief description, we recommend including the following sections.
+we are developing a series of easy-to-learn RISC-V processors and related VSCode-based IDE called TreeCore with rich, detailed and interactive online tutorials, which is friendly to the beginners. The VSCode-based IDE integrates code analysis, wave simulation functions and can automatically find and assemble a specific toolchains, IP cores and library dependencies from cloud server to develop processors or applications.
 
 ## Features
 
@@ -8,7 +9,7 @@ Describe specific features of your extension including screenshots of your exten
 
 For example if there is an image subfolder under your extension project workspace:
 
-\!\[feature X\]\(images/feature-x.png\)
+
 
 > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
