@@ -3,51 +3,14 @@ import { Viewport } from "./Viewport.js";
 import { Grid } from "./Grid.js";
 import { Cursor } from "./Cursor.js";
 import { WaveItems } from "./WaveItems.js";
-import { convertRGBColorStrToArray } from "./Utils.js";
+import { OPERATE_CONFIG } from "./Config"
 
-const OPERATE_CONFIG = {
-    keyboard: {
-        reload: "ctrl+r,f5",
-        createGroup: "ctrl+g",
-        addSignal: "shift+a,insert",
-        deleteSignal: "delete",
-        prevEdge: "left",
-        nextEdge: "right",
-        prevSignal: "up",
-        nextSignal: "down",
-        moveSignalUp: "ctrl+up",
-        moveSignalDown: "ctrl+down",
-        selectAll: "ctrl+a",
-        zoomStart: "home",
-        zoomEnd: "end",
-        zoomIn: "pageUp",
-        zoomOut: "pageDown",
-        zoomFit: "f",
-        zoomTarget: "mouse",
-        zoomAmount: 1,
-    },
-    mouse: {
-        smoothScrolling: true,
-        reverseScrolling: false,
-        zoomTarget: "mouse",
-        zoomAmount: 1,
-    },
-};
 
 class Waveform extends HTMLElement {
     constructor() {
         super();
 
-        this.innerHTML = `<input type="file" id="file-input" />
-        <button type="button" id="zoom_fit">zoom fit</button>
-        <button type="button" id="zoom_in">zoom in</button>
-        <button type="button" id="zoom_out">zoom out</button>
-        <button type="button" id="auto">auto</button>
-        <button type="button" id="pre_rising_edge">pre rising edge</button>
-        <button type="button" id="pre_falling_edge">pre falling edge</button>
-        <button type="button" id="aft_rising_edge">aft rising edge</button>
-        <button type="button" id="aft_falling_edge">aft rising edge</button>
-        `;
+        this.innerHTML = `<treecore-waveform-toolkits></treecore-waveform-toolkits>`;
 
         this.ready = false;
         this.activeSignal = null;
@@ -68,22 +31,22 @@ class Waveform extends HTMLElement {
         }
 
         this.onpointermove = t => {
-            if(t.buttons) {
+            if (t.buttons) {
                 this.setCursor(t.offsetX);
             }
         }
 
         this.addEventListener("wheel", t => {
-            if(t.shiftKey) {
+            if (t.shiftKey) {
                 // console.log('shiftKey+wheel');
-                if(OPERATE_CONFIG.mouse.reverseScrolling) {
+                if (OPERATE_CONFIG.mouse.reverseScrolling) {
                     this.viewport.pan(t.deltaY + t.deltaX);
                 } else {
-                    this.viewport.pan(-(t.deltaY + t.deltaX));  
+                    this.viewport.pan(-(t.deltaY + t.deltaX));
                 }
-            }  else if(t.ctrlKey) {
+            } else if (t.ctrlKey) {
                 // console.log('ctrlKey+wheel');
-                this.viewport.zoom(t.deltaY * OPERATE_CONFIG.keyboard.zoomAmount, 
+                this.viewport.zoom(t.deltaY * OPERATE_CONFIG.keyboard.zoomAmount,
                     OPERATE_CONFIG.mouse.zoomTarget === 'mouse', t.offsetX);
             }
             else {
@@ -97,7 +60,7 @@ class Waveform extends HTMLElement {
             passive: !0
         });
 
-        document.getElementById('file-input').addEventListener('change', this.getData.bind(this), false);
+        document.getElementById('select-file').addEventListener('change', this.getData.bind(this), false);
     }
 
     getData(e) {
@@ -196,8 +159,8 @@ class Waveform extends HTMLElement {
         this.graph.x = Math.ceil(-this.viewport.x * this.viewport.xscale);
         this.cursor.x = this.graph.x;
 
-        
-        
+
+
         this.VCDData.resetSignalDrawNumber();
         let wf_idx = 0;
         for (let wf of this.waveforms.children) {
@@ -310,7 +273,7 @@ class Waveform extends HTMLElement {
     setCursor(t) {
         let e = this.cursor.offsetPs;
 
-        if(t) {
+        if (t) {
             e = this.viewport.screenToPs(t);
             this.moveCursor(e);
             // console.log('this.cursor.offset: %d', e);
