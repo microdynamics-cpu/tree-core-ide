@@ -26,6 +26,10 @@
         .v-data-table th {
             font-size: 16px !important;
         }
+        .tc-text-field-x {
+            position: relative;
+            top: -6px;
+        }
     </style>
 </head>
 <body>
@@ -70,24 +74,24 @@
                     <v-container fluid>
                         <v-row no-gutters>
                             <v-col md="12">
-                                <v-tabs v-model="tcModelLibTabs" color="lime darken-2">
+                                <v-tabs v-model="libTabsModel" color="lime darken-2">
                                     <v-tab>未安装</v-tab>
                                     <v-tab>已安装</v-tab>
                                 </v-tabs>
-                                <v-tabs-items v-model="tcModelLibTabs" dark>
-                                    <v-tab-item>
+                                <v-tabs-items v-model="libTabsModel" dark>
+                                    <v-tab-item height="200px">
                                         <v-card outlined>
                                             <v-row>
                                                 <v-col class="mt-4" md="4">
-                                                    <v-card outlined>
-                                                        <v-select v-model="tcModelSelectItems" class="mx-4"
-                                                                  :items="tcSelectItems" label="请选择软件库类型"
-                                                                  dense outlined></v-select>
+                                                    <v-card height="100%" outlined>
+                                                        <v-select v-model="libRankTypeModel" :items="libRankTypeItems"
+                                                                  class="mt-3 mx-4" label="请选择软件库类型" dense outlined>
+                                                        </v-select>
                                                         <v-divider></v-divider>
-                                                        <div id="chart" style="height:350px;"></div>
                                                     </v-card>
                                                 </v-col>
-                                                <v-col class="mt-4" v-for="item in tcRankTableItems" :key="item.title" md="4">
+                                                <v-col v-for="item in libRankTableItems" :key="item.title" class="mt-4"
+                                                       md="4">
                                                     <v-card outlined>
                                                         <v-card-title>
                                                             <v-icon color="lime darken-2" small>mdi-square</v-icon>
@@ -96,11 +100,46 @@
                                                             </span>
                                                         </v-card-title>
                                                         <v-card-text>
-                                                            <v-data-table :headers="item.headers" :items="item.items" dense
-                                                                           hide-default-footer>
+                                                            <v-data-table :headers="item.headers" :items="item.items"
+                                                                           dense hide-default-footer>
+                                                                <template v-if="item.title === '评分高低'" v-slot:item.value="{ item }">
+                                                                    <v-chip :color="getLibRatingColor(item.value)">
+                                                                        {{ item.value }}
+                                                                    </v-chip>
+                                                                </template>
                                                             </v-data-table>
                                                         </v-card-text>
                                                     </v-card>
+                                                </v-col>
+                                                <v-col md="12">
+                                                    <v-divider></v-divider>
+                                                </v-col>
+                                                <v-col md="12">
+                                                    <v-text-field class="mx-4" clearable dense label="请输入相关信息" outlined>
+                                                        <template v-slot:prepend>
+                                                            <v-select v-model="libSearchTypeModel"
+                                                                      :items="libSearchTypeItems"
+                                                                      class="tc-text-field-x" label="请选择搜索类型" dense
+                                                                      outlined style="top:-8px;">
+                                                            </v-select>
+                                                        </template>
+                                                        <template v-slot:append-outer>
+                                                            <v-btn @click="searchLibsByName" class="tc-text-field-x" outlined>
+                                                                <v-icon left>mdi-book-search</v-icon>搜索
+                                                            </v-btn>
+                                                        </template>
+                                                    </v-text-field>
+                                                    <v-data-table :headers="libSearchTableItem.headers"
+                                                                  :items="libSearchTableItem.items"
+                                                                  :loading="libSearchTableLoading"
+                                                                  :options.sync="libSearchTableOptions"
+                                                                  :server-items-length="libSearchTableCount" dense>
+                                                        <template v-slot:item.rating="{ item }">
+                                                            <v-chip :color="getLibRatingColor(item.rating)">
+                                                                {{ item.rating }}
+                                                            </v-chip>
+                                                        </template>
+                                                    </v-data-table>
                                                 </v-col>
                                             </v-row>
                                         </v-card>

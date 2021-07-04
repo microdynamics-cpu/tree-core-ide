@@ -176,10 +176,6 @@ new Vue({
         //         val: valNew
         //     }, null, vscodeLite);
         // }
-
-        // screenWidth: function(valNew, valOld) {
-        //     console.log("test: " + valNew + ", " + valOld);
-        // }
     },
     mounted: function() {
         // sendDataToExtension({
