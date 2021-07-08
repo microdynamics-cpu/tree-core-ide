@@ -38,6 +38,9 @@ export default {
     },
     data: function() {
         return {};
+    },
+    created() {
+        console.log("test");
     }
 }
 </script>
