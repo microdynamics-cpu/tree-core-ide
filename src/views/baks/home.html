@@ -95,10 +95,9 @@
                                                 <span class="tc-card-title-span-20px">概述</span>
                                             </v-card-title>
                                             <v-card-text class="white--text">
-                                                <strong>木心IDE是一款功能强大的处理器通用开发平台</strong>，它集成有智能化的开发、调试和管理模块（目前还在开发中），不仅支持我们团队自研的<strong>木心系列处理器</strong>，未来还将面向所有符合标准的第三方处理器和外设模块。最后，我们开发木心IDE的初衷是希望<strong>它能构建与激发爱好者们对处理器领域的信心与兴趣</strong>，并改变当下处理器学习与开发效率相对低下的窘迫局面，<strong>我们始终坚信半导体会像互联网那样借助开源的力量而迎来发展的黄金时代</strong>，为此我们愿意贡献出自己的一份力量。
+                                                <strong>木心IDE是一款功能强大的处理器通用开发平台</strong>，它集成有智能化的开发、调试和管理模块（目前还在开发中），不仅支持我们团队自研的<strong>木心系列处理器</strong>，未来还将面向所有符合标准的第三方处理器和外设模块。最后，我们开发木心IDE的初衷是希望<strong>它能够构建与激发爱好者们对处理器设计领域的信心与兴趣</strong>，并改变当下处理器学习与开发效率相对低下的窘迫局面，<strong>我们始终坚信半导体会像互联网那样借助开源的力量而迎来发展的黄金时代</strong>，为此我们愿意贡献出自己的一份力量。
                                             </v-card-text>
                                         </v-card>
-                                        <!-- <v-divider></v-divider> -->
                                         <v-card outlined>
                                             <v-card-title>
                                                 <v-icon color="lime darken-2" small>mdi-square</v-icon>
@@ -156,9 +155,48 @@
                                     </v-col>
                                 </v-row>
                             </v-col>
-                            <!-- <v-col md="12">
+                            <v-col md="12">
                                 <v-divider class="my-4"></v-divider>
-                            </v-col> -->
+                            </v-col>
+                            <v-col md="12">
+                                <v-row>
+                                    <v-col md="12">
+                                        <v-card outlined>
+                                            <v-card-title>
+                                                <v-icon color="lime darken-2" small>mdi-square</v-icon>
+                                                <span class="tc-card-title-span-20px">新闻动态</span>
+                                            </v-card-title>
+                                            <v-card-text>
+                                                <v-carousel show-arrows-on-hover height="410px;">
+                                                    <v-carousel-item v-for="(item, index) in tcNewsCarouselItems"
+                                                                     :key="index">
+                                                        <v-row>
+                                                            <v-col v-for="i in item" :key="i.title" md="4">
+                                                                <v-card outlined>
+                                                                    <v-card-text>
+                                                                        <v-img position="top center" :src="i.src"
+                                                                               style="height:120px;"></v-img>
+                                                                    </v-card-text>
+                                                                </v-card>
+                                                                <v-card outlined>
+                                                                    <v-card-subtitle class="pt-2 pb-1 white--text"
+                                                                                     style="overflow:hidden;
+                                                                                            text-overflow:ellipsis;
+                                                                                            white-space:nowrap;">
+                                                                        <span>{{ i.date }}</span>
+                                                                        <span>{{ i.title }}</span>
+                                                                    </v-card-subtitle>
+                                                                    <v-card-text style="height:160px;">{{ i.text }}</v-card-text>
+                                                                </v-card>
+                                                            </v-col>
+                                                        </v-row>
+                                                    </v-carousel-item>
+                                                </v-carousel>
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
                             <v-col md="12">
                                 <v-divider class="my-4"></v-divider>
                             </v-col>
