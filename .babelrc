@@ -3,6 +3,7 @@
         ["@babel/preset-env", {
             "targets": {
                 "browsers": [
+                    "defaults",
                     "> 1%",
                     "last 2 versions",
                     "not dead"
@@ -11,17 +12,6 @@
             },
             "modules": false
         }]
-        // ["env", {
-        //     "browsers": [
-        //         "> 1%",
-        //         "last 2 versions",
-        //         "not dead"
-        //     ],
-        //     "modules": false,
-        //     "target": {
-        //         "node": "current"
-        //     }
-        // }]
     ],
     "plugins": [
     ]

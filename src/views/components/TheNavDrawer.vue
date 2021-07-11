@@ -7,7 +7,7 @@
         <v-list>
             <v-list-item class="px-0">
                 <v-list-item-avatar tile>
-                    <v-img src="../../resources/logos/treecore_logo_main.svg"></v-img>
+                    <v-img :src="require('../../../resources/logos/treecore_logo_main.svg').default"></v-img>
                 </v-list-item-avatar>
             </v-list-item>
         </v-list>
