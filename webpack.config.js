@@ -26,7 +26,8 @@ module.exports = {
     },
     devtool: "eval-source-map",
     entry: {
-        view: path.resolve(__dirname, "./src/views/view.js"),
+        // home: path.resolve(__dirname, "./src/views/home.js"),
+        libs: path.resolve(__dirname, "./src/views/libs.js"),
     },
     mode: "development",
     module: {
@@ -106,10 +107,26 @@ module.exports = {
                     "\n @version: " + package.version + "",
         }),
         new CleanWebpackPlugin(),
+        // new HtmlWebpackPlugin({
+        //     chunks: ["home"],
+        //     filename: "home.html",
+        //     minify: {
+        // 　　    removeComments: true,
+        //     　　collapseWhitespace: true
+        //     },
+        //     template: __dirname + "/src/views/view.html"
+        // }),
+        // new HtmlWebpackPlugin({
+        //     chunks: ["libs"],
+        //     filename: "libs.html",
+        //     minify: {
+        // 　　    removeComments: true,
+        //     　　collapseWhitespace: true
+        //     },
+        //     template: __dirname + "/src/views/view.html"
+        // }),
         new HtmlWebpackPlugin({
-            hash: false,
-            inject: true,
-            inlineSource: ".(js|css)",
+            filename: "index.html",
             minify: {
         　　    removeComments: true,
             　　collapseWhitespace: true
@@ -122,7 +139,10 @@ module.exports = {
         }),
         new VueLoaderPlugin(),
         new VuetifyLoaderPlugin()
-    ]
+    ],
+    stats: {
+        children: false
+    }
 }
 
 if (process.env.NODE_ENV === "production") {
@@ -153,7 +173,7 @@ if (process.env.NODE_ENV === "production") {
         }
     };
     module.exports.plugins.push(
-        // new BundleAnalyzerPlugin(),
+        new BundleAnalyzerPlugin(),
         // new CompressionWebpackPlugin({
         //     test:  /\.js$|\.css$|\.html$/,
         //     algorithm: "gzip",

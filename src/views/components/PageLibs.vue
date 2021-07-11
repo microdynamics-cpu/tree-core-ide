@@ -27,7 +27,6 @@
                                     v-model="libRankTypeModel"
                                     class="mt-3 mx-4">
                                 </v-select>
-                                <!-- <v-divider></v-divider> -->
                                 <BaseEcharts/>
                             </v-card>
                         </v-col>
@@ -41,7 +40,8 @@
                                 <v-card-title>
                                     <v-icon
                                         color="lime darken-2"
-                                        small>mdi-square</v-icon>
+                                        small>mdi-square
+                                    </v-icon>
                                     <span class="tc-card-title-span-20px">
                                         {{ item.title }}
                                     </span>
@@ -397,22 +397,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-    .tc-card-title-span-20px {
-        position: relative;
-        top: 1px;
-        margin-left: 4px;
-    }
-    .tc-card-title-span-14px {
-        position: relative;
-        top: 1px;
-        margin-left: 2px;
-    }
-    .v-data-table th {
-        font-size: 16px !important;
-    }
-    .tc-text-field-x {
-        position: relative;
-        top: -6px;
-    }
-</style>
