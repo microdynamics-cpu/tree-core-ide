@@ -1,12 +1,18 @@
 {
-    "plugins": [
-        "transform-class-properties"
-    ],
-    "presets": [[
-        "env", {
+    "presets": [
+        ["@babel/preset-env", {
             "targets": {
-                "node": "8"
-            }
-        }
-    ]]
+                "browsers": [
+                    "defaults",
+                    "> 1%",
+                    "last 2 versions",
+                    "not dead"
+                ],
+                "node": "current"
+            },
+            "modules": false
+        }]
+    ],
+    "plugins": [
+    ]
 }
