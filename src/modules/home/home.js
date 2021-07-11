@@ -51,6 +51,24 @@ module.exports = function (context) {
                 "src/modules/viewer/waveform/WaveViewer.html");
         }
     ));
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('schviewer.start', () => {
+            const panel = vscode.window.createWebviewPanel(
+                'Sch Viewer',
+                "Sch Viewer",
+                vscode.ViewColumn.One,
+                {
+                    enableScripts: true,
+                    retainContextWhenHidden: true,
+                }
+            );
+
+            panel.webview.html = utilExtn.getWebViewContent(context,
+                'src/modules/viewer/schematic/SchViewer.html');
+        }
+    ));
+
 }
 
 // export default function showHomePage(context) {

@@ -1,5 +1,8 @@
-node_modules
+node_modules/
+resources/
 .vscode-test/
 *.vsix
-dist
+dist/
 pixi.min*
+venv/
+*coverage/
