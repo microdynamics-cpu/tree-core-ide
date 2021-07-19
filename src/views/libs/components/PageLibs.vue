@@ -121,7 +121,7 @@
     </v-col>
 </template>
 <script>
-import BaseEcharts from "./BaseEcharts.vue";
+import BaseEcharts from "../../commons/components/BaseEcharts.vue";
 
 export default {
     name: "PageLibs",

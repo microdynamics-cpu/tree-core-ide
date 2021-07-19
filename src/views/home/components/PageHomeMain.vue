@@ -10,7 +10,9 @@
                 <v-main>
                     <v-container fluid>
                         <v-row no-gutters>
-                            <PageLibs/>
+                            <PageHomeBrief/>
+                            <TheDivider/>
+                            <PageHomeNews/>
                             <TheDivider/>
                             <TheFooter/>
                         </v-row>
@@ -21,29 +23,28 @@
     </div>
 </template>
 <script>
-import TheAppBar from "./TheAppBar.vue";
-import TheDivider from "./TheDivider.vue";
-import TheFooter from "./TheFooter.vue";
-import TheNavDrawer from "./TheNavDrawer.vue"
-import PageLibs from "./PageLibs.vue";
+import TheAppBar from "../../commons/components/TheAppBar";
+import TheDivider from "../../commons/components/TheDivider.vue";
+import TheFooter from "../../commons/components/TheFooter.vue";
+import TheNavDrawer from "../../commons/components/TheNavDrawer.vue"
+import PageHomeBrief from "./PageHomeBrief.vue";
+import PageHomeNews from "./PageHomeNews.vue";
 
 export default {
-    name: "PageLibsMain",
+    name: "PageHomeMain",
     components: {
         TheAppBar,
         TheDivider,
         TheFooter,
         TheNavDrawer,
-        PageLibs
+        PageHomeBrief,
+        PageHomeNews
     },
     data: function() {
         return {};
-    },
-    created() {
-        console.log("test");
     }
 }
 </script>
 <style scoped>
-    @import "../css/common.css";
+    @import "../../commons/css/view.css";
 </style>
