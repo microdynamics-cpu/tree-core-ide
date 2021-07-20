@@ -1,7 +1,7 @@
 // @ts-nocheck
 import Vue from "vue";
-import vuetify from "../plugins/vuetify";
-import PageLibsMain from "./components/PageLibsMain.vue";
+import vuetify from "../../../plugins/vuetify";
+import PageLibsMain from "../components/PageLibsMain.vue";
 
 Vue.config.productionTip = false;
 
