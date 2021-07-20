@@ -3,8 +3,6 @@
 </template>
 <script>
 import Vue from "vue";
-// import shine_dark from "../themes/shine_dark";
-// import dark from "../themes/dark";
 import * as echarts from "echarts";
 
 Vue.prototype.$echarts = echarts;
@@ -21,7 +19,7 @@ export default {
         drawPie: function() {
             let chart = this.$echarts.init(
                 document.getElementById("chart"), "dark");
-            chart.setOption({
+            let options = {
                 title: {
                     text: "软件库数量占比图",
                     subtext: "全部模块",
@@ -61,7 +59,31 @@ export default {
                     }
                 }],
                 backgroundColor: "rgb(30, 30, 30)"
-            });
+            }
+            chart.setOption(options);
+            let currentIndex = -1;
+            setInterval(function() {
+                var dataLen = options.series[0].data.length;
+                // 取消之前高亮的图形
+                chart.dispatchAction({
+                    type: "downplay",
+                    seriesIndex: 0,
+                    dataIndex: currentIndex
+                });
+                currentIndex = (currentIndex + 1) % dataLen;
+                // 高亮当前图形
+                chart.dispatchAction({
+                    type: "highlight",
+                    seriesIndex: 0,
+                    dataIndex: currentIndex
+                });
+                // 显示tooltip
+                chart.dispatchAction({
+                    type: "showTip",
+                    seriesIndex: 0,
+                    dataIndex: currentIndex
+                });
+            }, 3000);
         }
     }
 }

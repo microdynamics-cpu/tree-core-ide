@@ -6,4 +6,3 @@ dist/
 pixi.min*
 venv/
 *coverage/
-package-lock.json

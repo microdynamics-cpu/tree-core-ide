@@ -26,8 +26,8 @@ module.exports = {
     },
     devtool: "eval-source-map",
     entry: {
-        // home: path.resolve(__dirname, "./src/views/home.js"),
-        libs: path.resolve(__dirname, "./src/views/libs.js"),
+        // home: path.resolve(__dirname, "./src/views/home/js/home.js"),
+        libs: path.resolve(__dirname, "./src/views/libs/js/libs.js"),
     },
     mode: "development",
     module: {
