@@ -124,7 +124,7 @@
 import BaseEcharts from "../../commons/components/BaseEcharts.vue";
 
 export default {
-    name: "PageLibs",
+    name: "PageLib",
     components: {
         BaseEcharts
     },

@@ -1,11 +1,11 @@
 // @ts-nocheck
 import Vue from "vue";
 import vuetify from "../../../plugins/vuetify";
-import PageLibsMain from "../components/PageLibsMain.vue";
+import PageLibMain from "../components/PageLibMain.vue";
 
 Vue.config.productionTip = false;
 
 new Vue({
   vuetify,
-  render: h => h(PageLibsMain)
+  render: h => h(PageLibMain)
 }).$mount("#app");

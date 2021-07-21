@@ -10,7 +10,7 @@
                 <v-main>
                     <v-container fluid>
                         <v-row no-gutters>
-                            <PageLibs/>
+                            <PageLib/>
                             <TheDivider/>
                             <TheFooter/>
                         </v-row>
@@ -25,16 +25,16 @@ import TheAppBar from "../../commons/components/TheAppBar.vue";
 import TheDivider from "../../commons/components/TheDivider.vue";
 import TheFooter from "../../commons/components/TheFooter.vue";
 import TheNavDrawer from "../../commons/components/TheNavDrawer.vue"
-import PageLibs from "./PageLibs.vue";
+import PageLib from "./PageLib.vue";
 
 export default {
-    name: "PageLibsMain",
+    name: "PageLibMain",
     components: {
         TheAppBar,
         TheDivider,
         TheFooter,
         TheNavDrawer,
-        PageLibs
+        PageLib
     },
     data: function() {
         return {};
