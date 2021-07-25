@@ -46,12 +46,14 @@ export default {
                                 let series = opt.series;
                                 let seriesName = series[0].name;
                                 let seriesData = series[0].data;
-                                let table = "<table border='1' cellspacing='0' " +
-                                                   "style='width:100%;text-align:center;" +
-                                                   "color:black;'><tbody><tr>" +
-                                                "<td>指标类别</td>" +
-                                                "<td>指标内容</td>" +
-                                                "</tr>";
+                                let table = "<table class='layui-table tc-echart-table' lay-even>" +
+                                                "<thead>" +
+                                                    "<tr>" +
+                                                        "<th>指标类别</th>" +
+                                                        "<th>指标内容</th>" +
+                                                    "</tr>" +
+                                                "</thead>" +
+                                                "<tbody>";
                                 for (let i = 0; i < seriesData.length; i++) {
                                     table += "<tr>" +
                                                 "<td>" + seriesData[i].name + "</td>" +
@@ -65,9 +67,9 @@ export default {
                                 console.log(dom, opt);
                                 chartTimer = setInterval(chartTimerFunc, 3000);
                             },
-                            lang: ["<div style='text-align:center;'>数据视图</div>",
-                                   "<div style='display:none;'>测试</div>",
-                                   '关闭']
+                            lang: ["<div class='tc-echart-dataview'>数据视图</div>",
+                                   "<div class='tc-echart-closeBtn'></div>",
+                                   "<div class='tc-echart-refreshBtn'>关闭</div>"]
                         },
                         saveAsImage: {
                         },
@@ -104,7 +106,6 @@ export default {
             }
             chart.setOption(options);
 
-
             let currentIndex = -1;
             let chartTimer = 0;
             function chartTimerFunc() {
@@ -130,31 +131,38 @@ export default {
                 });
             }
             chartTimer = setInterval(chartTimerFunc, 3000);
-            // chartTimer = setInterval(function() {
-            //     let dataLen = options.series[0].data.length;
-            //     // 取消高亮图形
-            //     chart.dispatchAction({
-            //         type: "downplay",
-            //         seriesIndex: 0,
-            //         dataIndex: currentIndex
-            //     });
-            //     currentIndex = (currentIndex + 1) % dataLen;
-            //     // 高亮当前图形
-            //     chart.dispatchAction({
-            //         type: "highlight",
-            //         seriesIndex: 0,
-            //         dataIndex: currentIndex
-            //     });
-            //     // 显示tooltip
-            //     chart.dispatchAction({
-            //         type: "showTip",
-            //         seriesIndex: 0,
-            //         dataIndex: currentIndex
-            //     });
-            // }, 3000);
         }
     }
 }
 </script>
-<style scoped>
+<style scope>
+    @import "../../../../resources/frameworks/layui/css/layui.css";
+    .tc-echart-table {
+        position: relative;
+        width: 90%;
+        margin: auto;
+        color: black;
+        text-align: center;
+    }
+    .tc-echart-table th {
+        font-weight: bold;
+        text-align: center;
+    }
+    .tc-echart-dataview {
+        font-size: 18px;
+        text-align: center;
+    }
+    .tc-echart-closeBtn {
+        position: absolute;
+        width: 15px;
+        height: 10px;
+        margin: -5px 0px 0px -10px;
+        background-color: white;
+        cursor: default;
+        pointer-events: none;
+    }
+    .tc-echart-refreshBtn {
+        font-size: 14px;
+    }
+
 </style>
