@@ -27,7 +27,26 @@
                                     v-model="libRankTypeModel"
                                     class="mt-3 mx-4">
                                 </v-select>
-                                <BaseEcharts/>
+                                <BaseEcharts :chartType="chartPieData"></BaseEcharts>
+                            </v-card>
+                        </v-col>
+                        <v-col
+                            height="100%"
+                            md="4"
+                            class="mt-4">
+                            <v-card
+                                height="100%"
+                                outlined>
+                                <v-card-title>
+                                    <v-icon
+                                        color="lime darken-2"
+                                        small>mdi-square
+                                    </v-icon>
+                                    <span class="tc-card-title-span-20px">
+                                        下载次数
+                                    </span>
+                                </v-card-title>
+                                <BaseEcharts :chartType="chartBarData"></BaseEcharts>
                             </v-card>
                         </v-col>
                         <v-col
@@ -130,54 +149,58 @@ export default {
     },
     data: function() {
         return {
+            chartPieData: "chartPie",
+            chartBarData: "chartBar",
             libTabsModel: null,
             libRankTypeItems: ["全部模块", "基础模块", "外设模块", "处理器核", "片上系统"],
             libRankTypeModel: "全部模块",
-            libRankTableItems: [{
-                title: "下载次数",
-                headers: [{
-                    text: "名称",
-                    value: "name",
-                    align: "center",
-                    sortable: false
-                }, {
-                    text: "数值",
-                    value: "value",
-                    align: "center",
-                    sortable: false
-                }],
-                items: [{
-                    name: "IEEE 802.15.4 CRC",
-                    value: "100"
-                }, {
-                    name: "BiRiscV",
-                    value: "80"
-                }, {
-                    name: "I2C Multiple Bus Controller",
-                    value: "70"
-                }, {
-                    name: "OpenFIRE",
-                    value: "60"
-                }, {
-                    name: "Simple RS232 UART",
-                    value: "50"
-                }, {
-                    name: "8b10b Encoder/Decoder",
-                    value: "40"
-                }, {
-                    name: "Featherweight RISC-V",
-                    value: "30"
-                }, {
-                    name: "APB to I2C",
-                    value: "20"
-                }, {
-                    name: "ORPSoC",
-                    value: "10"
-                }, {
-                    name: "Bitwise addressable GPIO",
-                    value: "9"
-                }]
-            }, {
+            libRankTableItems: [
+            // {
+            //     title: "下载次数",
+            //     headers: [{
+            //         text: "名称",
+            //         value: "name",
+            //         align: "center",
+            //         sortable: false
+            //     }, {
+            //         text: "数值",
+            //         value: "value",
+            //         align: "center",
+            //         sortable: false
+            //     }],
+            //     items: [{
+            //         name: "IEEE 802.15.4 CRC",
+            //         value: "100"
+            //     }, {
+            //         name: "BiRiscV",
+            //         value: "80"
+            //     }, {
+            //         name: "I2C Multiple Bus Controller",
+            //         value: "70"
+            //     }, {
+            //         name: "OpenFIRE",
+            //         value: "60"
+            //     }, {
+            //         name: "Simple RS232 UART",
+            //         value: "50"
+            //     }, {
+            //         name: "8b10b Encoder/Decoder",
+            //         value: "40"
+            //     }, {
+            //         name: "Featherweight RISC-V",
+            //         value: "30"
+            //     }, {
+            //         name: "APB to I2C",
+            //         value: "20"
+            //     }, {
+            //         name: "ORPSoC",
+            //         value: "10"
+            //     }, {
+            //         name: "Bitwise addressable GPIO",
+            //         value: "9"
+            //     }]
+            // },
+            {
                 title: "评分高低",
                 headers: [{
                     text: "名称",
