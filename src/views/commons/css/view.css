@@ -1,0 +1,17 @@
+.tc-card-title-span-20px {
+    position: relative;
+    top: 1px;
+    margin-left: 4px;
+}
+.tc-card-title-span-14px {
+    position: relative;
+    top: 1px;
+    margin-left: 2px;
+}
+.v-data-table th {
+    font-size: 16px !important;
+}
+.tc-text-field-x {
+    position: relative;
+    top: -6px;
+}

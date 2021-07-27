@@ -6,7 +6,7 @@ const utilExtn = require("../../utils/util_extn");
 
 module.exports = function (context) {
     context.subscriptions.push(
-        vscode.commands.registerCommand("treecore.cmd.showHomePage", function () {
+        vscode.commands.registerCommand("treecore.cmd.showHomePage", function() {
             const panel = vscode.window.createWebviewPanel(
                 "treecoreHome",
                 "TreeCore IDE Home",
@@ -22,7 +22,8 @@ module.exports = function (context) {
                 "resources/logos/treecore_logo_main.svg");
             panel.webview.html = utilExtn.getWebViewContent(
                 context,
-                "src/views/home.html");
+                // "src/views/home.html");
+                "src/views/dist/index.html");
             panel.webview.onDidReceiveMessage(message => {
                 utilExtn.handleMessageFromWebview(global, message);
             }, undefined, context.subscriptions);
@@ -35,9 +36,9 @@ module.exports = function (context) {
     }
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('waveviewer.start', () => {
+        vscode.commands.registerCommand("waveviewer.start", () => {
             const panel = vscode.window.createWebviewPanel(
-                'Wave Viewer',
+                "Wave Viewer",
                 "Wave Viewer",
                 vscode.ViewColumn.One,
                 {
@@ -47,7 +48,7 @@ module.exports = function (context) {
             );
 
             panel.webview.html = utilExtn.getWebViewContent(context,
-                'src/modules/viewer/waveform/WaveViewer.html');
+                "src/modules/viewer/waveform/WaveViewer.html");
         }
     ));
 
