@@ -12,7 +12,7 @@
                             <v-img :src="require('../../../../resources/logos/treecore_logo_main.svg').default"></v-img>
                         </v-avatar>
                         <div class="mt-8 text-md-h5 font-weight-bold white--text">木心集成开发环境</div>
-                        <div class="mt-2 text-md-body1 white--text">下一代处理器集成开发环境</div>
+                        <div class="mt-2 text-md-body-1 white--text">下一代处理器集成开发环境</div>
                         <div class="mt-4 mb-8">
                             <img alt="license" src="https://img.shields.io/github/license/microdynamics-cpu/tree-core-ide.svg" />
                             <img alt="stars" src="https://img.shields.io/github/stars/microdynamics-cpu/tree-core-ide.svg" />
