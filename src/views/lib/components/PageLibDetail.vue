@@ -12,100 +12,145 @@
             <v-tab-item height="200px">
                 <v-card outlined>
                     <v-row>
-                        <v-col
-                            height="100%"
-                            md="4"
-                            class="mt-4">
-                            <v-card
-                                height="100%"
-                                outlined>
-                                <v-select
-                                    dense
-                                    :items="libRankTypeItems"
-                                    label="请选择软件库类型"
-                                    outlined
-                                    v-model="libRankTypeModel"
-                                    class="mt-3 mx-4">
-                                </v-select>
-                                <BaseEcharts/>
-                            </v-card>
-                        </v-col>
-                        <v-col
-                            height="100%"
-                            md="4"
-                            v-for="item in libRankTableItems"
-                            :key="item.title"
-                            class="mt-4">
+                        <v-col md="12">
                             <v-card outlined>
-                                <v-card-title>
-                                    <v-icon
-                                        color="lime darken-2"
-                                        small>mdi-square
-                                    </v-icon>
-                                    <span class="tc-card-title-span-20px">
-                                        {{ item.title }}
-                                    </span>
-                                </v-card-title>
-                                <v-card-text>
-                                    <v-data-table
-                                        dense
-                                        :headers="item.headers"
-                                        hide-default-footer
-                                        :items="item.items">
-                                        <template
-                                            v-if="item.title === '评分高低'"
-                                            #item.value="{ item }">
-                                            <v-chip :color="getLibRatingColor(item.value)">
-                                                {{ item.value }}
-                                            </v-chip>
-                                        </template>
-                                    </v-data-table>
+                                <v-card-title>CPU Test Lib</v-card-title>
+                                <v-card-text class="white--text text-md-body-1">
+                                    <v-row class="tc-lib-detail-title">
+                                        <v-tooltip
+                                            color="black"
+                                            bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <span
+                                                    v-bind="attrs"
+                                                    v-on="on">
+                                                    myyerrol
+                                                </span>
+                                            </template>
+                                            <span>作者姓名</span>
+                                        </v-tooltip>
+                                        <v-divider
+                                            vertical
+                                            class="mx-3">
+                                        </v-divider>
+                                        <v-tooltip
+                                            color="black"
+                                            bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <div
+                                                    v-bind="attrs"
+                                                    v-on="on">
+                                                    <v-icon
+                                                        dense
+                                                        class="mr-1">
+                                                        mdi-cloud-download-outline
+                                                    </v-icon>
+                                                    <span>1000</span>
+                                                </div>
+                                            </template>
+                                            <span>下载次数</span>
+                                        </v-tooltip>
+                                        <v-divider
+                                            vertical
+                                            class="mx-3">
+                                        </v-divider>
+                                        <v-tooltip
+                                            color="black"
+                                            bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <div
+                                                    v-bind="attrs"
+                                                    v-on="on">
+                                                    <v-rating
+                                                        color="amber"
+                                                        dense
+                                                        length="5"
+                                                        half-increments
+                                                        readonly
+                                                        size="18"
+                                                        v-bind:value="4.5">
+                                                    </v-rating>
+                                                </div>
+                                            </template>
+                                            <span>评分高低</span>
+                                        </v-tooltip>
+                                        <v-divider
+                                            vertical
+                                            class="mx-3">
+                                        </v-divider>
+                                        <v-tooltip
+                                            color="black"
+                                            bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <span
+                                                    v-bind="attrs"
+                                                    v-on="on">
+                                                    基础模块
+                                                </span>
+                                            </template>
+                                            <span>模块类型</span>
+                                        </v-tooltip>
+                                        <v-divider
+                                            vertical
+                                            class="mx-3">
+                                        </v-divider>
+                                        <v-tooltip
+                                            color="black"
+                                            bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <span
+                                                    v-bind="attrs"
+                                                    v-on="on">
+                                                    BSD
+                                                </span>
+                                            </template>
+                                            <span>协议类型</span>
+                                        </v-tooltip>
+                                    </v-row>
+                                    <v-row class="tc-lib-detail-title">
+                                        <div>This is a test lib for cpu.</div>
+                                    </v-row>
+                                    <v-row class="tc-lib-detail-title">
+                                        <v-col md="2"
+                                               style="padding-left:0px;padding-right:20px">
+                                            <v-select
+                                                dense
+                                                :items="libVersionItems"
+                                                label="请选择软件库版本"
+                                                outlined
+                                                v-model="libVersionModel">
+                                            </v-select>
+                                        </v-col>
+                                        <v-col md="2"
+                                               style="padding-left:0px;">
+                                            <v-btn
+                                                color="lime darken-2"
+                                                small>安装
+                                            </v-btn>
+                                        </v-col>
+                                    </v-row>
+                                    <v-row class="tc-lib-detail-contents">
+
+                                        <v-tabs
+                                            height="35px"
+                                            color="lime darken-2"
+                                            v-model="libDetailTabsModel">
+                                            <v-tab>详细介绍</v-tab>
+                                            <v-tab>变更记录</v-tab>
+                                        </v-tabs>
+                                        <v-tabs-items
+                                            dark
+                                            v-model="libDetailTabsModel">
+                                            <v-tab-item
+                                                height="200px">
+                                                <v-card>
+                                                    <v-card-text v-html="libDetailContents"></v-card-text>
+                                                </v-card>
+                                            </v-tab-item>
+                                        </v-tabs-items>
+                                    </v-row>
                                 </v-card-text>
                             </v-card>
-                        </v-col>
-                        <v-col md="12">
-                            <v-divider></v-divider>
-                        </v-col>
-                        <v-col md="12">
-                            <v-text-field
-                                clearable
-                                dense
-                                label="请输入相关信息"
-                                outlined
-                                class="mx-4">
-                                <template #prepend>
-                                    <v-select
-                                        dense
-                                        :items="libSearchTypeItems"
-                                        label="请选择搜索类型"
-                                        outlined
-                                        v-model="libSearchTypeModel"
-                                        class="tc-text-field-x"
-                                        style="top:-8px;">
-                                    </v-select>
-                                </template>
-                                <template #append-outer>
-                                    <v-btn
-                                        outlined
-                                        class="tc-text-field-x"
-                                        @click="searchLibsByName">
-                                        <v-icon left>mdi-book-search</v-icon>搜索
-                                    </v-btn>
-                                </template>
-                            </v-text-field>
-                            <v-data-table
-                                dense
-                                :headers="libSearchTableItem.headers"
-                                :items="libSearchTableItem.items"
-                                :loading="libSearchTableLoading"
-                                :options.sync="libSearchTableOptions"
-                                :server-items-length="libSearchTableCount" >
-                                <template #item.rating="{ item }">
-                                    <v-chip :color="getLibRatingColor(item.rating)">
-                                        {{ item.rating }}
-                                    </v-chip>
-                                </template>
-                            </v-data-table>
                         </v-col>
                     </v-row>
                 </v-card>
@@ -121,279 +166,69 @@
     </v-col>
 </template>
 <script>
-import BaseEcharts from "../../commons/components/BaseEcharts.vue";
+import marked from "marked";
+import $ from "jquery";
+
+let rendererMD = new marked.Renderer();
+marked.setOptions({
+    renderer: rendererMD,
+    // 默认为true，允许使用GitHub Flavor Markdown语法
+    // Default is true, allow GitHub Flavor Markdown syntax
+    gfm: true,
+    // 默认为true，允许使用表格语法（gfm必须为true）
+    // Default is true, allow table syntax(gfm must be true)
+    tables: true,
+    // 默认为false，允许使用回车换行（gfm必须为true）
+    // Default is false, allow CRLF(gfm must be true)
+    breaks: false,
+    // 默认为false，尽可能地兼容markdown.pl的晦涩部分，且不纠正原始模型任何的不良行为和错误
+    // Default is false, it is compatible with the obscure part of markdown.pl
+    // as much as possible without correcting any bad behavior and errors of
+    // the original model
+    pedantic: false,
+    // 默认为false，对输出内容进行过滤清理
+    // Default is false, filter and clean the output content
+    sanitize: false,
+    smartLists: true,
+    // 默认为false，使用更为时髦的标点，比如在语法中加入破折号
+    // Default is false, use more fashionable punctuation, such as adding
+    // dashes to syntax
+    smartypants: false
+});
 
 export default {
-    name: "PageLib",
+    name: "PageLibDetail",
     components: {
-        BaseEcharts
     },
     data: function() {
         return {
             libTabsModel: null,
-            libRankTypeItems: ["全部模块", "基础模块", "外设模块", "处理器核", "片上系统"],
-            libRankTypeModel: "全部模块",
-            libRankTableItems: [{
-                title: "下载次数",
-                headers: [{
-                    text: "名称",
-                    value: "name",
-                    align: "center",
-                    sortable: false
-                }, {
-                    text: "数值",
-                    value: "value",
-                    align: "center",
-                    sortable: false
-                }],
-                items: [{
-                    name: "IEEE 802.15.4 CRC",
-                    value: "100"
-                }, {
-                    name: "BiRiscV",
-                    value: "80"
-                }, {
-                    name: "I2C Multiple Bus Controller",
-                    value: "70"
-                }, {
-                    name: "OpenFIRE",
-                    value: "60"
-                }, {
-                    name: "Simple RS232 UART",
-                    value: "50"
-                }, {
-                    name: "8b10b Encoder/Decoder",
-                    value: "40"
-                }, {
-                    name: "Featherweight RISC-V",
-                    value: "30"
-                }, {
-                    name: "APB to I2C",
-                    value: "20"
-                }, {
-                    name: "ORPSoC",
-                    value: "10"
-                }, {
-                    name: "Bitwise addressable GPIO",
-                    value: "9"
-                }]
-            }, {
-                title: "评分高低",
-                headers: [{
-                    text: "名称",
-                    value: "name",
-                    align: "center",
-                    sortable: false,
-                }, {
-                    text: "数值",
-                    value: "value",
-                    align: "center",
-                    sortable: false,
-                }],
-                items: [{
-                    name: "IEEE 802.15.4 CRC",
-                    value: "4.9"
-                }, {
-                    name: "BiRiscV",
-                    value: "4.9"
-                }, {
-                    name: "I2C Multiple Bus Controller",
-                    value: "4.6"
-                }, {
-                    name: "OpenFIRE",
-                    value: "4.5"
-                }, {
-                    name: "Simple RS232 UART",
-                    value: "4.4"
-                }, {
-                    name: "8b10b Encoder/Decoder",
-                    value: "4.4"
-                }, {
-                    name: "Featherweight RISC-V",
-                    value: "4.3"
-                }, {
-                    name: "APB to I2C",
-                    value: "4.2"
-                }, {
-                    name: "ORPSoC",
-                    value: "4.2"
-                }, {
-                    name: "Bitwise addressable GPIO",
-                    value: "4.1"
-                }]
-            }],
-            libSearchTypeItems: ["全部", "名称", "作者"],
-            libSearchTypeModel: "全部",
-            libSearchTableItem: {
-                headers: [{
-                    text: "名称",
-                    value: "name",
-                    align: "center",
-                    sortable: false
-                }, {
-                    text: "作者",
-                    value: "author",
-                    align: "center",
-                    sortable: false
-                }, {
-                    text: "类型",
-                    value: "type",
-                    align: "center",
-                    sortable: false
-                }, {
-                    text: "下载",
-                    value: "download",
-                    align: "center",
-                    sortable: false
-                }, {
-                    text: "评价",
-                    value: "rating",
-                    align: "center",
-                    sortable: false
-                }],
-                items: []
-            },
-            libSearchTableLoading: true,
-            libSearchTableOptions: {},
-            libSearchTableCount: 0
+            libVersionItems: ["最新版本", "v1.3.1", "v1.3.0", "v1.2.5", "v1.1.0"],
+            libVersionModel: "最新版本",
+            libDetailTabsModel: null,
+            libDetailContents: ""
         };
     },
     watch: {
-        libSearchTableOptions: function() {
-            this.getDataFromAPI();
-        }
+    },
+    mounted: function() {
+        const html = marked("# Marked in Node.js\n\nRendered by **marked**.");
+        console.log(html);
+        this.libDetailContents = html;
     },
     methods: {
-        searchLibsByName: function() {
-            console.log("test");
-        },
-        getLibRatingColor: function(rating) {
-            var num = parseFloat(rating);
-            if (num >= 4.5) {
-                return "green";
-            }
-            else if (num >= 4.0) {
-                return "orange";
-            }
-            else {
-                return "red";
-            }
-        },
-        getDataFromAPI() {
-            this.libSearchTableLoading = true;
-            this.callFakeData().then(data => {
-                this.libSearchTableItem.items = data.items;
-                this.libSearchTableCount = data.count;
-                this.libSearchTableLoading = false;
-            });
-        },
-        callFakeData() {
-            return new Promise((resolve, reject) => {
-                const { sortBy, sortDesc, page, itemsPerPage } =
-                    this.libSearchTableOptions;
-
-                let items = this.getLibSearchTable();
-                let count = items.length;
-
-                if (sortBy === 1 && sortDesc === 1) {
-                    items = items.sort((a, b) => {
-                        const sortA = a[sortBy[0]]
-                        const sortB = b[sortBy[0]]
-
-                        if (sortDesc[0]) {
-                            if (sortA < sortB) {
-                                return 1;
-                            }
-                            if (sortA > sortB) {
-                                return -1;
-                            }
-                            return 0;
-                        }
-                        else {
-                            if (sortA < sortB) {
-                                return -1;
-                            }
-                            if (sortA > sortB) {
-                                return 1;
-                            }
-                            return 0;
-                        }
-                    });
-                }
-
-                if (itemsPerPage > 0) {
-                    items = items.slice((page - 1) * itemsPerPage,
-                                         page * itemsPerPage)
-                }
-
-                setTimeout(() => {
-                    resolve({ items, count });
-                }, 1000);
-            });
-        },
-        getLibSearchTable() {
-            return [{
-                name: "IEEE 802.15.4 CRC",
-                author: "张三",
-                type: "基础模块",
-                download: "100",
-                rating: "4.9"
-            }, {
-                name: "BiRiscV",
-                author: "李四",
-                type: "处理器核",
-                download: "80",
-                rating: "4.9"
-            }, {
-                name: "I2C Multiple Bus Controller",
-                author: "王五",
-                type: "外设模块",
-                download: "70",
-                rating: "4.6"
-            }, {
-                name: "OpenFIRE",
-                author: "赵六",
-                type: "片上系统",
-                download: "60",
-                rating: "4.5"
-            }, {
-                name: "Simple RS232 UART",
-                author: "孙七",
-                type: "外设模块",
-                download: "50",
-                rating: "4.4"
-            }, {
-                name: "8b10b Encoder/Decoder",
-                author: "周八",
-                type: "基础模块",
-                download: "40",
-                rating: "4.4"
-            }, {
-                name: "Featherweight RISC-V",
-                author: "吴九",
-                type: "处理器核",
-                download: "30",
-                rating: "4.3"
-            }, {
-                name: "APB to I2C",
-                author: "郑十",
-                type: "外设模块",
-                download: "20",
-                rating: "4.2"
-            }, {
-                name: "ORPSoC",
-                author: "小张",
-                type: "片上系统",
-                download: "19",
-                rating: "4.2"
-            }, {
-                name: "Bitwise addressable GPIO",
-                author: "小李",
-                type: "外设模块",
-                download: "9",
-                rating: "4.1"
-            }];
-        }
     }
 }
 </script>
+<style scoped>
+    .tc-lib-detail-title {
+        margin-left: 1.5px
+    }
+    .tc-lib-detail-title + .tc-lib-detail-title {
+        margin-top: 18px;
+    }
+    .tc-lib-detail-contents {
+        margin-top: -25px;
+        margin-left: 0px;
+    }
+</style>
