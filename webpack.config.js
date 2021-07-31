@@ -90,8 +90,7 @@ module.exports = {
                 }
             }]
         }
-    ]
-    },
+    ]},
     output: {
         filename: "js/[name].bundle.[hash:8].js",
         chunkFilename: "js/[name].chunk.[chunkhash:8].js",
