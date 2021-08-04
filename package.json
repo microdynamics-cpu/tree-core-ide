@@ -36,197 +36,162 @@
         "email": "myyerrol@126.com",
         "url": "https://myyerrol.io"
     },
-    "contributors": [
-        {
-            "name": "maksyuki",
-            "email": "maksyuki@126.com",
-            "url": "http://www.maksyuki.com"
-        }
-    ],
+    "contributors": [{
+        "name": "maksyuki",
+        "email": "maksyuki@126.com",
+        "url": "http://www.maksyuki.com"
+    }],
     "main": "./src/main.js",
     "activationEvents": [
         "*"
     ],
     "contributes": {
-        "commands": [
-            {
-                "command": "tree-core-ide.helloWorld",
-                "title": "Hello World"
-            },
-            {
-                "command": "waveviewer.start",
-                "title": "Start wave viewer session",
-                "category": "[TreeCore] wave viewer"
-            },
-            {
-                "command": "schviewer.start",
-                "title": "Start sch viewer session",
-                "category": "[TreeCore]sch viewer"
-            },
-            {
-                "command": "treecore.activityBar.rtlproject.refreshEntry",
-                "title": "Refresh",
-                "icon": {
-                    "light": "resources/light/refresh.svg",
-                    "dark": "resources/dark/refresh.svg"
-                }
-            },
-            {
+        "commands": [{
+            "command": "tree-core-ide.helloWorld",
+            "title": "Hello World"
+        }, {
+            "command": "waveviewer.start",
+            "title": "Start wave viewer session",
+            "category": "[TreeCore] wave viewer"
+        }, {
+            "command": "schviewer.start",
+            "title": "Start sch viewer session",
+            "category": "[TreeCore]sch viewer"
+        }, {
+            "command": "treecore.activityBar.rtlproject.refreshEntry",
+            "title": "Refresh",
+            "icon": {
+                "light": "resources/light/refresh.svg",
+                "dark": "resources/dark/refresh.svg"
+            }
+        }, {
                 "command": "treecore.activityBar.rtlproject.addEntry",
                 "title": "Add"
-            },
-            {
-                "command": "treecore.activityBar.rtlproject.editEntry",
-                "title": "Edit",
-                "icon": {
-                    "light": "resources/light/edit.svg",
-                    "dark": "resources/dark/edit.svg"
-                }
-            },
-            {
-                "command": "treecore.activityBar.rtlproject.deleteEntry",
-                "title": "Delete"
-            },
-            {
-                "command": "schviewer.start",
-                "title": "Start sch viewer session",
-                "category": "sch viewer"
+        }, {
+            "command": "treecore.activityBar.rtlproject.editEntry",
+            "title": "Edit",
+            "icon": {
+                "light": "resources/light/edit.svg",
+                "dark": "resources/dark/edit.svg"
             }
-        ],
+        }, {
+            "command": "treecore.activityBar.rtlproject.deleteEntry",
+            "title": "Delete"
+        }, {
+            "command": "schviewer.start",
+            "title": "Start sch viewer session",
+            "category": "sch viewer"
+        }],
         "menus": {
-            "view/title": [
-                {
-                    "command": "treecore.activityBar.rtlproject.refreshEntry",
-                    "when": "view == treecore.activityBar.rtlproject",
-                    "group": "navigation"
-                },
-                {
-                    "command": "treecore.activityBar.rtlproject.addEntry",
-                    "when": "view == treecore.activityBar.rtlproject"
-                }
-            ],
-            "view/item/context": [
-                {
-                    "command": "treecore.activityBar.rtlproject.editEntry",
-                    "when": "view == treecore.activityBar.rtlproject && viewItem == dependency",
-                    "group": "inline"
-                },
-                {
-                    "command": "treecore.activityBar.rtlproject.deleteEntry",
-                    "when": "view == treecore.activityBar.rtlproject && viewItem == dependency"
-                }
-            ]
+            "view/title": [{
+                "command": "treecore.activityBar.rtlproject.refreshEntry",
+                "when": "view == treecore.activityBar.rtlproject",
+                "group": "navigation"
+            }, {
+                "command": "treecore.activityBar.rtlproject.addEntry",
+                "when": "view == treecore.activityBar.rtlproject"
+            }],
+            "view/item/context": [{
+                "command": "treecore.activityBar.rtlproject.editEntry",
+                "when": "view == treecore.activityBar.rtlproject && viewItem == dependency",
+                "group": "inline"
+            }, {
+                "command": "treecore.activityBar.rtlproject.deleteEntry",
+                "when": "view == treecore.activityBar.rtlproject && viewItem == dependency"
+            }]
         },
-        "languages": [
-            {
-                "id": "verilog",
-                "aliases": [
-                    "Verilog",
-                    "verilog"
-                ],
-                "extensions": [
-                    ".v",
-                    ".vh",
-                    ".vl"
-                ],
-                "configuration": "./config/verilog.configuration.json"
-            },
-            {
-                "id": "systemverilog",
-                "aliases": [
-                    "System Verilog",
-                    "systemverilog"
-                ],
-                "extensions": [
-                    ".sv",
-                    ".SV"
-                ],
-                "configuration": "./config/systemverilog.configuration.json"
-            },
-            {
-                "id": "bluespec-system-verilog",
-                "aliases": [
-                    "BluespecSystemVerilog",
-                    "Bluespec SystemVerilog",
-                    "BSV"
-                ],
-                "extensions": [
-                    ".bsv",
-                    ".BSV"
-                ],
-                "configuration": "./bluespec-system-verilog.configuration.json"
-            }
-        ],
-        "grammars": [
-            {
-                "language": "verilog",
-                "scopeName": "source.verilog",
-                "path": "./syntaxes/verilog.tmLanguage"
-            },
-            {
-                "language": "systemverilog",
-                "scopeName": "source.systemverilog",
-                "path": "./syntaxes/system-verilog.tmLanguage"
-            },
-            {
-                "language": "bluespec-system-verilog",
-                "scopeName": "source.bluespec-system-verilog",
-                "path": "./syntaxes/bluespec-system-verilog.tmLanguage"
-            }
-        ],
-        "snippets": [
-            {
-                "language": "verilog",
-                "path": "./snippets/verilog.json"
-            }
-        ],
+        "languages": [{
+            "id": "verilog",
+            "aliases": [
+                "Verilog",
+                "verilog"
+            ],
+            "extensions": [
+                ".v",
+                ".vh",
+                ".vl"
+            ],
+            "configuration": "./config/verilog.configuration.json"
+        }, {
+            "id": "systemverilog",
+            "aliases": [
+                "System Verilog",
+                "systemverilog"
+            ],
+            "extensions": [
+                ".sv",
+                ".SV"
+            ],
+            "configuration": "./config/systemverilog.configuration.json"
+        }, {
+            "id": "bluespec-system-verilog",
+            "aliases": [
+                "BluespecSystemVerilog",
+                "Bluespec SystemVerilog",
+                "BSV"
+            ],
+            "extensions": [
+                ".bsv",
+                ".BSV"
+            ],
+            "configuration": "./bluespec-system-verilog.configuration.json"
+        }],
+        "grammars": [{
+            "language": "verilog",
+            "scopeName": "source.verilog",
+            "path": "./syntaxes/verilog.tmLanguage"
+        }, {
+            "language": "systemverilog",
+            "scopeName": "source.systemverilog",
+            "path": "./syntaxes/system-verilog.tmLanguage"
+        }, {
+            "language": "bluespec-system-verilog",
+            "scopeName": "source.bluespec-system-verilog",
+            "path": "./syntaxes/bluespec-system-verilog.tmLanguage"
+        }],
+        "snippets": [{
+            "language": "verilog",
+            "path": "./snippets/verilog.json"
+        }],
         "viewsContainers": {
-            "activitybar": [
-                {
-                    "id": "treecore",
-                    "title": "TreeCore",
-                    "icon": "./resources/logos/treecore_logo_activity.svg"
-                }
-            ]
+            "activitybar": [{
+                "id": "treecore",
+                "title": "TreeCore",
+                "icon": "./resources/logos/treecore_logo_activity.svg"
+            }]
         },
         "views": {
-            "treecore": [
-                {
-                    "id": "treecore.activityBar.rtlproject",
-                    "name": "RTL Project"
-                },
-                {
-                    "id": "treecore.activityBar.projectTasks",
-                    "name": "Project Tasks"
-                },
-                {
-                    "id": "treecore.activityBar.quickAccess",
-                    "name": "Quick Access"
-                }
-            ]
+            "treecore": [{
+                "id": "treecore.activityBar.rtlproject",
+                "name": "RTL Project"
+            }, {
+                "id": "treecore.activityBar.projectTasks",
+                "name": "Project Tasks"
+            }, {
+                "id": "treecore.activityBar.quickAccess",
+                "name": "Quick Access"
+            }]
         },
-        "configuration": [
-            {
-                "type": "object",
-                "title": "TreeCore IDE Configuration",
-                "properties": {
-                    "treecore.config.showHomePageAtStartup": {
-                        "type": "boolean",
-                        "default": true,
-                        "description": "Show TreeCore Home page at startup."
-                    },
-                    "treecore.config.switchIDELanguage": {
-                        "type": "string",
-                        "enum": [
-                            "English",
-                            "中文"
-                        ],
-                        "default": "English",
-                        "description": "Switch TreeCore IDE language."
-                    }
+        "configuration": [{
+            "type": "object",
+            "title": "TreeCore IDE Configuration",
+            "properties": {
+                "treecore.config.showHomePageAtStartup": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show TreeCore Home page at startup."
+                },
+                "treecore.config.switchIDELanguage": {
+                    "type": "string",
+                    "enum": [
+                        "English",
+                        "中文"
+                    ],
+                    "default": "English",
+                    "description": "Switch TreeCore IDE language."
                 }
             }
-        ]
+        }]
     },
     "browserslist": [
         "defaults",
@@ -294,6 +259,7 @@
     },
     "dependencies": {
         "echarts": "^5.1.1",
+        "express": "^4.17.1",
         "fs-plus": "^3.1.1",
         "jquery": "^3.6.0",
         "lit": "^2.0.0-rc.2",
