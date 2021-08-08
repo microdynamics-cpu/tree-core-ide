@@ -3,7 +3,7 @@
     "displayName": "TreeCore IDE",
     "description": "The next generation integrated development environment for processor.",
     "version": "1.0.0",
-    "icon": "./resources/logos/treecore_logo_200x200.png",
+    "icon": "./resources/images/logos/treecore_logo_200x200.png",
     "engines": {
         "vscode": "^1.42.0"
     },
@@ -61,8 +61,8 @@
             "command": "treecore.activityBar.rtlproject.refreshEntry",
             "title": "Refresh",
             "icon": {
-                "light": "resources/light/refresh.svg",
-                "dark": "resources/dark/refresh.svg"
+                "light": "resources/images/icons/light/refresh.svg",
+                "dark": "resources/images/icons/dark/refresh.svg"
             }
         }, {
                 "command": "treecore.activityBar.rtlproject.addEntry",
@@ -71,8 +71,8 @@
             "command": "treecore.activityBar.rtlproject.editEntry",
             "title": "Edit",
             "icon": {
-                "light": "resources/light/edit.svg",
-                "dark": "resources/dark/edit.svg"
+                "light": "resources/images/icons/light/edit.svg",
+                "dark": "resources/images/icons/dark/edit.svg"
             }
         }, {
             "command": "treecore.activityBar.rtlproject.deleteEntry",
@@ -157,7 +157,7 @@
             "activitybar": [{
                 "id": "treecore",
                 "title": "TreeCore",
-                "icon": "./resources/logos/treecore_logo_activity.svg"
+                "icon": "./resources/images/logos/treecore_logo_activity.svg"
             }]
         },
         "views": {

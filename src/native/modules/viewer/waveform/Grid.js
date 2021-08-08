@@ -44,7 +44,7 @@ export class Grid extends PIXI.Container {
 
         // very important
         // first create all the tick-scale object in the resize(),
-        // when drawing, put them in the right pos, 
+        // when drawing, put them in the right pos,
         // so slice(1): [1:...] are AxisMarker Obj
         for (let i of this.children.slice(1)) {
             i.length = this.bounds.height;

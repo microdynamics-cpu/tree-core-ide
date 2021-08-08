@@ -131,7 +131,7 @@ export class ELKObject {
                 }
             }
         }
-        
+
         dfs(origData);
         this.__edgesCache = edgesOfChildren;
         return this.__edgesCache;
@@ -144,7 +144,7 @@ export class ELKObject {
 
         var g = this.graph = root;
         this._invalidateCaches();
-        
+
         console.log('kgraph: %d, %d', this.width, this.height);
 
         if (!g.id)
@@ -217,19 +217,19 @@ export class ELKObject {
         var nodeMap = {};
         // convert to absolute positions
         toAbsolutePositions(kgraph, { x: 0, y: 0 }, nodeMap);
-        
+
         // return;
         toAbsolutePositionsEdges(kgraph, nodeMap);
-        
+
         console.log('nodemap: %o', nodeMap);
         console.log('this.graph: %o', this.graph);
         // return;
         console.log('this.graph.id: %s', this.graph.id);
 
         copyElkProps(kgraph, this.graph, this._d3ObjMap);
-        
+
         // this._layoutCache[this._currentLayoutCacheKey] = serializeLayout(this.graph);
-        
+
         return this.graph;
     }
 };

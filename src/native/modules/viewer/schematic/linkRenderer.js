@@ -28,7 +28,7 @@ export function renderLinks(edges, app) {
                 linkPoints.push([bp.x, bp.y]);
             }
         }
-        
+
 
         linkPoints.push([i.sections[0].endPoint.x, i.sections[0].endPoint.y]);
         tmp.drawLink(linkPoints);

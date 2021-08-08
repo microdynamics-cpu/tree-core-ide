@@ -186,7 +186,7 @@ class SchViewer extends HTMLElement {
 
         // resize the viewport model to the origin bound pos
         this.viewport.resize(e, i);
-        
+
         this.hwSchematic.updateGlobalSize(e, i);
         // this.graph.y = .5 - t.y;
 

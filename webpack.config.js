@@ -17,7 +17,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 module.exports = {
     devServer: {
         compress: true,
-        contentBase: path.resolve(__dirname, "./src/views/dist"),
+        contentBase: path.resolve(__dirname, "./src/server/static"),
         historyApiFallback: true,
         hot: true,
         inline: true,
@@ -26,9 +26,7 @@ module.exports = {
     },
     devtool: "eval-source-map",
     entry: {
-        // home: path.resolve(__dirname, "./src/views/home/js/home.js"),
-        // libs: path.resolve(__dirname, "./src/views/lib/js/lib.js"),
-        view: path.resolve(__dirname, "./src/views/view.js")
+        view: path.resolve(__dirname, "./src/client/client.js")
     },
     mode: "development",
     module: {
@@ -95,7 +93,7 @@ module.exports = {
     output: {
         filename: "js/[name].bundle.[hash:8].js",
         chunkFilename: "js/[name].chunk.[chunkhash:8].js",
-        path: path.resolve(__dirname, "./src/views/dist"),
+        path: path.resolve(__dirname, "./src/server/public"),
     },
     performance: {
         hints: "warning"
@@ -131,7 +129,7 @@ module.exports = {
         　　    removeComments: true,
             　　collapseWhitespace: true
             },
-            template: __dirname + "/src/views/view.html"
+            template: __dirname + "/src/client/client.html"
         }),
         new MiniCssExtractPlugin({
             filename: "css/[name].bundle.[hash:8].css",
@@ -140,6 +138,14 @@ module.exports = {
         new VueLoaderPlugin(),
         new VuetifyLoaderPlugin()
     ],
+    resolve: {
+        alias: {
+            "@client": path.resolve(__dirname + "./src/client"),
+            "@native": path.resolve(__dirname + "./src/native"),
+            "@server": path.resolve(__dirname + "./src/server")
+        },
+        extensions:[".css", ".js", "json", ".vue"]
+    },
     stats: {
         children: false
     }

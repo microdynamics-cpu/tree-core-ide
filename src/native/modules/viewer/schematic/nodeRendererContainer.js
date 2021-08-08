@@ -69,7 +69,7 @@ export class NodeRendererContainer {
             })
         }
         console.log('nodesForRenderer: %o', nodesForRenderer);
-    
+
         nodesForRenderer.forEach(function (nodes, i) {
             if (nodes.length) {
                 // nodes = d3.selectAll(nodes);

@@ -2,8 +2,8 @@
 import Vue from "vue";
 import App from "./components/App.vue";
 
-import vuetify from "../plugins/vuetify";
-import router from "./router";
+import vuetify from "./plugins/vuetify";
+import router from "./router/index.js";
 
 import jquery from "jquery";
 

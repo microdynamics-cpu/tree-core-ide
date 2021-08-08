@@ -2,7 +2,7 @@ import {GenericNodeRenderer} from "./generic.js"
 
 /**
  * Draw a multiplexer operator symbol
- */ 
+ */
 function MUX_SHAPE(root) {
     // width="20" height="40"
     root.append("path")
@@ -25,20 +25,20 @@ export class MuxNodeRenderer extends GenericNodeRenderer {
         node.width = this.DEFULT_NODE_SIZE[0];
         node.height = this.DEFULT_NODE_SIZE[1];
     }
-    
+
     selector(node) {
         return node.hwMeta.cls == "Operator" && (
         		node.hwMeta.name === "MUX" ||
         		node.hwMeta.name === "LATCHED_MUX"
         );
     }
-    
+
     addShapeToDefs(defs) {
         var cont = defs.append("g");
         cont.attr("id", "MUX");
         cont.attr("class", "d3-hwschematic node-operator");
         MUX_SHAPE(cont);
-        
+
         var cont = defs.append("g");
         cont.attr("id", "LATCHED_MUX");
         cont.attr("class", "d3-hwschematic node-operator");
@@ -49,10 +49,10 @@ export class MuxNodeRenderer extends GenericNodeRenderer {
           .attr("x", "10")
           .attr("style", "writing-mode: tb;")
     }
-        
+
     /**
      * Render svg of node
-     * 
+     *
      * @param root root svg element where nodes should be rendered
      * @param nodeG svg g for each node with data binded
      * */
@@ -70,7 +70,7 @@ export class MuxNodeRenderer extends GenericNodeRenderer {
     //     .attr("href", function (d) {
     //         return "#" + d.hwMeta.name;
     //     });
-        
+
 
     }
 }

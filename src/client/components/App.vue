@@ -12,7 +12,8 @@
     </v-app>
 </template>
 <script>
-    import TheAppBar from "./base/TheAppBar.vue";
+    import TheAppBar from "@client/components/base/TheAppBar";
+    // import TheAppBar from "./base/TheAppBar.vue";
     import TheFooter from "./base/TheFooter.vue";
     import TheNavDrawer from "./base/TheNavDrawer.vue";
 
@@ -32,5 +33,5 @@
     }
 </script>
 <style scoped>
-    @import "../css/view.css";
+    @import "../css/client.css";
 </style>

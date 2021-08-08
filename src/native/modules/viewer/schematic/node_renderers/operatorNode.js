@@ -27,7 +27,7 @@ export class OperatorNodeRenderer extends GenericNodeRenderer {
             console.log('operator: %o, name: %s', i, i.hwMeta.name);
             let tmp = new RenderItems;
             app.stage.addChild(tmp);
-            
+
             let txt = new TextItems;
             app.stage.addChild(txt);
             switch (i.hwMeta.name) {

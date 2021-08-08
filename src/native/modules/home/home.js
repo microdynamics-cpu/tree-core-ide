@@ -19,7 +19,7 @@ module.exports = function (context) {
             let global = { panel };
             panel.iconPath = utilExtn.getExtensionFileAbsolutePathUrl(
                 context,
-                "resources/logos/treecore_logo_main.svg");
+                "resources/images/logos/treecore_logo_main.svg");
             panel.webview.html = utilExtn.getWebViewContent(
                 context,
                 // "src/views/home.html");
@@ -48,7 +48,7 @@ module.exports = function (context) {
             );
 
             panel.webview.html = utilExtn.getWebViewContent(context,
-                "src/modules/viewer/waveform/WaveViewer.html");
+                "src/native/viewer/waveform/WaveViewer.html");
         }
     ));
 
@@ -65,7 +65,7 @@ module.exports = function (context) {
             );
 
             panel.webview.html = utilExtn.getWebViewContent(context,
-                'src/modules/viewer/schematic/SchViewer.html');
+                'src/native/viewer/schematic/SchViewer.html');
         }
     ));
 

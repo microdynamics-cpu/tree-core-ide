@@ -130,15 +130,15 @@ export class HWSchematic {
         hyperEdgesToEdges(graph, graph.hwMeta.maxId);
 
         console.log('binData: %o', graph);
-        
+
         // add parent attr to the hwMeta domain recursively
         initNodeParents(graph, null);
         console.log('binData: %o', graph);
-        
+
         // expand ports recursively
         expandPorts(graph);
         console.log('binData: %o', graph);
-        
+
 
         if (this._PERF) {
             var t0 = new Date().getTime();
@@ -149,7 +149,7 @@ export class HWSchematic {
         this.nodeRenderers.prepare(graph);
         console.log('binData: %o', graph);
 
-        
+
         if (this._PERF) {
             var t1 = new Date().getTime();
             console.log("> nodeRenderers.prepare() : " + (t1 - t0) + " ms");
