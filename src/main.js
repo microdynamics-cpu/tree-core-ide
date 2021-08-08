@@ -1,14 +1,14 @@
 const vscode = require("vscode");
-const ProjectManager = require("./modules/manager/ProjectManagerProvider");
+const ProjectManager = require("./native/modules/manager/ProjectManagerProvider");
 // import vscode from "vscode";
-// import showHomePage from "./modules/home/home"
+// import showHomePage from "./native/home/home"
 
 // Triggered when the extension is activated
 function activate(context) {
     console.log("TreeCore IDE extension is active!");
     console.log(vscode);
 
-    require("./modules/home/home")(context);
+    require("./native/modules/home/home")(context);
 
     console.log(vscode.workspace.workspaceFolders)
     const projectManagerProvider = new ProjectManager.ProjectManagerProvider(vscode.workspace.rootPath);
