@@ -117,7 +117,7 @@
     </v-row>
 </template>
 <script>
-    import BaseEcharts from "../base/BaseEcharts.vue";
+    import BaseEcharts from "@client/components/base/BaseEcharts.vue";
 
     export default {
         name: "PageLibBrief",

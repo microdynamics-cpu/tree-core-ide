@@ -13,9 +13,8 @@
 </template>
 <script>
     import TheAppBar from "@client/components/base/TheAppBar";
-    // import TheAppBar from "./base/TheAppBar.vue";
-    import TheFooter from "./base/TheFooter.vue";
-    import TheNavDrawer from "./base/TheNavDrawer.vue";
+    import TheFooter from "@client/components/base/TheFooter.vue";
+    import TheNavDrawer from "@client/components/base/TheNavDrawer.vue";
 
     export default {
         name: "App",

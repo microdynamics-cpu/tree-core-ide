@@ -2,10 +2,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import PageHome from "./components/home/PageHome.vue";
-import PageLib from "./components/lib/PageLib.vue";
-import PageLibBrief from "./components/lib/PageLibBrief.vue";
-import PageLibDetail from "./components/lib/PageLibDetail.vue";
+import PageHome from "@client/components/home/PageHome.vue";
+import PageLib from "@client/components/lib/PageLib.vue";
+import PageLibBrief from "@client/components/lib/PageLibBrief.vue";
+import PageLibDetail from "@client/components/lib/PageLibDetail.vue";
 
 Vue.use(VueRouter);
 

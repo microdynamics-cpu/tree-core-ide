@@ -105,24 +105,6 @@ module.exports = {
                     "\n @version: " + package.version + "",
         }),
         new CleanWebpackPlugin(),
-        // new HtmlWebpackPlugin({
-        //     chunks: ["home"],
-        //     filename: "home.html",
-        //     minify: {
-        // 　　    removeComments: true,
-        //     　　collapseWhitespace: true
-        //     },
-        //     template: __dirname + "/src/views/view.html"
-        // }),
-        // new HtmlWebpackPlugin({
-        //     chunks: ["libs"],
-        //     filename: "libs.html",
-        //     minify: {
-        // 　　    removeComments: true,
-        //     　　collapseWhitespace: true
-        //     },
-        //     template: __dirname + "/src/views/view.html"
-        // }),
         new HtmlWebpackPlugin({
             filename: "index.html",
             minify: {
@@ -140,9 +122,9 @@ module.exports = {
     ],
     resolve: {
         alias: {
-            "@client": path.resolve(__dirname + "./src/client"),
-            "@native": path.resolve(__dirname + "./src/native"),
-            "@server": path.resolve(__dirname + "./src/server")
+            "@client": __dirname + "/src/client",
+            "@native": __dirname + "/src/native",
+            "@server": __dirname + "/src/server"
         },
         extensions:[".css", ".js", "json", ".vue"]
     },
