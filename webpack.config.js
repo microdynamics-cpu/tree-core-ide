@@ -4,10 +4,11 @@ const package = require("./package.json");
 const webpack = require("webpack");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
@@ -17,17 +18,17 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 module.exports = {
     devServer: {
         compress: true,
-        contentBase: path.resolve(__dirname, "./src/views/dist"),
+        contentBase: path.resolve(__dirname, "./src/server/static"),
         historyApiFallback: true,
         hot: true,
         inline: true,
-        open: true,
-        port: 8080
+        open: false,
+        port: 8080,
+        quiet: true
     },
     devtool: "eval-source-map",
     entry: {
-        // home: path.resolve(__dirname, "./src/views/home/js/home.js"),
-        libs: path.resolve(__dirname, "./src/views/libs/js/libs.js"),
+        view: path.resolve(__dirname, "./src/client/client.js")
     },
     mode: "development",
     module: {
@@ -90,12 +91,11 @@ module.exports = {
                 }
             }]
         }
-    ]
-    },
+    ]},
     output: {
         filename: "js/[name].bundle.[hash:8].js",
         chunkFilename: "js/[name].chunk.[chunkhash:8].js",
-        path: path.resolve(__dirname, "./src/views/dist"),
+        path: path.resolve(__dirname, "./src/server/static"),
     },
     performance: {
         hints: "warning"
@@ -107,45 +107,36 @@ module.exports = {
                     "\n @version: " + package.version + "",
         }),
         new CleanWebpackPlugin(),
-        // new HtmlWebpackPlugin({
-        //     chunks: ["home"],
-        //     filename: "home.html",
-        //     minify: {
-        // 　　    removeComments: true,
-        //     　　collapseWhitespace: true
-        //     },
-        //     template: __dirname + "/src/views/view.html"
-        // }),
-        // new HtmlWebpackPlugin({
-        //     chunks: ["libs"],
-        //     filename: "libs.html",
-        //     minify: {
-        // 　　    removeComments: true,
-        //     　　collapseWhitespace: true
-        //     },
-        //     template: __dirname + "/src/views/view.html"
-        // }),
+        new FriendlyErrorsWebpackPlugin(),
         new HtmlWebpackPlugin({
             filename: "index.html",
             minify: {
         　　    removeComments: true,
             　　collapseWhitespace: true
             },
-            template: __dirname + "/src/views/view.html"
+            template: __dirname + "/src/client/client.html"
         }),
         new MiniCssExtractPlugin({
             filename: "css/[name].bundle.[hash:8].css",
             chunkFilename: "css/[name].chunk.[chunkhash:8].css"
         }),
         new VueLoaderPlugin(),
-        new VuetifyLoaderPlugin()
+        new VuetifyLoaderPlugin(),
     ],
+    resolve: {
+        alias: {
+            "@client": __dirname + "/src/client",
+            "@native": __dirname + "/src/native",
+            "@server": __dirname + "/src/server"
+        },
+        extensions:[".css", ".js", "json", ".vue"]
+    },
     stats: {
         children: false
     }
 }
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV.indexOf("production") != -1) {
     module.exports.devtool = "none";
     module.exports.mode = "production";
     module.exports.optimization = {
@@ -172,16 +163,21 @@ if (process.env.NODE_ENV === "production") {
             chunks: "all",
         }
     };
+
+    if (process.env.NODE_ENV.indexOf("stats") != -1) {
+        module.exports.plugins.push(
+            new BundleAnalyzerPlugin()
+        );
+    }
     module.exports.plugins.push(
-        new BundleAnalyzerPlugin(),
-        // new CompressionWebpackPlugin({
-        //     test:  /\.js$|\.css$|\.html$/,
-        //     algorithm: "gzip",
-        //     deleteOriginalAssets: false,
-        //     filename: "[path][base].gz",
-        //     minRatio: 0.8,
-        //     threshold: 0
-        // }),
+        new CompressionWebpackPlugin({
+            test:  /\.js$|\.css$|\.html$/,
+            algorithm: "gzip",
+            deleteOriginalAssets: false,
+            filename: "[path][base].gz",
+            minRatio: 0.8,
+            threshold: 0
+        }),
         new OptimizeCssAssetsPlugin()
-    );
+    )
 }

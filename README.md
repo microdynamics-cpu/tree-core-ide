@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="200px" src="resources/logos/treecore_logo_200x200.png" align="center" alt="TreeCore IDE" />
+    <img width="200px" src="https://github.com/microdynamics-cpu/tree-core-ide-resources/blob/main/images/logos/treecore_logo_200x200.png" align="center" alt="TreeCore IDE" />
     <h1 align="center">TreeCore IDE</h1>
     <p align="center">A VSCode-based HDL extension.</p>
 </p>
