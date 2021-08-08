@@ -15,7 +15,7 @@
                     v-model="libRankTypeModel"
                     class="mt-3 mx-4">
                 </v-select>
-                <BaseEcharts :chartType="chartPieData"></BaseEcharts>
+                <BaseEcharts chartType="chartPie"></BaseEcharts>
             </v-card>
         </v-col>
         <v-col
@@ -25,7 +25,7 @@
             <v-card
                 height="100%"
                 outlined>
-                <v-card-title @click="$jumpToPage('/lib/detail')">
+                <v-card-title @click="$jumpToPageByLink('history', '/lib/detail')">
                     <v-icon
                         color="lime darken-2"
                         small>mdi-square
@@ -34,7 +34,7 @@
                         下载次数
                     </span>
                 </v-card-title>
-                <BaseEcharts :chartType="chartBarData"></BaseEcharts>
+                <BaseEcharts chartType="chartBar"></BaseEcharts>
             </v-card>
         </v-col>
         <v-col
@@ -126,8 +126,6 @@
         },
         data: function() {
             return {
-                chartPieData: "chartPie",
-                chartBarData: "chartBar",
                 libRankTypeItems: ["全部模块", "基础模块", "外设模块", "处理器核", "片上系统"],
                 libRankTypeModel: "全部模块",
                 libRankTableItems: [

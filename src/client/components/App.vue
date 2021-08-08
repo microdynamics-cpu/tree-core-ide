@@ -6,13 +6,15 @@
             height="100%">
             <TheNavDrawer/>
             <TheAppBar/>
-            <router-view></router-view>
+            <transition mode="out-in">
+                <router-view></router-view>
+            </transition>
             <TheFooter/>
         </v-card>
     </v-app>
 </template>
 <script>
-    import TheAppBar from "@client/components/base/TheAppBar";
+    import TheAppBar from "@client/components/base/TheAppBar.vue";
     import TheFooter from "@client/components/base/TheFooter.vue";
     import TheNavDrawer from "@client/components/base/TheNavDrawer.vue";
 
@@ -27,7 +29,7 @@
             return {};
         },
         mounted: function() {
-            this.$jumpToPage("/home");
+            this.$jumpToPageByLink("history", "/home");
         }
     }
 </script>

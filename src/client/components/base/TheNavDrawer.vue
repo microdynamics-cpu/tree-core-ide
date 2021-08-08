@@ -19,7 +19,7 @@
                     v-for="item in navListItems"
                     :key="item.title"
                     class="px-0 text-center">
-                    <v-list-item-content @click="$jumpToPage(item.link)">
+                    <v-list-item-content @click="$jumpToPageByLink('history', item.link)">
                         <v-list-item-icon class="mb-0 ml-4">
                             <v-icon>{{ item.icon }}</v-icon>
                         </v-list-item-icon>

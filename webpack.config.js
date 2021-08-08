@@ -4,10 +4,11 @@ const package = require("./package.json");
 const webpack = require("webpack");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
@@ -21,8 +22,9 @@ module.exports = {
         historyApiFallback: true,
         hot: true,
         inline: true,
-        open: true,
-        port: 8080
+        open: false,
+        port: 8080,
+        quiet: true
     },
     devtool: "eval-source-map",
     entry: {
@@ -93,7 +95,7 @@ module.exports = {
     output: {
         filename: "js/[name].bundle.[hash:8].js",
         chunkFilename: "js/[name].chunk.[chunkhash:8].js",
-        path: path.resolve(__dirname, "./src/server/public"),
+        path: path.resolve(__dirname, "./src/server/static"),
     },
     performance: {
         hints: "warning"
@@ -105,6 +107,7 @@ module.exports = {
                     "\n @version: " + package.version + "",
         }),
         new CleanWebpackPlugin(),
+        new FriendlyErrorsWebpackPlugin(),
         new HtmlWebpackPlugin({
             filename: "index.html",
             minify: {
@@ -118,7 +121,7 @@ module.exports = {
             chunkFilename: "css/[name].chunk.[chunkhash:8].css"
         }),
         new VueLoaderPlugin(),
-        new VuetifyLoaderPlugin()
+        new VuetifyLoaderPlugin(),
     ],
     resolve: {
         alias: {
@@ -133,7 +136,7 @@ module.exports = {
     }
 }
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV.indexOf("production") != -1) {
     module.exports.devtool = "none";
     module.exports.mode = "production";
     module.exports.optimization = {
@@ -160,16 +163,21 @@ if (process.env.NODE_ENV === "production") {
             chunks: "all",
         }
     };
+
+    if (process.env.NODE_ENV.indexOf("stats") != -1) {
+        module.exports.plugins.push(
+            new BundleAnalyzerPlugin()
+        );
+    }
     module.exports.plugins.push(
-        new BundleAnalyzerPlugin(),
-        // new CompressionWebpackPlugin({
-        //     test:  /\.js$|\.css$|\.html$/,
-        //     algorithm: "gzip",
-        //     deleteOriginalAssets: false,
-        //     filename: "[path][base].gz",
-        //     minRatio: 0.8,
-        //     threshold: 0
-        // }),
+        new CompressionWebpackPlugin({
+            test:  /\.js$|\.css$|\.html$/,
+            algorithm: "gzip",
+            deleteOriginalAssets: false,
+            filename: "[path][base].gz",
+            minRatio: 0.8,
+            threshold: 0
+        }),
         new OptimizeCssAssetsPlugin()
-    );
+    )
 }
