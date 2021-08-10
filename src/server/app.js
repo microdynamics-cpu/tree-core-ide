@@ -20,10 +20,19 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(connectHistoryApi());
 app.use(expressSession({
-    store: new sessionFileStore(),
-    secret: "test",
+    // 用作服务器端生成session的签名
+    // Used as the signature of the server-side generated session
+    secret: "tree-core-ide",
+    // 强制保存session即使它并没有变化，默认为true
+    // Force the session to be saved, even if it has not changed.
+    // The default value is true
     resave: false,
-    saveUninitialized: false
+    // 强制将未初始化的session存储，默认为true
+    // Force uninitialized sessions to be stored. The default value is true
+    saveUninitialized: false,
+    // 把session保存到文件中
+    // Save the session to a file
+    store: new sessionFileStore(),
 }));
 app.use("/static", express.static(path.join(__dirname, "static")));
 app.use("/", controller);

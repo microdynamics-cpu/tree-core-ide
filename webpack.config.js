@@ -179,5 +179,5 @@ if (process.env.NODE_ENV.indexOf("production") != -1) {
             threshold: 0
         }),
         new OptimizeCssAssetsPlugin()
-    )
+    );
 }

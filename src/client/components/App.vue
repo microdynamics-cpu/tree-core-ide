@@ -29,7 +29,7 @@
             return {};
         },
         mounted: function() {
-            this.$jumpToPageByLink("history", "/home");
+            // this.$jumpToPageByLink("history", "/home");
         }
     }
 </script>
