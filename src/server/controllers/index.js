@@ -1,7 +1,9 @@
 const router = require("express").Router();
 
-router.post("/lib/brief/getLibInfoData", function(req, res) {
-
+router.get("/lib/brief/getLibInfoData", function(req, res) {
+    res.send({
+        test: 1
+    });
 });
 
 module.exports = router;

@@ -90,8 +90,8 @@
                                     chartTimer = setInterval(chartTimerFunc, 3000);
                                 },
                                 lang: ["<div class='tc-echart-dataview'>数据视图</div>",
-                                    "<div class='tc-echart-closeBtn'></div>",
-                                    "<div class='tc-echart-refreshBtn'>关闭</div>"]
+                                       "<div class='tc-echart-closeBtn'></div>",
+                                       "<div class='tc-echart-refreshBtn'>关闭</div>"]
                             },
                             saveAsImage: {
                             },
@@ -258,8 +258,8 @@
                                 contentToOption: function(dom, opt) {
                                 },
                                 lang: ["<div class='tc-echart-dataview'>数据视图</div>",
-                                    "<div class='tc-echart-closeBtn'></div>",
-                                    "<div class='tc-echart-refreshBtn'>关闭</div>"]
+                                       "<div class='tc-echart-closeBtn'></div>",
+                                       "<div class='tc-echart-refreshBtn'>关闭</div>"]
                             },
                             saveAsImage: {
                             },
@@ -308,6 +308,7 @@
 </script>
 <style scope>
     @import "../../../../resources/frameworks/layui/css/layui.css";
+
     .tc-echart {
         width: 100%;
         height: 80%;

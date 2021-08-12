@@ -29,7 +29,11 @@
             return {};
         },
         mounted: function() {
-            // this.$jumpToPageByLink("history", "/home");
+            this.$axios.get("http://localhost:3000/lib/brief/getLibInfoData").then(res => {
+                console.log(res);
+            }).catch(err => {
+                console.log(err);
+            });
         }
     }
 </script>

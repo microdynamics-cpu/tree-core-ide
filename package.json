@@ -270,6 +270,7 @@
         "friendly-errors-webpack-plugin": "^1.7.0",
         "glob": "^7.1.6",
         "html-webpack-plugin": "^4.5.2",
+        "http-proxy-middleware": "^0.19.1",
         "jest": "^27.0.3",
         "mini-css-extract-plugin": "^1.6.2",
         "mocha": "^8.2.1",
