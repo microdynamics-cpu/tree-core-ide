@@ -95,7 +95,7 @@
                     <v-btn
                         outlined
                         class="tc-text-field-x"
-                        @click="searchLibsByName">
+                        @click="searchLibByName">
                         <v-icon left>mdi-book-search</v-icon>搜索
                     </v-btn>
                 </template>
@@ -261,7 +261,7 @@
             }
         },
         methods: {
-            searchLibsByName: function() {
+            searchLibByName: function() {
                 console.log("test");
             },
             getLibRatingColor: function(rating) {
@@ -276,7 +276,7 @@
                     return "red";
                 }
             },
-            getDataFromAPI() {
+            getDataFromAPI: function() {
                 this.libSearchTableLoading = true;
                 this.callFakeData().then(data => {
                     this.libSearchTableItem.items = data.items;
@@ -284,7 +284,7 @@
                     this.libSearchTableLoading = false;
                 });
             },
-            callFakeData() {
+            callFakeData: function() {
                 return new Promise((resolve, reject) => {
                     const { sortBy, sortDesc, page, itemsPerPage } =
                         this.libSearchTableOptions;
@@ -328,7 +328,7 @@
                     }, 1000);
                 });
             },
-            getLibSearchTable() {
+            getLibSearchTable: function() {
                 return [{
                     name: "IEEE 802.15.4 CRC",
                     author: "张三",
@@ -390,7 +390,8 @@
                     download: "9",
                     rating: "4.1"
                 }];
-            }
+            },
+
         }
     }
 </script>

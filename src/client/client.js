@@ -2,12 +2,27 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
+import axios from "axios";
 import jquery from "jquery";
+
 import router from "./router/index.js";
 import vuetify from "./plugins/vuetify";
 
 import App from "./components/App.vue";
 
+Vue.use(Vuex);
+const store = new Vuex.Store({
+    state: {
+        count: 0
+    },
+    mutations: {
+        add(state) {
+            state.count++;
+        }
+    }
+});
+
+Vue.prototype.$axios = axios;
 Vue.prototype.$ = jquery;
 Vue.prototype.$jumpToPageByIndex = function(index) {
     console.log("router index: " + index);
@@ -23,18 +38,6 @@ Vue.prototype.$jumpToPageByLink = function(type, link) {
     }
 };
 Vue.config.productionTip = false;
-
-Vue.use(Vuex);
-const store = new Vuex.Store({
-    state: {
-        count: 0
-    },
-    mutations: {
-        add(state) {
-            state.count++;
-        }
-    }
-});
 
 new Vue({
     router,
