@@ -83,6 +83,18 @@ module.exports = {
                 }
             }]
         }, {
+            test: /\.(aac|flac|mp3|mp4|ogg|wav|webm)$/,
+            use: [{
+                loader: "url-loader",
+                options: {
+                    limit: 2048,
+                    name: "media/[name].[hash:8].[ext]"
+                }
+            }]
+        }, {
+            // 字体不能使用url-loader，因为被转换成Base64后浏览器无法识别
+            // The font cannot use URL loader because it cannot be recognized
+            // by the browser after being converted to Base64
             test: /\.(eot|otf|ttf|woff|woff2)$/,
             use: [{
                 loader: "file-loader",
@@ -136,7 +148,7 @@ module.exports = {
     }
 }
 
-if (process.env.NODE_ENV.indexOf("production") != -1) {
+if (process.env.NODE_ENV.indexOf("production") !== -1) {
     module.exports.devtool = "none";
     module.exports.mode = "production";
     module.exports.optimization = {
@@ -164,7 +176,7 @@ if (process.env.NODE_ENV.indexOf("production") != -1) {
         }
     };
 
-    if (process.env.NODE_ENV.indexOf("stats") != -1) {
+    if (process.env.NODE_ENV.indexOf("stats") !== -1) {
         module.exports.plugins.push(
             new BundleAnalyzerPlugin()
         );
@@ -179,5 +191,5 @@ if (process.env.NODE_ENV.indexOf("production") != -1) {
             threshold: 0
         }),
         new OptimizeCssAssetsPlugin()
-    )
+    );
 }

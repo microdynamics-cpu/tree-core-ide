@@ -12,6 +12,9 @@ Vue.use(VueRouter);
 export default new VueRouter({
     mode: "history",
     routes: [{
+        path: "/",
+        redirect: "/home"
+    }, {
         path: "/home",
         name: "Home",
         component: PageHome
@@ -20,6 +23,9 @@ export default new VueRouter({
         name: "Lib",
         component: PageLib,
         children: [{
+            path: "",
+            redirect: "brief"
+        }, {
             path: "brief",
             name: "Lib Brief",
             component: PageLibBrief

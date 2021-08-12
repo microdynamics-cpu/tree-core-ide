@@ -214,7 +214,8 @@ export default {
                 date: "2021-04",
                 title: "确定需求",
                 text: "经过团队内部的详细讨论，决定开发木心IDE并确定了相关需求。"
-            }],homeNewsCarouselItems: [[{
+            }],
+            homeNewsCarouselItems: [[{
                 date: "2021-06-01",
                 title: "《芯来科技将举行专场研讨会》",
                 src: "https://myyerrol-1257317595.cos.ap-beijing.myqcloud.com/images/test/nuclei_banner.jpeg",

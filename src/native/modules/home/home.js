@@ -1,8 +1,5 @@
 const vscode = require("vscode");
-const utilExtn = require("../../utils/util_extn");
-
-// import vscode from "vscode";
-// import * as utilExtn from "../../utils/util_extn";
+const utilExtn = require("../../utils/extn");
 
 module.exports = function (context) {
     context.subscriptions.push(
@@ -22,7 +19,6 @@ module.exports = function (context) {
                 "resources/images/logos/treecore_logo_main.svg");
             panel.webview.html = utilExtn.getWebViewContent(
                 context,
-                // "src/views/home.html");
                 "src/views/dist/index.html");
             panel.webview.onDidReceiveMessage(message => {
                 utilExtn.handleMessageFromWebview(global, message);
@@ -53,9 +49,9 @@ module.exports = function (context) {
     ));
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('schviewer.start', () => {
+        vscode.commands.registerCommand("schviewer.start", () => {
             const panel = vscode.window.createWebviewPanel(
-                'Sch Viewer',
+                "Sch Viewer",
                 "Sch Viewer",
                 vscode.ViewColumn.One,
                 {
@@ -65,38 +61,7 @@ module.exports = function (context) {
             );
 
             panel.webview.html = utilExtn.getWebViewContent(context,
-                'src/native/viewer/schematic/SchViewer.html');
+                "src/native/viewer/schematic/SchViewer.html");
         }
     ));
-
 }
-
-// export default function showHomePage(context) {
-//     context.subscriptions.push(
-//         vscode.commands.registerCommand("treecore.cmd.showHomePage", function() {
-//             const panel = vscode.window.createWebviewPanel(
-//                 "treecoreHome",
-//                 "TreeCore IDE Home",
-//                 vscode.ViewColumn.One,
-//                 {
-//                     enableScripts: true
-//                 }
-//             );
-//             let global = { panel };
-//             panel.iconPath = utilExtn.getExtensionFileAbsolutePathUrl(
-//                 context,
-//                 "resources/logos/treecore_logo_main.svg");
-//             panel.webview.html = utilExtn.getWebViewContent(
-//                 context,
-//                 "src/views/libraries.html");
-//             panel.webview.onDidReceiveMessage(message => {
-//                 utilExtn.handleMessageFromWebview(global, message);
-//             }, undefined, context.subscriptions);
-//         }
-//     ));
-
-//     const key = "treecore.config.showHomePageAtStartup";
-//     if (vscode.workspace.getConfiguration().get(key)) {
-//         vscode.commands.executeCommand("treecore.cmd.showHomePage");
-//     }
-// }
