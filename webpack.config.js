@@ -24,6 +24,9 @@ module.exports = {
         inline: true,
         open: false,
         port: 8080,
+        proxy: {
+            "/api": "http://localhost:8081"
+        },
         quiet: true
     },
     devtool: "eval-source-map",
