@@ -7,6 +7,6 @@ export default {
             callback(res);
         }).catch(err => {
             console.log(err);
-        })
+        });
     }
 };
