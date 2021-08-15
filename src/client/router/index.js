@@ -2,12 +2,19 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import PageHome from "@client/components/home/PageHome.vue";
-import PageLib from "@client/components/lib/PageLib.vue";
-import PageLibBrief from "@client/components/lib/PageLibBrief.vue";
-import PageLibDetail from "@client/components/lib/PageLibDetail.vue";
+import PageHome from "@client/components/home/PageHome";
+import PageLib from "@client/components/lib/PageLib";
+import PageLibBrief from "@client/components/lib/PageLibBrief";
+import PageLibDetail from "@client/components/lib/PageLibDetail";
 
 Vue.use(VueRouter);
+
+// 关闭连续点击路由的错误提示
+// Turn off the error prompt of continuous click routing
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err);
+}
 
 export default new VueRouter({
     mode: "history",
@@ -20,7 +27,7 @@ export default new VueRouter({
         component: PageHome
     }, {
         path: "/lib",
-        name: "Lib",
+        // name: "Lib",
         component: PageLib,
         children: [{
             path: "",
