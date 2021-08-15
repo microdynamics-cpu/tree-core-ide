@@ -62,7 +62,9 @@
                         <template
                             v-if="item.title === '评分高低'"
                             #item.value="{ item }">
-                            <v-chip :color="getLibRatingColor(item.value)">
+                            <v-chip v-if="(item.value !== '' &&
+                                           item.value !== undefined)"
+                                    :color="getLibRatingColor(item.value)">
                                 {{ item.value }}
                             </v-chip>
                         </template>
@@ -117,7 +119,7 @@
     </v-row>
 </template>
 <script>
-    import BaseEcharts from "@client/components/base/BaseEcharts.vue";
+    import BaseEcharts from "@client/components/base/BaseEcharts";
 
     export default {
         name: "PageLibBrief",
@@ -128,7 +130,7 @@
             return {
                 libRankTypeItems: ["全部模块", "基础模块", "外设模块", "处理器核", "片上系统"],
                 libRankTypeModel: "全部模块",
-                libRankTableItems: [
+                // libRankTableItems: [
                 // {
                 //     title: "下载次数",
                 //     headers: [{
@@ -174,51 +176,52 @@
                 //         value: "9"
                 //     }]
                 // },
-                {
-                    title: "评分高低",
-                    headers: [{
-                        text: "名称",
-                        value: "name",
-                        align: "center",
-                        sortable: false,
-                    }, {
-                        text: "数值",
-                        value: "value",
-                        align: "center",
-                        sortable: false,
-                    }],
-                    items: [{
-                        name: "IEEE 802.15.4 CRC",
-                        value: "4.9"
-                    }, {
-                        name: "BiRiscV",
-                        value: "4.9"
-                    }, {
-                        name: "I2C Multiple Bus Controller",
-                        value: "4.6"
-                    }, {
-                        name: "OpenFIRE",
-                        value: "4.5"
-                    }, {
-                        name: "Simple RS232 UART",
-                        value: "4.4"
-                    }, {
-                        name: "8b10b Encoder/Decoder",
-                        value: "4.4"
-                    }, {
-                        name: "Featherweight RISC-V",
-                        value: "4.3"
-                    }, {
-                        name: "APB to I2C",
-                        value: "4.2"
-                    }, {
-                        name: "ORPSoC",
-                        value: "4.2"
-                    }, {
-                        name: "Bitwise addressable GPIO",
-                        value: "4.1"
-                    }]
-                }],
+                // {
+                //     title: "评分高低",
+                //     headers: [{
+                //         text: "名称",
+                //         value: "name",
+                //         align: "center",
+                //         sortable: false,
+                //     }, {
+                //         text: "数值",
+                //         value: "value",
+                //         align: "center",
+                //         sortable: false,
+                //     }],
+                //     items: [{
+                //         name: "IEEE 802.15.4 CRC",
+                //         value: "4.9"
+                //     }, {
+                //         name: "BiRiscV",
+                //         value: "4.9"
+                //     }, {
+                //         name: "I2C Multiple Bus Controller",
+                //         value: "4.6"
+                //     }, {
+                //         name: "OpenFIRE",
+                //         value: "4.5"
+                //     }, {
+                //         name: "Simple RS232 UART",
+                //         value: "4.4"
+                //     }, {
+                //         name: "8b10b Encoder/Decoder",
+                //         value: "4.4"
+                //     }, {
+                //         name: "Featherweight RISC-V",
+                //         value: "4.3"
+                //     }, {
+                //         name: "APB to I2C",
+                //         value: "4.2"
+                //     }, {
+                //         name: "ORPSoC",
+                //         value: "4.2"
+                //     }, {
+                //         name: "Bitwise addressable GPIO",
+                //         value: "4.1"
+                //     }]
+                // }
+                // ],
                 libSearchTypeItems: ["全部", "名称", "作者"],
                 libSearchTypeModel: "全部",
                 libSearchTableItem: {
@@ -255,21 +258,43 @@
                 libSearchTableCount: 0
             };
         },
+        computed: {
+            libRankTableItems: function() {
+                var objArr = [{
+                    title: "评分高低",
+                    headers: [{
+                        text: "名称",
+                        value: "name",
+                        align: "center",
+                        sortable: false,
+                    }, {
+                        text: "数值",
+                        value: "value",
+                        align: "center",
+                        sortable: false,
+                    }],
+                    items: this.$store.state.libRankTableItems
+                }];
+                return objArr;
+            }
+        },
         watch: {
             libSearchTableOptions: function() {
                 this.getDataFromAPI();
             }
         },
+        mounted: function() {
+            this.$store.dispatch("getLibInfoData", {
+                order: "rating"
+            });
+        },
         methods: {
-            searchLibByName: function() {
-                console.log("test");
-            },
             getLibRatingColor: function(rating) {
                 var num = parseFloat(rating);
-                if (num >= 4.5) {
+                if ((num - 4.50) >= Number.EPSILON) {
                     return "green";
                 }
-                else if (num >= 4.0) {
+                else if ((num - 4.00) >= Number.EPSILON) {
                     return "orange";
                 }
                 else {
@@ -391,7 +416,9 @@
                     rating: "4.1"
                 }];
             },
-
+            searchLibByName: function() {
+                console.log("test");
+            },
         }
     }
 </script>

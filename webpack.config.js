@@ -19,7 +19,9 @@ module.exports = {
     devServer: {
         compress: true,
         contentBase: path.resolve(__dirname, "./src/server/static"),
-        historyApiFallback: true,
+        historyApiFallback: {
+            verbose: true
+        },
         hot: true,
         inline: true,
         open: false,
