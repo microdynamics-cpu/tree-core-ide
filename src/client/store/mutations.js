@@ -1,5 +1,5 @@
 export default {
-    getLibInfoData: function(state, {funcType, sortType, data}) {
+    getLibInfoData: function(state, { funcType, sortType, tableOpt, data }) {
         let tableItems = [];
 
         for (let i = 0; i < data.length; i++) {
@@ -45,8 +45,15 @@ export default {
             state.libRankTableItems = tableItems;
         }
         else if (funcType === "search") {
+            let tableCount = tableItems.length;
+            console.log(tableOpt);
+            const { sortBy, sortDesc, page, itemsPerPage } = tableOpt;
+            if (itemsPerPage > 0) {
+                tableItems = tableItems.slice((page - 1) * itemsPerPage,
+                                               page * itemsPerPage);
+            }
             state.libSearchTableItem = tableItems;
-            state.libSearchTableCount = tableItems.length;
+            state.libSearchTableCount = tableCount;
         }
     }
 }

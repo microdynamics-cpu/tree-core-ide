@@ -215,13 +215,14 @@
                 }
             },
             getLibDataFromServer: function() {
-                this.libSearchTableLoading = true;
                 let that = this;
+                this.libSearchTableLoading = true;
                 this.$store.dispatch("getLibInfoData", {
                     funcType: "search",
                     searchKey: "",
                     searchVal: "",
-                    sortType: "rating"
+                    sortType: "rating",
+                    tableOpt: this.libSearchTableOptions
                 }).then((status) => {
                     that.libSearchTableLoading = false;
                     if (status) {
