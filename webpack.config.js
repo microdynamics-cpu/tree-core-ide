@@ -20,9 +20,10 @@ module.exports = {
         compress: true,
         contentBase: path.resolve(__dirname, "./src/server/static"),
         historyApiFallback: {
-            verbose: true
+            verbose: false
         },
         hot: true,
+        // hotOnly: true,
         inline: true,
         open: false,
         port: 8080,
