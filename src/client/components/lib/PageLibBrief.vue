@@ -108,7 +108,7 @@
                 :items="libSearchTableItem.items"
                 :loading="libSearchTableLoading"
                 :options.sync="libSearchTableOptions"
-                :server-items-length="libSearchTableCount" >
+                :server-items-length="libSearchTableCount">
                 <template #item.rating="{ item }">
                     <v-chip :color="getLibRatingColor(item.rating)">
                         {{ item.rating }}
@@ -130,98 +130,6 @@
             return {
                 libRankTypeItems: ["全部模块", "基础模块", "外设模块", "处理器核", "片上系统"],
                 libRankTypeModel: "全部模块",
-                // libRankTableItems: [
-                // {
-                //     title: "下载次数",
-                //     headers: [{
-                //         text: "名称",
-                //         value: "name",
-                //         align: "center",
-                //         sortable: false
-                //     }, {
-                //         text: "数值",
-                //         value: "value",
-                //         align: "center",
-                //         sortable: false
-                //     }],
-                //     items: [{
-                //         name: "IEEE 802.15.4 CRC",
-                //         value: "100"
-                //     }, {
-                //         name: "BiRiscV",
-                //         value: "80"
-                //     }, {
-                //         name: "I2C Multiple Bus Controller",
-                //         value: "70"
-                //     }, {
-                //         name: "OpenFIRE",
-                //         value: "60"
-                //     }, {
-                //         name: "Simple RS232 UART",
-                //         value: "50"
-                //     }, {
-                //         name: "8b10b Encoder/Decoder",
-                //         value: "40"
-                //     }, {
-                //         name: "Featherweight RISC-V",
-                //         value: "30"
-                //     }, {
-                //         name: "APB to I2C",
-                //         value: "20"
-                //     }, {
-                //         name: "ORPSoC",
-                //         value: "10"
-                //     }, {
-                //         name: "Bitwise addressable GPIO",
-                //         value: "9"
-                //     }]
-                // },
-                // {
-                //     title: "评分高低",
-                //     headers: [{
-                //         text: "名称",
-                //         value: "name",
-                //         align: "center",
-                //         sortable: false,
-                //     }, {
-                //         text: "数值",
-                //         value: "value",
-                //         align: "center",
-                //         sortable: false,
-                //     }],
-                //     items: [{
-                //         name: "IEEE 802.15.4 CRC",
-                //         value: "4.9"
-                //     }, {
-                //         name: "BiRiscV",
-                //         value: "4.9"
-                //     }, {
-                //         name: "I2C Multiple Bus Controller",
-                //         value: "4.6"
-                //     }, {
-                //         name: "OpenFIRE",
-                //         value: "4.5"
-                //     }, {
-                //         name: "Simple RS232 UART",
-                //         value: "4.4"
-                //     }, {
-                //         name: "8b10b Encoder/Decoder",
-                //         value: "4.4"
-                //     }, {
-                //         name: "Featherweight RISC-V",
-                //         value: "4.3"
-                //     }, {
-                //         name: "APB to I2C",
-                //         value: "4.2"
-                //     }, {
-                //         name: "ORPSoC",
-                //         value: "4.2"
-                //     }, {
-                //         name: "Bitwise addressable GPIO",
-                //         value: "4.1"
-                //     }]
-                // }
-                // ],
                 libSearchTypeItems: ["全部", "名称", "作者"],
                 libSearchTypeModel: "全部",
                 libSearchTableItem: {
@@ -260,7 +168,7 @@
         },
         computed: {
             libRankTableItems: function() {
-                var objArr = [{
+                var tableItems = [{
                     title: "评分高低",
                     headers: [{
                         text: "名称",
@@ -275,18 +183,23 @@
                     }],
                     items: this.$store.state.libRankTableItems
                 }];
-                return objArr;
+                return tableItems;
             }
         },
         watch: {
             libSearchTableOptions: function() {
-                this.getDataFromAPI();
+                this.getLibDataFromServer();
             }
         },
-        mounted: function() {
+        created: function() {
             this.$store.dispatch("getLibInfoData", {
-                order: "rating"
+                funcType: "rank",
+                searchKey: "",
+                searchVal: "",
+                sortType: "rating"
             });
+        },
+        mounted: function() {
         },
         methods: {
             getLibRatingColor: function(rating) {
@@ -301,23 +214,102 @@
                     return "red";
                 }
             },
-            getDataFromAPI: function() {
+            getLibDataFromServer: function() {
                 this.libSearchTableLoading = true;
-                this.callFakeData().then(data => {
+                let that = this;
+                this.$store.dispatch("getLibInfoData", {
+                    funcType: "search",
+                    searchKey: "",
+                    searchVal: "",
+                    sortType: "rating"
+                }).then((status) => {
+                    that.libSearchTableLoading = false;
+                    if (status) {
+                        that.libSearchTableItem.items =
+                            that.$store.state.libSearchTableItem;
+                        that.libSearchTableCount =
+                            that.$store.state.libSearchTableCount;
+                    }
+                });
+            },
+            getLibDataFromAPI: function() {
+                this.libSearchTableLoading = true;
+                this.getLibInfoDataFake().then((data) => {
                     this.libSearchTableItem.items = data.items;
                     this.libSearchTableCount = data.count;
                     this.libSearchTableLoading = false;
                 });
             },
-            callFakeData: function() {
+            getLibInfoDataFake: function() {
                 return new Promise((resolve, reject) => {
+                    console.log(this.libSearchTableOptions);
                     const { sortBy, sortDesc, page, itemsPerPage } =
                         this.libSearchTableOptions;
 
-                    let items = this.getLibSearchTable();
+                    let items = [{
+                        name: "IEEE 802.15.4 CRC",
+                        author: "张三",
+                        type: "基础模块",
+                        download: "100",
+                        rating: "4.9"
+                    }, {
+                        name: "BiRiscV",
+                        author: "李四",
+                        type: "处理器核",
+                        download: "80",
+                        rating: "4.9"
+                    }, {
+                        name: "I2C Multiple Bus Controller",
+                        author: "王五",
+                        type: "外设模块",
+                        download: "70",
+                        rating: "4.6"
+                    }, {
+                        name: "OpenFIRE",
+                        author: "赵六",
+                        type: "片上系统",
+                        download: "60",
+                        rating: "4.5"
+                    }, {
+                        name: "Simple RS232 UART",
+                        author: "孙七",
+                        type: "外设模块",
+                        download: "50",
+                        rating: "4.4"
+                    }, {
+                        name: "8b10b Encoder/Decoder",
+                        author: "周八",
+                        type: "基础模块",
+                        download: "40",
+                        rating: "4.4"
+                    }, {
+                        name: "Featherweight RISC-V",
+                        author: "吴九",
+                        type: "处理器核",
+                        download: "30",
+                        rating: "4.3"
+                    }, {
+                        name: "APB to I2C",
+                        author: "郑十",
+                        type: "外设模块",
+                        download: "20",
+                        rating: "4.2"
+                    }, {
+                        name: "ORPSoC",
+                        author: "小张",
+                        type: "片上系统",
+                        download: "19",
+                        rating: "4.2"
+                    }, {
+                        name: "Bitwise addressable GPIO",
+                        author: "小李",
+                        type: "外设模块",
+                        download: "9",
+                        rating: "4.1"
+                    }];
                     let count = items.length;
 
-                    if (sortBy === 1 && sortDesc === 1) {
+                    if (sortBy.length === 1 && sortDesc.length === 1) {
                         items = items.sort((a, b) => {
                             const sortA = a[sortBy[0]]
                             const sortB = b[sortBy[0]]
@@ -345,76 +337,13 @@
 
                     if (itemsPerPage > 0) {
                         items = items.slice((page - 1) * itemsPerPage,
-                                            page * itemsPerPage)
+                                             page * itemsPerPage);
                     }
 
                     setTimeout(() => {
                         resolve({ items, count });
                     }, 1000);
                 });
-            },
-            getLibSearchTable: function() {
-                return [{
-                    name: "IEEE 802.15.4 CRC",
-                    author: "张三",
-                    type: "基础模块",
-                    download: "100",
-                    rating: "4.9"
-                }, {
-                    name: "BiRiscV",
-                    author: "李四",
-                    type: "处理器核",
-                    download: "80",
-                    rating: "4.9"
-                }, {
-                    name: "I2C Multiple Bus Controller",
-                    author: "王五",
-                    type: "外设模块",
-                    download: "70",
-                    rating: "4.6"
-                }, {
-                    name: "OpenFIRE",
-                    author: "赵六",
-                    type: "片上系统",
-                    download: "60",
-                    rating: "4.5"
-                }, {
-                    name: "Simple RS232 UART",
-                    author: "孙七",
-                    type: "外设模块",
-                    download: "50",
-                    rating: "4.4"
-                }, {
-                    name: "8b10b Encoder/Decoder",
-                    author: "周八",
-                    type: "基础模块",
-                    download: "40",
-                    rating: "4.4"
-                }, {
-                    name: "Featherweight RISC-V",
-                    author: "吴九",
-                    type: "处理器核",
-                    download: "30",
-                    rating: "4.3"
-                }, {
-                    name: "APB to I2C",
-                    author: "郑十",
-                    type: "外设模块",
-                    download: "20",
-                    rating: "4.2"
-                }, {
-                    name: "ORPSoC",
-                    author: "小张",
-                    type: "片上系统",
-                    download: "19",
-                    rating: "4.2"
-                }, {
-                    name: "Bitwise addressable GPIO",
-                    author: "小李",
-                    type: "外设模块",
-                    download: "9",
-                    rating: "4.1"
-                }];
             },
             searchLibByName: function() {
                 console.log("test");

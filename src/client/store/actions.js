@@ -1,17 +1,20 @@
-import base from "../js/base";
+import axios from "axios";
 
 export default {
     getLibInfoData: function({commit}, params) {
-        base.getDataFromServer("/api/getLibInfoData", params, function(res) {
-            if (!res.code) {
+        return axios.post("/api/getLibInfoData", params).then((res) => {
+            console.log(res);
+            if (res && res.status === 200 && !res.data.code) {
                 commit("getLibInfoData", {
-                    order: params.order,
+                    funcType: params.funcType,
+                    sortType: params.sortType,
                     data: res.data.data
                 });
+                return true;
             }
             else {
-
+                return false;
             }
-        })
+        });
     }
 }
