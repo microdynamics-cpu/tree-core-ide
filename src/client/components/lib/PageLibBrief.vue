@@ -8,11 +8,11 @@
                 height="100%"
                 outlined>
                 <v-select
+                    v-model="libRankTypeModel"
                     dense
                     :items="libRankTypeItems"
                     label="请选择软件库类型"
                     outlined
-                    v-model="libRankTypeModel"
                     class="mt-3 mx-4">
                 </v-select>
                 <BaseEcharts chartType="chartPie"></BaseEcharts>
@@ -38,10 +38,10 @@
             </v-card>
         </v-col>
         <v-col
-            height="100%"
-            md="4"
             v-for="item in libRankTableItems"
             :key="item.title"
+            height="100%"
+            md="4"
             class="mt-4">
             <v-card outlined>
                 <v-card-title>
@@ -77,22 +77,22 @@
         </v-col>
         <v-col md="12">
             <v-text-field
+                v-model="libSearchInfoModel"
                 clearable
                 dense
                 label="请输入相关信息"
                 outlined
-                v-model="libSearchInfoModel"
                 class="mx-4">
                 <template #prepend>
                     <v-select
+                        v-model="libSearchTypeModel"
                         dense
                         :items="libSearchTypeItems"
                         item-text="text"
                         item-value="value"
-                        return-object
                         label="请选择搜索类型"
                         outlined
-                        v-model="libSearchTypeModel"
+                        return-object
                         class="tc-text-field-x"
                         style="top:-8px;">
                     </v-select>
