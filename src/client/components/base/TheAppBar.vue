@@ -8,8 +8,8 @@
                 outlined
                 small
                 target="_blank"
-                class="mr-2"
-                :title="item.title">
+                :title="item.title"
+                class="mr-2">
                 <v-icon>{{ item.icon }}</v-icon>
             </v-btn>
         </div>
@@ -18,7 +18,7 @@
             fab
             outlined
             small
-            title="Personal Account" >
+            title="Personal Account">
             <v-icon>mdi-account</v-icon>
         </v-btn>
     </v-app-bar>
