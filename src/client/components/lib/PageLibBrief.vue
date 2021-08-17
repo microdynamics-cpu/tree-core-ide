@@ -134,6 +134,51 @@
             return {
                 libRankTypeItems: ["全部模块", "基础模块", "外设模块", "处理器核", "片上系统"],
                 libRankTypeModel: "全部模块",
+                libRankTableItems: [{
+                    title: "评分高低",
+                    headers: [{
+                        text: "名称",
+                        value: "name",
+                        align: "center",
+                        sortable: false,
+                    }, {
+                        text: "数值",
+                        value: "value",
+                        align: "center",
+                        sortable: false,
+                    }],
+                    items: [{
+                        name: "",
+                        value: ""
+                    }, {
+                        name: "",
+                        value: ""
+                    }, {
+                        name: "",
+                        value: ""
+                    }, {
+                        name: "",
+                        value: ""
+                    }, {
+                        name: "",
+                        value: ""
+                    }, {
+                        name: "",
+                        value: ""
+                    }, {
+                        name: "",
+                        value: ""
+                    }, {
+                        name: "",
+                        value: ""
+                    }, {
+                        name: "",
+                        value: ""
+                    }, {
+                        name: "",
+                        value: ""
+                    }]
+                }],
                 libSearchInfoModel: "",
                 libSearchTypeItems: [{
                     text: "名称",
@@ -181,24 +226,24 @@
             };
         },
         computed: {
-            libRankTableItems: function() {
-                var tableItems = [{
-                    title: "评分高低",
-                    headers: [{
-                        text: "名称",
-                        value: "name",
-                        align: "center",
-                        sortable: false,
-                    }, {
-                        text: "数值",
-                        value: "value",
-                        align: "center",
-                        sortable: false,
-                    }],
-                    items: this.$store.state.libRankTableItems
-                }];
-                return tableItems;
-            }
+            // libRankTableItems: function() {
+            //     var tableItems = [{
+            //         title: "评分高低",
+            //         headers: [{
+            //             text: "名称",
+            //             value: "name",
+            //             align: "center",
+            //             sortable: false,
+            //         }, {
+            //             text: "数值",
+            //             value: "value",
+            //             align: "center",
+            //             sortable: false,
+            //         }],
+            //         items: this.$store.state.libRankTableItems
+            //     }];
+            //     return tableItems;
+            // }
         },
         watch: {
             libSearchTableOptions: function() {
@@ -211,15 +256,19 @@
                 });
             }
         },
-        created: function() {
+        mounted: function() {
+            let that = this;
             this.$store.dispatch("getLibInfoData", {
                 funcType: "rank",
                 searchKey: "",
                 searchVal: "",
                 sortType: "rating"
+            }).then((status) => {
+                if (status) {
+                    that.libRankTableItems[0].items =
+                        that.$store.state.libRankTableItems;
+                }
             });
-        },
-        mounted: function() {
         },
         methods: {
             getLibRatingColor: function(rating) {
