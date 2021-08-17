@@ -2,20 +2,62 @@ const router = require("express").Router();
 let deFunc = require("../models/index");
 
 router.post("/api/getLibInfoData", function(req, res) {
-    let order = req.body.order;
-    let dbFieldObj = {
+    let searchKey = req.body.searchKey;
+    let searchVal = req.body.searchVal;
+    let sortType = req.body.sortType;
+
+    let sqlWhereTemp = "";
+    if (searchKey !== "") {
+        let sqlWhereFieldObj = {
+            name: {
+                name: "li.libName",
+                type: "varchar"
+            },
+            author: {
+                name: "ui.userName",
+                type: "varchar"
+            },
+            type: {
+                name: "li.libType",
+                type: "varchar"
+            },
+            download: {
+                name: "li.libDownloadNum",
+                type: "int"
+            },
+            rating: {
+                name: "li.libRating",
+                type: "float"
+            }
+        };
+        let sqlWhereField = sqlWhereFieldObj[searchKey].name;
+        let sqlWhereFieldType = sqlWhereFieldObj[searchKey].type;
+        if (sqlWhereFieldType === "varchar") {
+            sqlWhereTemp = sqlWhereField + " LIKE '%" + searchVal + "%' ";
+        }
+        else if (sqlWhereFieldType === "int" ||
+                 sqlWhereFieldType === "float") {
+            sqlWhereTemp = sqlWhereField + " = " + searchVal + " ";
+        }
+    }
+    else {
+        sqlWhereTemp = "1 = 1 ";
+    }
+    let sqlWhere = "WHERE " + sqlWhereTemp;
+
+    let sqlSortFieldObj = {
         download: "li.libDownloadNum",
         rating: "li.libRating"
     };
-    let dbField = dbFieldObj[order];
-    if (dbField == undefined) {
-        dbField = "li.libCreateDate";
+    let sqlSortField = sqlSortFieldObj[sortType];
+    if (sqlSortField == undefined) {
+        sqlSortField = "li.libCreateDate";
     }
+    let sqlSort = "ORDER BY " + sqlSortField + " DESC";
 
     let sql = "SELECT li.*, ui.* " +
               "FROM TCLibInfo li LEFT JOIN TCUserInfo ui " +
-              "ON li.libUserId = ui.userId " +
-              "ORDER BY " + dbField + " DESC";
+              "ON li.libUserId = ui.userId " + sqlWhere + sqlSort;
     deFunc.getDBRecord(sql, function(resDB) {
         if (resDB.length > 0) {
             res.json({
@@ -33,7 +75,5 @@ router.post("/api/getLibInfoData", function(req, res) {
         }
     });
 });
-
-
 
 module.exports = router;

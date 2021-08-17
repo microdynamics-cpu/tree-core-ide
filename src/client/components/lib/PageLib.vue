@@ -4,14 +4,14 @@
             <v-row no-gutters>
                 <v-col md="12">
                     <v-tabs
-                        color="lime darken-2"
-                        v-model="libTabsModel">
+                        v-model="libTabsModel"
+                        color="lime darken-2">
                         <v-tab>未安装</v-tab>
                         <v-tab>已安装</v-tab>
                     </v-tabs>
                     <v-tabs-items
-                        dark
-                        v-model="libTabsModel">
+                        v-model="libTabsModel"
+                        dark>
                         <v-tab-item height="200px">
                             <v-card outlined>
                                 <!-- <router-view v-if="libPageType != 'libManage'"></router-view> -->

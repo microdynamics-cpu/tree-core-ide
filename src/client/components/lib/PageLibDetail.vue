@@ -22,8 +22,8 @@
                             class="mx-3">
                         </v-divider>
                         <v-tooltip
-                            color="black"
-                            bottom>
+                            bottom
+                            color="black">
                             <template v-slot:activator="{ on, attrs }">
                                 <div
                                     v-bind="attrs"
@@ -43,8 +43,8 @@
                             class="mx-3">
                         </v-divider>
                         <v-tooltip
-                            color="black"
-                            bottom>
+                            bottom
+                            color="black">
                             <template v-slot:activator="{ on, attrs }">
                                 <div
                                     v-bind="attrs"
@@ -52,11 +52,11 @@
                                     <v-rating
                                         color="amber"
                                         dense
-                                        length="5"
                                         half-increments
+                                        length="5"
                                         readonly
                                         size="18"
-                                        v-bind:value="4.5">
+                                        :value="4.5">
                                     </v-rating>
                                 </div>
                             </template>
@@ -67,8 +67,8 @@
                             class="mx-3">
                         </v-divider>
                         <v-tooltip
-                            color="black"
-                            bottom>
+                            bottom
+                            color="black">
                             <template v-slot:activator="{ on, attrs }">
                                 <span
                                     v-bind="attrs"
@@ -83,8 +83,8 @@
                             class="mx-3">
                         </v-divider>
                         <v-tooltip
-                            color="black"
-                            bottom>
+                            bottom
+                            color="black">
                             <template v-slot:activator="{ on, attrs }">
                                 <span
                                     v-bind="attrs"
@@ -102,15 +102,15 @@
                         <v-col md="2"
                             style="padding-left:0px;padding-right:20px">
                             <v-select
+                                v-model="libVersionModel"
                                 dense
                                 :items="libVersionItems"
                                 label="请选择软件库版本"
-                                outlined
-                                v-model="libVersionModel">
+                                outlined>
                             </v-select>
                         </v-col>
                         <v-col md="2"
-                            style="padding-left:0px;">
+                               style="padding-left:0px;">
                             <v-btn
                                 color="lime darken-2"
                                 small>安装
@@ -118,19 +118,17 @@
                         </v-col>
                     </v-row>
                     <v-row class="tc-lib-detail-contents">
-
                         <v-tabs
-                            height="35px"
+                            v-model="libDetailTabsModel"
                             color="lime darken-2"
-                            v-model="libDetailTabsModel">
+                            height="35px">
                             <v-tab>详细介绍</v-tab>
                             <v-tab>变更记录</v-tab>
                         </v-tabs>
                         <v-tabs-items
-                            dark
-                            v-model="libDetailTabsModel">
-                            <v-tab-item
-                                height="200px">
+                            v-model="libDetailTabsModel"
+                            dark>
+                            <v-tab-item height="200px">
                                 <v-card>
                                     <v-card-text v-html="libDetailContents"></v-card-text>
                                 </v-card>

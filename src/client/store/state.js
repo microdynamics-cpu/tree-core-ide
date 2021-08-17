@@ -1,3 +1,5 @@
 export default {
-    libRankTableItems: [{}]
+    libRankTableItems: [],
+    libSearchTableItem: [],
+    libSearchTableCount: 0
 }
