@@ -15,9 +15,9 @@
         <v-list dense>
             <v-list-item-group v-model="nvSelectedIndex">
                 <v-list-item
-                    color="lime darken-2"
                     v-for="item in navListItems"
                     :key="item.title"
+                    color="lime darken-2"
                     class="px-0 text-center">
                     <v-list-item-content @click="$jumpToPageByLink('history', item.link)">
                         <v-list-item-icon class="mb-0 ml-4">
@@ -60,8 +60,6 @@
             };
         },
         mounted: function() {
-            // let dom = this.$(".mdi-home").parents(".v-list-item");
-            // dom.addClass("v-list-item--active");
         }
     }
 </script>

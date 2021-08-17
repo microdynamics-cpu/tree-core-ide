@@ -7,9 +7,9 @@
                 justify-md="center"
                 no-gutters>
                 <v-col
-                    md="2"
                     v-for="item in footerItems"
-                    :key="item.title">
+                    :key="item.title"
+                    md="2">
                     <v-list dense>
                         <div class="mb-2 text-md-h6">{{ item.title }}</div>
                         <v-list-item-group>

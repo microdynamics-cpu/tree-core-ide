@@ -1,23 +1,58 @@
 export default {
-    getLibInfoData(state, {order, data}) {
-        let libRankTableItems = [];
-        for (let i = 0; i < 10; i++) {
-            let obj = data[i];
-            let name = "";
-            let value = "";
-            if(obj !== undefined) {
-                name = obj.libName;
-                value = obj.libDownloadNum;
-                if (order === "rating") {
-                    value = obj.libRating;
+    getLibInfoData: function(state, { funcType, sortType, tableOpt, data }) {
+        let tableItems = [];
+
+        for (let i = 0; i < data.length; i++) {
+            let dataObj = data[i];
+            let tableItem = {};
+            if (funcType === "rank") {
+                let value = "";
+                if (sortType === "download") {
+                    value = dataObj.libDownloadNum;
+                }
+                else if (sortType === "rating") {
+                    value = dataObj.libRating;
+                }
+                tableItem = {
+                    name: dataObj.libName,
+                    value: value
                 }
             }
-            let item = {
-                name: name,
-                value: value
-            };
-            libRankTableItems.push(item);
+            else if (funcType === "search") {
+                tableItem = {
+                    name: dataObj.libName,
+                    author: dataObj.userName,
+                    type: dataObj.libType,
+                    download: dataObj.libDownloadNum,
+                    rating: dataObj.libRating
+                }
+            }
+            tableItems.push(tableItem);
         }
-        state.libRankTableItems = libRankTableItems;
+
+        if (funcType === "rank") {
+            if (tableItems.length >= 10) {
+                tableItems = tableItems.slice(0, 10);
+            }
+            else {
+                for (let i = tableItems.length; i < 10; i++) {
+                    tableItems.push({
+                        name: "",
+                        value: ""
+                    });
+                }
+            }
+            state.libRankTableItems = tableItems;
+        }
+        else if (funcType === "search") {
+            let tableCount = tableItems.length;
+            const { sortBy, sortDesc, page, itemsPerPage } = tableOpt;
+            if (itemsPerPage > 0) {
+                tableItems = tableItems.slice((page - 1) * itemsPerPage,
+                                               page * itemsPerPage);
+            }
+            state.libSearchTableItem = tableItems;
+            state.libSearchTableCount = tableCount;
+        }
     }
 }

@@ -1,5 +1,7 @@
 <template>
-    <div :id="chartType" class="tc-echart"></div>
+    <div :id="chartType"
+         class="tc-echart">
+    </div>
 </template>
 <script>
     import * as echarts from "echarts";
