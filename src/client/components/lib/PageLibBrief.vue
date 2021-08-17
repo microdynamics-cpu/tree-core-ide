@@ -81,11 +81,15 @@
                 dense
                 label="请输入相关信息"
                 outlined
+                v-model="libSearchInfoModel"
                 class="mx-4">
                 <template #prepend>
                     <v-select
                         dense
                         :items="libSearchTypeItems"
+                        item-text="text"
+                        item-value="value"
+                        return-object
                         label="请选择搜索类型"
                         outlined
                         v-model="libSearchTypeModel"
@@ -97,7 +101,7 @@
                     <v-btn
                         outlined
                         class="tc-text-field-x"
-                        @click="searchLibByName">
+                        @click="searchLibData">
                         <v-icon left>mdi-book-search</v-icon>搜索
                     </v-btn>
                 </template>
@@ -130,8 +134,18 @@
             return {
                 libRankTypeItems: ["全部模块", "基础模块", "外设模块", "处理器核", "片上系统"],
                 libRankTypeModel: "全部模块",
-                libSearchTypeItems: ["全部", "名称", "作者"],
-                libSearchTypeModel: "全部",
+                libSearchInfoModel: "",
+                libSearchTypeItems: [{
+                    text: "名称",
+                    value: "name"
+                }, {
+                    text: "作者",
+                    value: "author"
+                }],
+                libSearchTypeModel: {
+                    text: "名称",
+                    value: "name"
+                },
                 libSearchTableItem: {
                     headers: [{
                         text: "名称",
@@ -188,7 +202,13 @@
         },
         watch: {
             libSearchTableOptions: function() {
-                this.getLibDataFromServer();
+                this.getLibDataFromServer({
+                    funcType: "search",
+                    searchKey: "",
+                    searchVal: "",
+                    sortType: "rating",
+                    tableOpt: this.libSearchTableOptions
+                });
             }
         },
         created: function() {
@@ -214,16 +234,10 @@
                     return "red";
                 }
             },
-            getLibDataFromServer: function() {
+            getLibDataFromServer: function(params) {
                 let that = this;
                 this.libSearchTableLoading = true;
-                this.$store.dispatch("getLibInfoData", {
-                    funcType: "search",
-                    searchKey: "",
-                    searchVal: "",
-                    sortType: "rating",
-                    tableOpt: this.libSearchTableOptions
-                }).then((status) => {
+                this.$store.dispatch("getLibInfoData", params).then((status) => {
                     that.libSearchTableLoading = false;
                     if (status) {
                         that.libSearchTableItem.items =
@@ -346,8 +360,18 @@
                     }, 1000);
                 });
             },
-            searchLibByName: function() {
-                console.log("test");
+            searchLibData: function() {
+                let searchKey = this.libSearchTypeModel.value;
+                let searchVal = this.libSearchInfoModel;
+                console.log("searchKey: " + searchKey);
+                console.log("searchVal: " + searchVal);
+                this.getLibDataFromServer({
+                    funcType: "search",
+                    searchKey: searchKey,
+                    searchVal: searchVal,
+                    sortType: "rating",
+                    tableOpt: this.libSearchTableOptions
+                });
             },
         }
     }

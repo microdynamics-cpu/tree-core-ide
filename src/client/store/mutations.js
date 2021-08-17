@@ -46,7 +46,6 @@ export default {
         }
         else if (funcType === "search") {
             let tableCount = tableItems.length;
-            console.log(tableOpt);
             const { sortBy, sortDesc, page, itemsPerPage } = tableOpt;
             if (itemsPerPage > 0) {
                 tableItems = tableItems.slice((page - 1) * itemsPerPage,

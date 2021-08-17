@@ -36,7 +36,7 @@ router.post("/api/getLibInfoData", function(req, res) {
             sqlWhereTemp = sqlWhereField + " LIKE '%" + searchVal + "%' ";
         }
         else if (sqlWhereFieldType === "int" ||
-                sqlWhereFieldType === "float") {
+                 sqlWhereFieldType === "float") {
             sqlWhereTemp = sqlWhereField + " = " + searchVal + " ";
         }
     }
