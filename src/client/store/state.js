@@ -1,5 +1,7 @@
 export default {
-    libRankTableItems: [],
-    libSearchTableItem: [],
-    libSearchTableCount: 0
+    libRankTableItemsData: [],
+    libSearchTableItemData: [],
+    libSearchTableCount: 0,
+    libChartPieOptsData: [],
+    libChartBarOptsData: []
 }

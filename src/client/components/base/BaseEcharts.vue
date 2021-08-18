@@ -12,6 +12,10 @@
             chartType: {
                 type: String,
                 default: ""
+            },
+            chartOpts: {
+                type: Object,
+                default: () => {}
             }
         },
         data: function() {
@@ -19,28 +23,27 @@
         },
         mounted: function() {
             let chartType = this.chartType
-            if (chartType == "chartPie") {
-                this.drawChartPieData();
+            console.log(this.chartOpts);
+            if (chartType == "pie") {
+                this.drawChartPieData(this.chartOpts);
             }
-            else if (chartType == "chartBar") {
+            else if (chartType == "bar") {
                 this.drawChartBarData();
             }
         },
-        destroyed: function() {
-        },
         methods: {
-            drawChartPieData: function() {
+            drawChartPieData: function(chartOpts) {
                 let chart = echarts.init(
-                    document.getElementById("chartPie"), "dark");
+                    document.getElementById(this.chartType), "dark");
                 let options = {
                     title: {
-                        text: "软件库数量占比图",
+                        text: chartOpts.title,
                         textStyle: {
                             color: "#fff",
                             fontWeight: "bold",
                             fontSize: 16
                         },
-                        subtext: "全部模块",
+                        subtext: chartOpts.titleSub,
                         subtextStyle: {
                             color: "#fff",
                             fontSize: 14
@@ -105,19 +108,7 @@
                         type: "pie",
                         name: "占比情况",
                         radius: "50%",
-                        data: [{
-                            name: "基础模块",
-                            value: 50
-                        }, {
-                            name: "外设模块",
-                            value: 30
-                        }, {
-                            name: "处理器核",
-                            value: 10
-                        }, {
-                            name: "片上系统",
-                            value: 5
-                        }],
+                        data: chartOpts.data,
                         emphasis: {
                             itemStyle: {
                                 shadowBlur: 10,
@@ -158,7 +149,7 @@
             },
             drawChartBarData: function() {
                 let chart = echarts.init(
-                    document.getElementById("chartBar"), "dark");
+                    document.getElementById(this.chartType), "dark");
                 let options = {
                     title: {
                         text: "软件库下载情况图",

@@ -15,7 +15,10 @@
                     outlined
                     class="mt-3 mx-4">
                 </v-select>
-                <BaseEcharts chartType="chartPie"></BaseEcharts>
+                <BaseEcharts
+                    chartType="pie"
+                    :chartOpts="libChartPieOpts">
+                </BaseEcharts>
             </v-card>
         </v-col>
         <v-col
@@ -34,7 +37,7 @@
                         下载次数
                     </span>
                 </v-card-title>
-                <BaseEcharts chartType="chartBar"></BaseEcharts>
+                <BaseEcharts chartType="bar"></BaseEcharts>
             </v-card>
         </v-col>
         <v-col
@@ -222,7 +225,17 @@
                 },
                 libSearchTableLoading: true,
                 libSearchTableOptions: {},
-                libSearchTableCount: 0
+                libSearchTableCount: 0,
+                libChartPieOpts: {
+                    title: "软件库数量占比图",
+                    titleSub: "全部模块",
+                    data: []
+                },
+                libChartBarOpts: {
+                    title: "软件库下载情况图",
+                    titleSub: "全部模块",
+                    data: []
+                }
             };
         },
         computed: {
@@ -256,6 +269,45 @@
                 });
             }
         },
+        beforeCreated: function() {
+        },
+        created: function() {
+            let that = this;
+            this.$store.dispatch("getLibChartData", {
+                chartType: "pie"
+            }).then((status) => {
+                if (status) {
+                    that.libChartPieOpts.data =
+                        that.$store.state.libChartPieOptsData;
+                    console.log(that.libChartPieOpts);
+                }
+            });
+
+        //   this.$store.dispatch("getLibChartData", {
+        //         chartType: "bar"
+        //     }).then((status) => {
+        //         if (status) {
+        //             that.libCharBarOpts = that.$store.state.libCharBarOptsData;
+        //         }
+        //     });
+            // this.libChartPieOpts = {
+            //     title: "软件库数量占比图",
+            //     titleSub: "全部模块",
+            //     data: [{
+            //         name: "基础模块",
+            //         value: 50
+            //     }, {
+            //         name: "外设模块",
+            //         value: 30
+            //     }, {
+            //         name: "处理器核",
+            //         value: 10
+            //     }, {
+            //         name: "片上系统",
+            //         value: 5
+            //     }]
+            // }
+        },
         mounted: function() {
             let that = this;
             this.$store.dispatch("getLibInfoData", {
@@ -266,7 +318,7 @@
             }).then((status) => {
                 if (status) {
                     that.libRankTableItems[0].items =
-                        that.$store.state.libRankTableItems;
+                        that.$store.state.libRankTableItemsData;
                 }
             });
         },
@@ -290,7 +342,7 @@
                     that.libSearchTableLoading = false;
                     if (status) {
                         that.libSearchTableItem.items =
-                            that.$store.state.libSearchTableItem;
+                            that.$store.state.libSearchTableItemData;
                         that.libSearchTableCount =
                             that.$store.state.libSearchTableCount;
                     }
