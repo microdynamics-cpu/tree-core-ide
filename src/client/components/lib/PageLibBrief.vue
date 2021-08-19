@@ -258,12 +258,25 @@
         },
         watch: {
             libSearchTableOpt: function() {
-                this.getLibDataFromServer({
-                    funcType: "search",
-                    searchKey: "",
-                    searchVal: "",
+                this.searchLibData();
+            },
+            libRankTypeModel: function() {
+                let searchVal = this.libRankTypeModel;
+                if (searchVal === "全部模块") {
+                    searchVal = "";
+                }
+                let that = this;
+                this.$store.dispatch("getLibInfoData", {
+                    funcType: "rank",
+                    searchKey: "type",
+                    searchVal: searchVal,
                     sortType: "rating",
-                    tableOpt: this.libSearchTableOpt
+                    tableOpt: {}
+                }).then((status) => {
+                    if (status) {
+                        that.libRankTableItems[0].data =
+                            that.$store.state.libRankTableData;
+                    }
                 });
             }
         },
@@ -299,7 +312,8 @@
                 funcType: "rank",
                 searchKey: "",
                 searchVal: "",
-                sortType: "rating"
+                sortType: "rating",
+                tableOpt: {}
             }).then((status) => {
                 if (status) {
                     that.libRankTableItems[0].data =
@@ -457,7 +471,7 @@
                     sortType: "rating",
                     tableOpt: this.libSearchTableOpt
                 });
-            },
+            }
         }
     }
 </script>

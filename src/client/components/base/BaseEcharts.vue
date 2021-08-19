@@ -85,10 +85,9 @@
                                        "<div class='tc-echart-refreshBtn'>关闭</div>"]
                             },
                             saveAsImage: {
-                            },
-                            restore: {
                             }
-                        }
+                        },
+                        right: "5%"
                     },
                     series: [{
                         type: "pie",
@@ -238,11 +237,10 @@
                             saveAsImage: {
                             },
                             magicType: {
-                                type: ["line"]
-                            },
-                            restore: {
-                            },
-                        }
+                                type: ["line", "bar"]
+                            }
+                        },
+                        right: "5%"
                     },
                     backgroundColor: "rgb(30, 30, 30)"
                 };
