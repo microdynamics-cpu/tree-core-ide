@@ -16,8 +16,8 @@
                     class="mt-3 mx-4">
                 </v-select>
                 <BaseEcharts
-                    chartType="pie"
-                    :chartOpts="libChartPieOpts">
+                    ref="chartPie"
+                    chartType="pie">
                 </BaseEcharts>
             </v-card>
         </v-col>
@@ -37,7 +37,10 @@
                         下载次数
                     </span>
                 </v-card-title>
-                <BaseEcharts chartType="bar"></BaseEcharts>
+                <BaseEcharts
+                    ref="chartBar"
+                    chartType="bar">
+                </BaseEcharts>
             </v-card>
         </v-col>
         <v-col
@@ -61,7 +64,7 @@
                         dense
                         :headers="item.headers"
                         hide-default-footer
-                        :items="item.items">
+                        :items="item.data">
                         <template
                             v-if="item.title === '评分高低'"
                             #item.value="{ item }">
@@ -112,9 +115,9 @@
             <v-data-table
                 dense
                 :headers="libSearchTableItem.headers"
-                :items="libSearchTableItem.items"
+                :items="libSearchTableItem.data"
                 :loading="libSearchTableLoading"
-                :options.sync="libSearchTableOptions"
+                :options.sync="libSearchTableOpt"
                 :server-items-length="libSearchTableCount">
                 <template #item.rating="{ item }">
                     <v-chip :color="getLibRatingColor(item.rating)">
@@ -150,7 +153,7 @@
                         align: "center",
                         sortable: false,
                     }],
-                    items: [{
+                    data: [{
                         name: "",
                         value: ""
                     }, {
@@ -221,95 +224,77 @@
                         align: "center",
                         sortable: false
                     }],
-                    items: []
+                    data: []
                 },
                 libSearchTableLoading: true,
-                libSearchTableOptions: {},
+                libSearchTableOpt: {},
                 libSearchTableCount: 0,
                 libChartPieOpts: {
-                    title: "软件库数量占比图",
-                    titleSub: "全部模块",
-                    data: []
+                    title: {
+                        text: "软件库占比情况图",
+                        subtext: "全部模块"
+                    },
+                    series: [{
+                        data: ["2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07"]
+                    }]
                 },
                 libChartBarOpts: {
-                    title: "软件库下载情况图",
-                    titleSub: "全部模块",
-                    data: []
+                    title: {
+                        text: "软件库下载情况图",
+                        subtext: "全部模块"
+                    },
+                    xAxis: [{
+                        data: []
+                    }],
+                    dataZoom: {
+                        startValue: 0,
+                        endValue: 0,
+                    },
+                    series: []
                 }
             };
         },
         computed: {
-            // libRankTableItems: function() {
-            //     var tableItems = [{
-            //         title: "评分高低",
-            //         headers: [{
-            //             text: "名称",
-            //             value: "name",
-            //             align: "center",
-            //             sortable: false,
-            //         }, {
-            //             text: "数值",
-            //             value: "value",
-            //             align: "center",
-            //             sortable: false,
-            //         }],
-            //         items: this.$store.state.libRankTableItems
-            //     }];
-            //     return tableItems;
-            // }
         },
         watch: {
-            libSearchTableOptions: function() {
+            libSearchTableOpt: function() {
                 this.getLibDataFromServer({
                     funcType: "search",
                     searchKey: "",
                     searchVal: "",
                     sortType: "rating",
-                    tableOpt: this.libSearchTableOptions
+                    tableOpt: this.libSearchTableOpt
                 });
             }
         },
-        beforeCreated: function() {
-        },
-        created: function() {
+        mounted: function() {
             let that = this;
+
             this.$store.dispatch("getLibChartData", {
                 chartType: "pie"
             }).then((status) => {
                 if (status) {
-                    that.libChartPieOpts.data =
-                        that.$store.state.libChartPieOptsData;
-                    console.log(that.libChartPieOpts);
+                    that.libChartPieOpts.series[0].data =
+                        that.$store.state.libChartPieData;
+                    that.$refs.chartPie.drawChartPieData(that.libChartPieOpts);
+                }
+            });
+            this.$store.dispatch("getLibChartData", {
+                chartType: "bar"
+            }).then((status) => {
+                if (status) {
+                    let xAxisData = that.$store.state.libChartBarXAxisData;
+                    that.libChartBarOpts.xAxis[0].data = xAxisData;
+                    that.libChartBarOpts.dataZoom = {
+                        startValue: xAxisData.length - 3,
+                        endValue: xAxisData.length - 1
+                    };
+                    that.libChartBarOpts.series =
+                        that.$store.state.libChartBarData;
+                    that.$refs.chartBar.drawChartBarData(that.libChartBarOpts);
                 }
             });
 
-        //   this.$store.dispatch("getLibChartData", {
-        //         chartType: "bar"
-        //     }).then((status) => {
-        //         if (status) {
-        //             that.libCharBarOpts = that.$store.state.libCharBarOptsData;
-        //         }
-        //     });
-            // this.libChartPieOpts = {
-            //     title: "软件库数量占比图",
-            //     titleSub: "全部模块",
-            //     data: [{
-            //         name: "基础模块",
-            //         value: 50
-            //     }, {
-            //         name: "外设模块",
-            //         value: 30
-            //     }, {
-            //         name: "处理器核",
-            //         value: 10
-            //     }, {
-            //         name: "片上系统",
-            //         value: 5
-            //     }]
-            // }
-        },
-        mounted: function() {
-            let that = this;
             this.$store.dispatch("getLibInfoData", {
                 funcType: "rank",
                 searchKey: "",
@@ -317,8 +302,8 @@
                 sortType: "rating"
             }).then((status) => {
                 if (status) {
-                    that.libRankTableItems[0].items =
-                        that.$store.state.libRankTableItemsData;
+                    that.libRankTableItems[0].data =
+                        that.$store.state.libRankTableData;
                 }
             });
         },
@@ -341,8 +326,8 @@
                 this.$store.dispatch("getLibInfoData", params).then((status) => {
                     that.libSearchTableLoading = false;
                     if (status) {
-                        that.libSearchTableItem.items =
-                            that.$store.state.libSearchTableItemData;
+                        that.libSearchTableItem.data =
+                            that.$store.state.libSearchTableData;
                         that.libSearchTableCount =
                             that.$store.state.libSearchTableCount;
                     }
@@ -350,19 +335,18 @@
             },
             getLibDataFromAPI: function() {
                 this.libSearchTableLoading = true;
-                this.getLibInfoDataFake().then((data) => {
-                    this.libSearchTableItem.items = data.items;
-                    this.libSearchTableCount = data.count;
+                this.getLibInfoDataFake().then((res) => {
+                    this.libSearchTableItem.data = res.data;
+                    this.libSearchTableCount = res.count;
                     this.libSearchTableLoading = false;
                 });
             },
             getLibInfoDataFake: function() {
                 return new Promise((resolve, reject) => {
-                    console.log(this.libSearchTableOptions);
                     const { sortBy, sortDesc, page, itemsPerPage } =
-                        this.libSearchTableOptions;
+                        this.libSearchTableOpt;
 
-                    let items = [{
+                    let data = [{
                         name: "IEEE 802.15.4 CRC",
                         author: "张三",
                         type: "基础模块",
@@ -423,10 +407,10 @@
                         download: "9",
                         rating: "4.1"
                     }];
-                    let count = items.length;
+                    let count = data.length;
 
                     if (sortBy.length === 1 && sortDesc.length === 1) {
-                        items = items.sort((a, b) => {
+                        data = data.sort((a, b) => {
                             const sortA = a[sortBy[0]]
                             const sortB = b[sortBy[0]]
 
@@ -452,12 +436,12 @@
                     }
 
                     if (itemsPerPage > 0) {
-                        items = items.slice((page - 1) * itemsPerPage,
-                                             page * itemsPerPage);
+                        data = data.slice((page - 1) * itemsPerPage,
+                                           page * itemsPerPage);
                     }
 
                     setTimeout(() => {
-                        resolve({ items, count });
+                        resolve({ data, count });
                     }, 1000);
                 });
             },
@@ -471,7 +455,7 @@
                     searchKey: searchKey,
                     searchVal: searchVal,
                     sortType: "rating",
-                    tableOpt: this.libSearchTableOptions
+                    tableOpt: this.libSearchTableOpt
                 });
             },
         }

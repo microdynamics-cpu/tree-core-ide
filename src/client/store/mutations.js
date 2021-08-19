@@ -1,6 +1,6 @@
 export default {
     getLibInfoData: function(state, { funcType, sortType, tableOpt, data }) {
-        let tableItems = [];
+        let tableData = [];
 
         for (let i = 0; i < data.length; i++) {
             let dataObj = data[i];
@@ -27,40 +27,41 @@ export default {
                     rating: dataObj.libRating
                 }
             }
-            tableItems.push(tableItem);
+            tableData.push(tableItem);
         }
 
         if (funcType === "rank") {
-            if (tableItems.length >= 10) {
-                tableItems = tableItems.slice(0, 10);
+            if (tableData.length >= 10) {
+                tableData = tableData.slice(0, 10);
             }
             else {
-                for (let i = tableItems.length; i < 10; i++) {
-                    tableItems.push({
+                for (let i = tableData.length; i < 10; i++) {
+                    tableData.push({
                         name: "",
                         value: ""
                     });
                 }
             }
-            state.libRankTableItems = tableItems;
+            state.libRankTableData = tableData;
         }
         else if (funcType === "search") {
-            let tableCount = tableItems.length;
+            let tableCount = tableData.length;
             const { sortBy, sortDesc, page, itemsPerPage } = tableOpt;
             if (itemsPerPage > 0) {
-                tableItems = tableItems.slice((page - 1) * itemsPerPage,
-                                               page * itemsPerPage);
+                tableData = tableData.slice((page - 1) * itemsPerPage,
+                                             page * itemsPerPage);
             }
-            state.libSearchTableItem = tableItems;
+            state.libSearchTableData = tableData;
             state.libSearchTableCount = tableCount;
         }
     },
     getLibChartData: function(state, { chartType, data }) {
         if (chartType === "pie") {
-            state.libChartPieOptsData = data;
+            state.libChartPieData = data;
         }
         else if (chartType === "bar") {
-            state.libChartBarOptsData = data;
+            state.libChartBarXAxisData = data.xAxisData;
+            state.libChartBarData = data.seriesData;
         }
     }
 }

@@ -12,38 +12,24 @@
             chartType: {
                 type: String,
                 default: ""
-            },
-            chartOpts: {
-                type: Object,
-                default: () => {}
             }
         },
         data: function() {
             return {}
         },
         mounted: function() {
-            let chartType = this.chartType
-            console.log(this.chartOpts);
-            if (chartType == "pie") {
-                this.drawChartPieData(this.chartOpts);
-            }
-            else if (chartType == "bar") {
-                this.drawChartBarData();
-            }
         },
         methods: {
-            drawChartPieData: function(chartOpts) {
+            drawChartPieData: function(funcOpts) {
                 let chart = echarts.init(
                     document.getElementById(this.chartType), "dark");
-                let options = {
+                let baseOpts = {
                     title: {
-                        text: chartOpts.title,
                         textStyle: {
                             color: "#fff",
                             fontWeight: "bold",
                             fontSize: 16
                         },
-                        subtext: chartOpts.titleSub,
                         subtextStyle: {
                             color: "#fff",
                             fontSize: 14
@@ -108,7 +94,6 @@
                         type: "pie",
                         name: "占比情况",
                         radius: "50%",
-                        data: chartOpts.data,
                         emphasis: {
                             itemStyle: {
                                 shadowBlur: 10,
@@ -119,12 +104,13 @@
                     }],
                     backgroundColor: "rgb(30, 30, 30)"
                 }
-                chart.setOption(options);
+                chart.setOption(baseOpts);
+                chart.setOption(funcOpts);
 
                 let currentIndex = -1;
                 let chartTimer = 0;
                 function chartTimerFunc() {
-                    let dataLen = options.series[0].data.length;
+                    let dataLen = funcOpts.series[0].data.length;
                     // 取消高亮图形
                     chart.dispatchAction({
                         type: "downplay",
@@ -147,18 +133,16 @@
                 }
                 chartTimer = setInterval(chartTimerFunc, 3000);
             },
-            drawChartBarData: function() {
+            drawChartBarData: function(funcOpts) {
                 let chart = echarts.init(
                     document.getElementById(this.chartType), "dark");
-                let options = {
+                let baseOpts = {
                     title: {
-                        text: "软件库下载情况图",
                         textStyle: {
                             color: "#fff",
                             fontWeight: "bold",
                             fontSize: 16
                         },
-                        subtext: "全部模块",
                         subtextStyle: {
                             color: "#fff",
                             fontSize: 14
@@ -188,8 +172,7 @@
                             lineStyle: {
                                 color:"#fff"
                             }
-                        },
-                        data: ["2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07"]
+                        }
                     }],
                     yAxis: [{
                         type: "value",
@@ -204,8 +187,6 @@
                         textStyle: {
                             color: "#fff"
                         },
-                        startValue: "2021-05",
-                        endValue: "2021-07",
                         zoomLock: true,
                     },
                     tooltip: {
@@ -263,38 +244,10 @@
                             },
                         }
                     },
-                    series: [{
-                        type: "bar",
-                        name: "基础模块",
-                        emphasis: {
-                            focus: "series"
-                        },
-                        data: [80, 85, 89, 90, 91, 92]
-                    }, {
-                        type: "bar",
-                        name: "外设模块",
-                        emphasis: {
-                            focus: "series"
-                        },
-                        data: [130, 140, 145, 150, 151, 152]
-                    }, {
-                        type: "bar",
-                        name: "处理器核",
-                        emphasis: {
-                            focus: "series"
-                        },
-                        data: [180, 160, 180, 200, 220, 200]
-                    }, {
-                        type: "bar",
-                        name: "片上系统",
-                        emphasis: {
-                            focus: "series"
-                        },
-                        data: [100, 80, 85, 70, 80, 90]
-                    }],
                     backgroundColor: "rgb(30, 30, 30)"
                 };
-                chart.setOption(options);
+                chart.setOption(baseOpts);
+                chart.setOption(funcOpts);
             }
         }
     }
