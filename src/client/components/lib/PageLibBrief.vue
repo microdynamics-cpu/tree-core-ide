@@ -424,7 +424,7 @@
                     let count = data.length;
 
                     if (sortBy.length === 1 && sortDesc.length === 1) {
-                        data = data.sort((a, b) => {
+                        data = data.sort(function(a, b) {
                             const sortA = a[sortBy[0]]
                             const sortB = b[sortBy[0]]
 
@@ -454,7 +454,7 @@
                                            page * itemsPerPage);
                     }
 
-                    setTimeout(() => {
+                    setTimeout(function() {
                         resolve({ data, count });
                     }, 1000);
                 });

@@ -1,5 +1,6 @@
 const router = require("express").Router();
 let dbFunc = require("../models/index");
+let baseFunc = require("../utils/base");
 
 router.post("/api/getLibInfoData", async function(req, res) {
     let searchKey = req.body.searchKey;
@@ -59,12 +60,18 @@ router.post("/api/getLibInfoData", async function(req, res) {
               "FROM TCLibInfo li LEFT JOIN TCUserInfo ui " +
               "ON li.libUserId = ui.userId " + sqlWhere + sqlSort;
     dbFunc.handleDBRecord(sql, function(resDB) {
+        resDB.forEach(function(item) {
+            let libRating = item["libRating"];
+            libRating = baseFunc.keepDecimalForce(libRating, 2);
+            item["libRating"] = libRating;
+        });
+
         if (resDB.length > 0) {
             res.json({
                 code: 0,
                 msg: "success",
                 data: resDB
-            })
+            });
         }
         else {
             res.json({
