@@ -4,7 +4,7 @@ export default {
 
         for (let i = 0; i < data.length; i++) {
             let dataObj = data[i];
-            let tableItem = {};
+            let tableObj = {};
             if (funcType === "rank") {
                 let value = "";
                 if (sortType === "download") {
@@ -13,21 +13,14 @@ export default {
                 else if (sortType === "rating") {
                     value = dataObj.libRating;
                 }
-                tableItem = {
-                    name: dataObj.libName,
-                    value: value
-                }
+                tableObj = dataObj;
+                tableObj.libValue = value;
             }
             else if (funcType === "search") {
-                tableItem = {
-                    name: dataObj.libName,
-                    author: dataObj.userName,
-                    type: dataObj.libType,
-                    download: dataObj.libDownloadNum,
-                    rating: dataObj.libRating
-                }
+                tableObj = dataObj;
             }
-            tableData.push(tableItem);
+
+            tableData.push(tableObj);
         }
 
         if (funcType === "rank") {
