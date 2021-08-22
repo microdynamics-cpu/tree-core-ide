@@ -185,6 +185,30 @@
         watch: {
         },
         mounted: function() {
+            let libId = this.$route.query.libId;
+            let tableData = this.$store.state.libRankTableData;
+            let tableObj = {};
+
+            for (let i = 0; i < tableData.length; i++) {
+                if (libId === tableData[i].libId) {
+                    tableObj = tableData[i];
+                    break;
+                }
+            }
+            if (JSON.stringify(tableObj) === "{}") {
+                tableData = this.$store.state.libSearchTableData;
+                for (let i = 0; i < tableData.length; i++) {
+                    if (libId === tableData[i].libId) {
+                        tableObj = tableData[i];
+                        break;
+                    }
+                }
+            }
+            console.log(tableObj);
+
+
+
+
             const html = marked("# Marked in Node.js\n\nRendered by **marked**.");
             console.log(html);
             this.libDetailContents = html;

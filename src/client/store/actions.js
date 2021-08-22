@@ -17,5 +17,20 @@ export default {
                 return false;
             }
         });
+    },
+    getLibChartData: function({ commit }, params) {
+        return axios.post("/api/getLibChartData", params).then((res) => {
+            console.log(res);
+            if (res && res.status === 200 && !res.data.code) {
+                commit("getLibChartData", {
+                    chartType: params.chartType,
+                    data: res.data.data
+                });
+                return true;
+            }
+            else {
+                return false;
+            }
+        });
     }
 }

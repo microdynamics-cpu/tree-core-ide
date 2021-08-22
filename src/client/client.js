@@ -33,6 +33,21 @@ Vue.prototype.$jumpToPageByLink = function(type, link) {
         this.$router.replace(link);
     }
 };
+Vue.prototype.$jumpToPageByLinkQuery = function(type, link, query) {
+    console.log("router link: " + link);
+    if (type === "history") {
+        this.$router.push({
+            path: link,
+            query: query
+        });
+    }
+    else if (type === "replace") {
+        this.$router.replace({
+            path: link,
+            query: query
+        });
+    }
+};
 Vue.config.productionTip = false;
 
 new Vue({

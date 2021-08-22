@@ -6,7 +6,9 @@ let dbFunc = {
             if (err) {
                 throw err;
             }
-            let query = conn.query(sql, function(err, res) {
+            console.log(sql);
+            console.log("\n");
+            conn.query(sql, function(err, res) {
                 if (err) {
                     throw err;
                 }
@@ -15,7 +17,28 @@ let dbFunc = {
                 callback(res);
                 conn.release();
             });
-            console.log(query.sql);
+        });
+    },
+    handleDBRecordSync: function(sql) {
+        return new Promise((resolve, reject) => {
+            dbPool.getConnection(function(err, conn) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    console.log(sql);
+                    console.log("\n");
+                    conn.query(sql, function(err, res) {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve(res);
+                        }
+                    });
+                    conn.release();
+                }
+            });
         });
     },
     handleDBRecordByParams: function(sql, params, callback) {
@@ -23,7 +46,9 @@ let dbFunc = {
             if (err) {
                 throw err;
             }
-            let query = conn.query(sql, params, function(err, res) {
+            console.log(sql);
+            console.log("\n");
+            conn.query(sql, params, function(err, res) {
                 if (err) {
                     throw err;
                 }
@@ -32,33 +57,30 @@ let dbFunc = {
                 callback(res);
                 conn.release();
             });
-            console.log(query.sql);
         });
     },
-    addDBRecord: function(sql, callback) {
-        this.handleDBRecord(sql, callback);
+    handleDBRecordByParamsSync: function(sql, params) {
+        return new Promise((resolve, reject) => {
+            dbPool.getConnection(function(err, conn) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    console.log(sql);
+                    console.log("\n");
+                    conn.query(sql, params, function(err, res) {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve(res);
+                        }
+                    });
+                    conn.release();
+                }
+            });
+        });
     },
-    addDBRecordByParams: function(sql, params, callback) {
-        this.handleDBRecordByParams(sql, params, callback);
-    },
-    deleteDBRecord: function(sql, callback) {
-        this.handleDBRecord(sql, callback);
-    },
-    deleteDBRecordByParams: function(sql, params, callback) {
-        this.handleDBRecordByParams(sql, params, callback);
-    },
-    getDBRecord: function(sql, callback) {
-        this.handleDBRecord(sql, callback);
-    },
-    getDBRecordByParams: function(sql, params, callback) {
-        this.handleDBRecordByParams(sql, params, callback);
-    },
-    updateDBRecord: function(sql, callback) {
-        this.handleDBRecord(sql, callback);
-    },
-    updateDBRecordByParams: function(sql, params, callback) {
-        this.handleDBRecordByParams(sql, params, callback);
-    }
 };
 
 module.exports = dbFunc;
