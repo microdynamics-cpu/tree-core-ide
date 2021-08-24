@@ -13,6 +13,22 @@
                 <v-icon>{{ item.icon }}</v-icon>
             </v-btn>
         </div>
+        <v-btn
+            @click="$jumpToPageByIndex(-1)"
+            outlined
+            small
+            title="Go back"
+            class="ml-10 mr-2">
+            <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+        <v-btn
+            @click="$jumpToPageByIndex(1)"
+            outlined
+            small
+            title="Go forward"
+            class="mr-2">
+            <v-icon>mdi-arrow-right</v-icon>
+        </v-btn>
         <v-spacer></v-spacer>
         <v-btn
             fab
@@ -46,6 +62,7 @@
                     href: "mailto:microdynamics@126.com"
                 }]
             };
-        }
+        },
+
     }
 </script>
