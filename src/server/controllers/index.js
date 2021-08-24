@@ -60,10 +60,10 @@ router.post("/api/getLibInfoData", async function(req, res) {
               "FROM TCLibInfo li LEFT JOIN TCUserInfo ui " +
               "ON li.libUserId = ui.userId " + sqlWhere + sqlSort;
     dbFunc.handleDBRecord(sql, function(resDB) {
-        resDB.forEach(function(item) {
-            let libRating = item["libRating"];
-            libRating = baseFunc.keepDecimalForce(libRating, 2);
-            item["libRating"] = libRating;
+        resDB.forEach(function(obj) {
+            let libRating = obj["libRating"];
+            let libRatingStr = baseFunc.keepDecimalForce(libRating, 2);
+            obj["libRatingStr"] = libRatingStr;
         });
 
         if (resDB.length > 0) {

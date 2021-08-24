@@ -6,15 +6,15 @@ export default {
             let dataObj = data[i];
             let tableObj = {};
             if (funcType === "rank") {
-                let value = "";
+                let valueStr = "";
                 if (sortType === "download") {
-                    value = dataObj.libDownloadNum;
+                    valueStr = dataObj.libDownloadNum + "";
                 }
                 else if (sortType === "rating") {
-                    value = dataObj.libRating;
+                    valueStr = dataObj.libRatingStr;
                 }
                 tableObj = dataObj;
-                tableObj.libValue = value;
+                tableObj.libValueStr = valueStr;
             }
             else if (funcType === "search") {
                 tableObj = dataObj;
@@ -30,8 +30,8 @@ export default {
             else {
                 for (let i = tableData.length; i < 10; i++) {
                     tableData.push({
-                        name: "",
-                        value: ""
+                        libName: "",
+                        libValueStr: ""
                     });
                 }
             }
