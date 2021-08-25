@@ -48,6 +48,7 @@ export default {
             state.libSearchTableCount = tableCount;
         }
     },
+
     getLibChartData: function(state, { chartType, data }) {
         if (chartType === "pie") {
             state.libChartPieData = data;

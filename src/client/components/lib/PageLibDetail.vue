@@ -2,7 +2,7 @@
     <v-row>
         <v-col md="12">
             <v-card outlined>
-                <v-card-title>CPU Test Lib</v-card-title>
+                <v-card-title>{{ libTableObj.libName }}</v-card-title>
                 <v-card-text class="white--text text-md-body-1">
                     <v-row class="tc-lib-detail-title">
                         <v-tooltip
@@ -12,7 +12,7 @@
                                 <span
                                     v-bind="attrs"
                                     v-on="on">
-                                    myyerrol
+                                    {{ libTableObj.userName }}
                                 </span>
                             </template>
                             <span>作者姓名</span>
@@ -33,7 +33,7 @@
                                         class="mr-1">
                                         mdi-cloud-download-outline
                                     </v-icon>
-                                    <span>1000</span>
+                                    <span>{{ libTableObj.libDownloadNum }}</span>
                                 </div>
                             </template>
                             <span>下载次数</span>
@@ -56,7 +56,7 @@
                                         length="5"
                                         readonly
                                         size="18"
-                                        :value="4.5">
+                                        :value="libTableObj.libRating">
                                     </v-rating>
                                 </div>
                             </template>
@@ -73,7 +73,7 @@
                                 <span
                                     v-bind="attrs"
                                     v-on="on">
-                                    基础模块
+                                    {{ libTableObj.libType }}
                                 </span>
                             </template>
                             <span>模块类型</span>
@@ -89,14 +89,37 @@
                                 <span
                                     v-bind="attrs"
                                     v-on="on">
-                                    BSD
+                                    {{ libTableObj.libLicense }}
                                 </span>
                             </template>
                             <span>协议类型</span>
                         </v-tooltip>
+                        <v-divider
+                            vertical
+                            class="mx-3">
+                        </v-divider>
+                        <v-tooltip
+                            bottom
+                            color="black">
+                            <template v-slot:activator="{ on, attrs }">
+                                <span
+                                    v-bind="attrs"
+                                    v-on="on">
+                                    <v-btn
+                                        :href="libTableObj.libRemoteUrl"
+                                        icon
+                                        small
+                                        target="_blank"
+                                        class="mt-n1">
+                                    <v-icon>{{ libTableObj.libRemoteIcon }}</v-icon>
+                                </v-btn>
+                                </span>
+                            </template>
+                            <span>仓库地址</span>
+                        </v-tooltip>
                     </v-row>
                     <v-row class="tc-lib-detail-title">
-                        <div>This is a test lib for cpu.</div>
+                        <div>{{ libTableObj.libDescription }}</div>
                     </v-row>
                     <v-row class="tc-lib-detail-title">
                         <v-col md="2"
@@ -142,6 +165,7 @@
 </template>
 <script>
     import marked from "marked";
+    import axios from "axios";
 
     let rendererMD = new marked.Renderer();
     marked.setOptions({
@@ -176,7 +200,8 @@
         },
         data: function() {
             return {
-                libVersionItems: ["最新版本", "v1.3.1", "v1.3.0", "v1.2.5", "v1.1.0"],
+                libTableObj: {},
+                libVersionItems: ["最新版本"],
                 libVersionModel: "最新版本",
                 libDetailTabsModel: null,
                 libDetailContents: ""
@@ -185,35 +210,60 @@
         watch: {
         },
         mounted: function() {
-            let libId = this.$route.query.libId;
-            let tableData = this.$store.state.libRankTableData;
-            let tableObj = {};
+            this.setLibDetailData();
 
-            for (let i = 0; i < tableData.length; i++) {
-                if (libId === tableData[i].libId) {
-                    tableObj = tableData[i];
-                    break;
-                }
-            }
-            if (JSON.stringify(tableObj) === "{}") {
-                tableData = this.$store.state.libSearchTableData;
+            // const url = tableObj.libRemoteUrl + "/raw/main/README.md";
+            // axios.defaults.baseURL = "/gitee";
+            // axios.get("/microdynamics-cpu/tree-core-cpu/raw/main/README.md").then((res) => {
+            //     console.log(res);
+            // }).catch((err) => {
+            //     console.log(err);
+            // })
+
+            // const html = marked("# Marked in Node.js\n\nRendered by **marked**.");
+            // console.log(html);
+            // this.libDetailContents = html;
+        },
+        methods: {
+            setLibDetailData: function() {
+                let libId = this.$route.query.libId;
+                let tableData = this.$store.state.libRankTableData;
+                let tableObj = {};
+
                 for (let i = 0; i < tableData.length; i++) {
                     if (libId === tableData[i].libId) {
                         tableObj = tableData[i];
                         break;
                     }
                 }
+                if (JSON.stringify(tableObj) === "{}") {
+                    tableData = this.$store.state.libSearchTableData;
+                    for (let i = 0; i < tableData.length; i++) {
+                        if (libId === tableData[i].libId) {
+                            tableObj = tableData[i];
+                            break;
+                        }
+                    }
+                }
+                this.libTableObj = tableObj;
+
+                let libRemoteUrl = tableObj.libRemoteUrl;
+                if (libRemoteUrl.indexOf("github") !== -1) {
+                    this.libTableObj.libRemoteIcon = "mdi-github";
+                }
+                else if (libRemoteUrl.indexOf("gitlab") !== -1) {
+                    this.libTableObj.libRemoteIcon = "mdi-gitlab";
+                }
+                else if (libRemoteUrl.indexOf("bitbucket") !== -1) {
+                    this.libTableObj.libRemoteIcon = "mdi-bitbucket";
+                }
+                else {
+                    this.libTableObj.libRemoteIcon = "mdi-source-repository";
+                }
+
+                this.libTableObj.libVersionArr.unshift("最新版本");
+                this.libVersionItems = this.libTableObj.libVersionArr;
             }
-            console.log(tableObj);
-
-
-
-
-            const html = marked("# Marked in Node.js\n\nRendered by **marked**.");
-            console.log(html);
-            this.libDetailContents = html;
-        },
-        methods: {
         }
     }
 </script>
