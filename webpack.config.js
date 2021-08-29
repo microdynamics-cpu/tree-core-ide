@@ -23,12 +23,37 @@ module.exports = {
             verbose: false
         },
         hot: true,
-        // hotOnly: true,
         inline: true,
         open: false,
         port: 8080,
         proxy: {
-            "/api": "http://localhost:8081"
+            // 将"http://localhost:8080/api/xxx"代理
+            // 到"http://localhost:8081/api/xxx"上
+            // Proxy "http://localhost:8080/api/xxx" to
+            // "http://localhost:8081/api/xxx"
+            "/api": {
+                // 设置虚拟服务器目标地址
+                // Set virtual server target address
+                target: "http://localhost:8081",
+                // 设置虚拟服务器并代为转发本地服务器请求
+                // Set the virtual server and forward the local server
+                // request on behalf of it
+                chageOrigin: true,
+                // 设置Https协议的SSL证书（如果接受无效证书，则将选项置为false）
+                // Set SSL certificate for HTTPS protocol(set the option to
+                // false if invalid certificate is accepted)
+                secure: false,
+            },
+            // 将"http://localhost:8080/gitee/xxx"代理到"https://gitee.com/xxx"上
+            // Proxy "http://localhost:8080/gitee/xxx" to "https://gitee.com/xxx"
+            "/gitee": {
+                target: "https://gitee.com",
+                changeOrigin: true,
+                secure: false,
+                pathRewrite: {
+                    "^/gitee": ""
+                }
+            }
         },
         quiet: true
     },

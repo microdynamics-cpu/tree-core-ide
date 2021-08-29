@@ -67,18 +67,15 @@
                         :items="item.data">
                         <template
                             #item.libName="{ item }">
-                            <!-- <a @click="jumpToLibDetailPage(item)">{{ item.libName }}</a> -->
-                            <a @click="$jumpToPageByLinkQuery('history',
-                                                              '/lib/detail',
-                                                              { libId: item.libId })">{{ item.libName }}</a>
+                            <a @click="jumpToLibDetailPage(item)">{{ item.libName }}</a>
                         </template>
                         <template
                             v-if="item.title === '评分高低'"
-                            #item.libValue="{ item }">
-                            <v-chip v-if="(item.libValue !== '' &&
-                                           item.libValue !== undefined)"
-                                    :color="getLibRatingColor(item.libValue)">
-                                {{ item.libValue }}
+                            #item.libValueStr="{ item }">
+                            <v-chip v-if="(item.libValueStr !== '' &&
+                                           item.libValueStr !== undefined)"
+                                    :color="getLibRatingColor(item.libValueStr)">
+                                {{ item.libValueStr }}
                             </v-chip>
                         </template>
                     </v-data-table>
@@ -128,13 +125,11 @@
                 :server-items-length="libSearchTableCount">
                 <template
                     #item.libName="{ item }">
-                    <a @click="$jumpToPageByLinkQuery('history',
-                                                      '/lib/detail',
-                                                      { libId: item.libId })">{{ item.libName }}</a>
+                    <a @click="jumpToLibDetailPage(item)">{{ item.libName }}</a>
                 </template>
-                <template #item.libRating="{ item }">
-                    <v-chip :color="getLibRatingColor(item.libRating)">
-                        {{ item.libRating }}
+                <template #item.libRatingStr="{ item }">
+                    <v-chip :color="getLibRatingColor(item.libRatingStr)">
+                        {{ item.libRatingStr }}
                     </v-chip>
                 </template>
             </v-data-table>
@@ -162,40 +157,40 @@
                         sortable: false,
                     }, {
                         text: "数值",
-                        value: "libValue",
+                        value: "libValueStr",
                         align: "center",
                         sortable: false,
                     }],
                     data: [{
                         libName: "",
-                        libValue: ""
+                        libValueStr: ""
                     }, {
                         libName: "",
-                        libValue: ""
+                        libValueStr: ""
                     }, {
                         libName: "",
-                        libValue: ""
+                        libValueStr: ""
                     }, {
                         libName: "",
-                        libValue: ""
+                        libValueStr: ""
                     }, {
                         libName: "",
-                        libValue: ""
+                        libValueStr: ""
                     }, {
                         libName: "",
-                        libValue: ""
+                        libValueStr: ""
                     }, {
                         libName: "",
-                        libValue: ""
+                        libValueStr: ""
                     }, {
                         libName: "",
-                        libValue: ""
+                        libValueStr: ""
                     }, {
                         libName: "",
-                        libValue: ""
+                        libValueStr: ""
                     }, {
                         libName: "",
-                        libValue: ""
+                        libValueStr: ""
                     }]
                 }],
                 libSearchInfoModel: "",
@@ -233,7 +228,7 @@
                         sortable: false
                     }, {
                         text: "评价",
-                        value: "libRating",
+                        value: "libRatingStr",
                         align: "center",
                         sortable: false
                     }],
@@ -475,7 +470,7 @@
             jumpToLibDetailPage: function(item) {
                 console.log(item);
                 this.$jumpToPageByLinkQuery("history", "/lib/detail", {
-                    id: item.id
+                    libId: item.libId
                 });
             },
             searchLibData: function() {

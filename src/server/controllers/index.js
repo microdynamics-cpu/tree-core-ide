@@ -59,28 +59,43 @@ router.post("/api/getLibInfoData", async function(req, res) {
     let sql = "SELECT li.*, ui.* " +
               "FROM TCLibInfo li LEFT JOIN TCUserInfo ui " +
               "ON li.libUserId = ui.userId " + sqlWhere + sqlSort;
-    dbFunc.handleDBRecord(sql, function(resDB) {
-        resDB.forEach(function(item) {
-            let libRating = item["libRating"];
-            libRating = baseFunc.keepDecimalForce(libRating, 2);
-            item["libRating"] = libRating;
-        });
+    let resDB = await dbFunc.handleDBRecordSync(sql);
+    for (let i = 0; i < resDB.length; i++) {
+        let obj = resDB[i];
+        let libInfoId = obj.libId;
+        sql = "SELECT lv.* " +
+              "FROM TCLibVersion lv " +
+              "WHERE lv.libInfoId = '" + libInfoId + "' " +
+              "ORDER BY lv.libUpdateDate DESC";
+        let resDBChild = await dbFunc.handleDBRecordSync(sql);
+        let libVersion = [];
+        let libVersionArr = [];
+        libVersion = resDBChild;
+        for (let j = 0; j < resDBChild.length; j++) {
+            libVersionArr.push(resDBChild[j].libVersion);
+        }
+        obj.libVersion = libVersion;
+        obj.libVersionArr = libVersionArr;
 
-        if (resDB.length > 0) {
-            res.json({
-                code: 0,
-                msg: "success",
-                data: resDB
-            });
-        }
-        else {
-            res.json({
-                code: 1,
-                msg: "error",
-                data: []
-            });
-        }
-    });
+        let libRating = obj.libRating;
+        let libRatingStr = baseFunc.keepDecimalForce(libRating, 2);
+        obj.libRatingStr = libRatingStr;
+    }
+
+    if (resDB.length > 0) {
+        res.json({
+            code: 0,
+            msg: "success",
+            data: resDB
+        });
+    }
+    else {
+        res.json({
+            code: 1,
+            msg: "error",
+            data: []
+        });
+    }
 });
 
 router.post("/api/getLibChartData", async function(req, res) {
@@ -106,16 +121,16 @@ router.post("/api/getLibChartData", async function(req, res) {
                     msg: "success",
                     data: [{
                         name: "基础模块",
-                        value: resDB[0][0]["count"]
+                        value: resDB[0][0].count
                     }, {
                         name: "外设模块",
-                        value: resDB[1][0]["count"]
+                        value: resDB[1][0].count
                     }, {
                         name: "处理器核",
-                        value: resDB[2][0]["count"]
+                        value: resDB[2][0].count
                     }, {
                         name: "片上系统",
-                        value: resDB[3][0]["count"]
+                        value: resDB[3][0].count
                     }]
                 });
             }
@@ -179,7 +194,7 @@ router.post("/api/getLibChartData", async function(req, res) {
                   "ORDER BY SUBSTRING(li.libCreateDate, 1, 7) ASC";
         let resDB = await dbFunc.handleDBRecordSync(sql);
         for (let i = 0; i < resDB.length; i++) {
-            let libDate = resDB[i]["libDate"];
+            let libDate = resDB[i].libDate;
             xAxisData.push(libDate);
             // 获取每个月份下每种软件库的数量
             // Get the number of each software library in each month
@@ -201,10 +216,10 @@ router.post("/api/getLibChartData", async function(req, res) {
                         "li.libCreateDate LIKE '" + libDate + "%'; ";
             let resDBChild = await dbFunc.handleDBRecordSync(sql);
             if (resDBChild.length === 4) {
-                seriesData[0].data.push(resDBChild[0][0]["count"]);
-                seriesData[1].data.push(resDBChild[1][0]["count"]);
-                seriesData[2].data.push(resDBChild[2][0]["count"]);
-                seriesData[3].data.push(resDBChild[3][0]["count"]);
+                seriesData[0].data.push(resDBChild[0][0].count);
+                seriesData[1].data.push(resDBChild[1][0].count);
+                seriesData[2].data.push(resDBChild[2][0].count);
+                seriesData[3].data.push(resDBChild[3][0].count);
             }
         }
         res.json({

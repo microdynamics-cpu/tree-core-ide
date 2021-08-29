@@ -49,7 +49,6 @@ CREATE TABLE `TCLibInfo` (
   `libLicense` varchar(50) DEFAULT NULL COMMENT '库协议',
   `libDescription` text COMMENT '库描述',
   `libRemoteUrl` varchar(200) DEFAULT NULL COMMENT '库远程地址',
-  `libVersionId` varchar(50) DEFAULT NULL COMMENT '库版本标识（外键）',
   `libType` varchar(50) DEFAULT NULL COMMENT '库类型',
   `libDownloadNum` int(10) DEFAULT '0' COMMENT '库下载次数',
   `libRating` float(5,2) DEFAULT '0.00' COMMENT '库评分高低',
@@ -66,22 +65,23 @@ DROP TABLE IF EXISTS `TCLibVersion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `TCLibVersion` (
-  `libId` varchar(50) NOT NULL COMMENT '库标识（主键）',
+  `libId` varchar(50) NOT NULL COMMENT '库版本标识（主键）',
+  `libInfoId` varchar(50) DEFAULT NULL COMMENT '库标识（外键）',
   `libVersion` varchar(50) DEFAULT NULL COMMENT '库版本',
-  `libUpdateDate` varchar(50) DEFAULT NULL COMMENT '库更新时间',
-  `libUpdateText` text COMMENT '库更新内容',
+  `libUpdateDate` varchar(50) DEFAULT NULL COMMENT '库版本更新时间',
+  `libUpdateText` text COMMENT '库版本更新内容',
   PRIMARY KEY (`libId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `TCUser`
+-- Table structure for table `TCUserInfo`
 --
 
-DROP TABLE IF EXISTS `TCUser`;
+DROP TABLE IF EXISTS `TCUserInfo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `TCUser` (
+CREATE TABLE `TCUserInfo` (
   `userId` varchar(50) NOT NULL COMMENT '用户标识（主键）',
   `userAccount` varchar(100) DEFAULT NULL COMMENT '用户账号',
   `userPassword` varchar(100) DEFAULT NULL COMMENT '用户密码',
@@ -103,4 +103,4 @@ CREATE TABLE `TCUser` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-10 12:50:17
+-- Dump completed on 2021-08-25  8:02:34
