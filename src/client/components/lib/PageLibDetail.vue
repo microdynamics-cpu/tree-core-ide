@@ -153,7 +153,12 @@
                             dark>
                             <v-tab-item height="200px">
                                 <v-card>
-                                    <v-card-text v-html="libDetailContents"></v-card-text>
+                                    <v-card-text v-html="libDetailReadMe"></v-card-text>
+                                </v-card>
+                            </v-tab-item>
+                            <v-tab-item height="200px">
+                                <v-card>
+                                    <v-card-text v-html="libDetailChangeLog"></v-card-text>
                                 </v-card>
                             </v-tab-item>
                         </v-tabs-items>
@@ -204,25 +209,14 @@
                 libVersionItems: ["最新版本"],
                 libVersionModel: "最新版本",
                 libDetailTabsModel: null,
-                libDetailContents: ""
+                libDetailReadMe: "",
+                libDetailChangeLog: ""
             };
         },
         watch: {
         },
         mounted: function() {
             this.setLibDetailData();
-
-            // const url = tableObj.libRemoteUrl + "/raw/main/README.md";
-            // axios.defaults.baseURL = "/gitee";
-            // axios.get("/microdynamics-cpu/tree-core-cpu/raw/main/README.md").then((res) => {
-            //     console.log(res);
-            // }).catch((err) => {
-            //     console.log(err);
-            // })
-
-            // const html = marked("# Marked in Node.js\n\nRendered by **marked**.");
-            // console.log(html);
-            // this.libDetailContents = html;
         },
         methods: {
             setLibDetailData: function() {
@@ -248,11 +242,17 @@
                 this.libTableObj = tableObj;
 
                 let libRemoteUrl = tableObj.libRemoteUrl;
+                let libReadMeUrl = "";
+                let libChangeLogUrl = "";
                 if (libRemoteUrl.indexOf("github") !== -1) {
                     this.libTableObj.libRemoteIcon = "mdi-github";
+                    libReadMeUrl = libRemoteUrl + "/raw/main/README.md";
+                    libChangeLogUrl = libRemoteUrl + "/raw/main/CHANGELOG.md";
                 }
                 else if (libRemoteUrl.indexOf("gitlab") !== -1) {
                     this.libTableObj.libRemoteIcon = "mdi-gitlab";
+                    libReadMeUrl = libRemoteUrl + "/raw/main/README.md";
+                    libChangeLogUrl = libRemoteUrl + "/raw/main/CHANGELOG.md";
                 }
                 else if (libRemoteUrl.indexOf("bitbucket") !== -1) {
                     this.libTableObj.libRemoteIcon = "mdi-bitbucket";
@@ -263,6 +263,18 @@
 
                 this.libTableObj.libVersionArr.unshift("最新版本");
                 this.libVersionItems = this.libTableObj.libVersionArr;
+
+                // let url = /microdynamics-cpu/tree-core-ide/raw/main/README.md
+                axios.defaults.baseURL = "/gitee";
+                axios.get("/microdynamics-cpu/tree-core-ide/raw/main/README.md").then((res) => {
+                    console.log(res);
+                    let html = marked(res.data);
+                    this.libDetailReadMe = html;
+                }).catch((err) => {
+                    console.log(err);
+                });
+
+
             }
         }
     }
