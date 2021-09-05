@@ -241,40 +241,45 @@
                 }
                 this.libTableObj = tableObj;
 
-                let libRemoteUrl = tableObj.libRemoteUrl;
-                let libReadMeUrl = "";
-                let libChangeLogUrl = "";
-                if (libRemoteUrl.indexOf("github") !== -1) {
-                    this.libTableObj.libRemoteIcon = "mdi-github";
-                    libReadMeUrl = libRemoteUrl + "/raw/main/README.md";
-                    libChangeLogUrl = libRemoteUrl + "/raw/main/CHANGELOG.md";
-                }
-                else if (libRemoteUrl.indexOf("gitlab") !== -1) {
-                    this.libTableObj.libRemoteIcon = "mdi-gitlab";
-                    libReadMeUrl = libRemoteUrl + "/raw/main/README.md";
-                    libChangeLogUrl = libRemoteUrl + "/raw/main/CHANGELOG.md";
-                }
-                else if (libRemoteUrl.indexOf("bitbucket") !== -1) {
-                    this.libTableObj.libRemoteIcon = "mdi-bitbucket";
-                }
-                else {
-                    this.libTableObj.libRemoteIcon = "mdi-source-repository";
-                }
-
                 this.libTableObj.libVersionArr.unshift("最新版本");
                 this.libVersionItems = this.libTableObj.libVersionArr;
 
-                // let url = /microdynamics-cpu/tree-core-ide/raw/main/README.md
-                axios.defaults.baseURL = "/gitee";
-                axios.get("/microdynamics-cpu/tree-core-ide/raw/main/README.md").then((res) => {
-                    console.log(res);
-                    let html = marked(res.data);
-                    this.libDetailReadMe = html;
-                }).catch((err) => {
-                    console.log(err);
-                });
+                // let libRemoteUrl = tableObj.libRemoteUrl;
+                // if (libRemoteUrl.indexOf("github") !== -1) {
+                //     this.libTableObj.libRemoteIcon = "mdi-github";
+                //     axios.defaults.baseURL = "/github";
+                //     libRemoteUrl = libRemoteUrl.replace("https://github.com", "");
+                // }
+                // else if (libRemoteUrl.indexOf("gitee") !== -1) {
+                //     this.libTableObj.libRemoteIcon = "mdi-source-repository";
+                //     axios.defaults.baseURL = "/gitee";
+                //     libRemoteUrl = libRemoteUrl.replace("https://gitee.com", "");
+                // }
 
+                // let libBranch = tableObj.libBranch;
+                // let libReadMeUrl = libRemoteUrl + "/raw/" + libBranch +
+                //     "/README.md";
+                // let libChangeLogUrl = libRemoteUrl + "/raw/" + libBranch +
+                //     "/CHANGELOG.md";
 
+                // console.log("libReadMeUrl: " + libReadMeUrl);
+                // console.log("libChangeLogUrl: " + libChangeLogUrl);
+
+                // axios.get(libReadMeUrl).then((res) => {
+                //     console.log(res);
+                //     let html = marked(res.data);
+                //     this.libDetailReadMe = html;
+                // }).catch((err) => {
+                //     console.log(err);
+                // });
+
+                // axios.get(libChangeLogUrl).then((res) => {
+                //     console.log(res);
+                //     let html = marked(res.data);
+                //     this.libDetailChangeLog = html;
+                // }).catch((err) => {
+                //     console.log(err);
+                // });
             }
         }
     }
