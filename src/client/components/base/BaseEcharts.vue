@@ -21,8 +21,11 @@
         },
         methods: {
             drawChartPieData: function(funcOpts) {
-                let chart = echarts.init(
-                    document.getElementById(this.chartType), "dark");
+                let chartDOM = document.getElementById(this.chartType);
+                let chart = echarts.getInstanceByDom(chartDOM);
+                if (chart === undefined || chart === null) {
+                    chart = echarts.init(chartDOM, "dark");
+                }
                 let baseOpts = {
                     title: {
                         textStyle: {
@@ -133,8 +136,11 @@
                 chartTimer = setInterval(chartTimerFunc, 3000);
             },
             drawChartBarData: function(funcOpts) {
-                let chart = echarts.init(
-                    document.getElementById(this.chartType), "dark");
+                let chartDOM = document.getElementById(this.chartType);
+                let chart = echarts.getInstanceByDom(chartDOM);
+                if (chart === undefined || chart === null) {
+                    chart = echarts.init(chartDOM, "dark");
+                }
                 let baseOpts = {
                     title: {
                         textStyle: {

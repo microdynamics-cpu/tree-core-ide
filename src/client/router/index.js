@@ -6,6 +6,7 @@ import PageHome from "@client/components/home/PageHome";
 import PageLib from "@client/components/lib/PageLib";
 import PageLibBrief from "@client/components/lib/PageLibBrief";
 import PageLibDetail from "@client/components/lib/PageLibDetail";
+import PageLibManage from "@client/components/lib/PageLibManage";
 
 Vue.use(VueRouter);
 
@@ -23,23 +24,26 @@ export default new VueRouter({
         redirect: "/home"
     }, {
         path: "/home",
-        name: "Home",
+        name: "home",
         component: PageHome
     }, {
         path: "/lib",
-        // name: "Lib",
         component: PageLib,
         children: [{
             path: "",
             redirect: "brief"
         }, {
             path: "brief",
-            name: "Lib Brief",
+            name: "libBrief",
             component: PageLibBrief
         }, {
             path: "detail",
-            name: "Lib Detail",
+            name: "libDetail",
             component: PageLibDetail
+        }, {
+            path: "manage",
+            name: "libManage",
+            component: PageLibManage
         }]
     }]
 });
