@@ -19,8 +19,6 @@
                         </v-tab-item>
                         <v-tab-item>
                             <v-card outlined id="libManage">
-                                <router-view></router-view>
-                                <!-- <router-view name="libManage"></router-view> -->
                                 <!-- <router-view></router-view> -->
                             </v-card>
                         </v-tab-item>

@@ -35,7 +35,8 @@ export default new VueRouter({
         }, {
             path: "brief",
             name: "libBrief",
-            component: PageLibBrief
+            // component: PageLibBrief
+            component: PageLibManage
         }, {
             path: "detail",
             name: "libDetail",

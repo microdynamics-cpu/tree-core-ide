@@ -1,22 +1,52 @@
 <template>
     <v-row>
         <v-col>
+            <v-text-field
+                v-model="libSearchInfoModel"
+                clearable
+                dense
+                label="请输入库名称"
+                outlined
+                class="mt-3 mx-4">
+                <template #append-outer>
+                    <v-btn
+                        outlined
+                        class="tc-text-field-x"
+                        @click="searchLibData">
+                        <v-icon left>mdi-book-search</v-icon>搜索
+                    </v-btn>
+                </template>
+            </v-text-field>
             <v-data-table
                 dense
-                :headers="libSearchTableItem.headers"
-                :items="libSearchTableItem.data"
-                :loading="libSearchTableLoading"
-                :options.sync="libSearchTableOpt"
-                :server-items-length="libSearchTableCount">
-                <!-- <template
-                    #item.libName="{ item }">
-                    <a @click="jumpToLibDetailPage(item)">{{ item.libName }}</a>
+                :headers="libManageTableItem.headers"
+                :items="libManageTableItem.data"
+                :loading="libManageTableLoading">
+                <!-- :options.sync="libManageTableOpt"
+                :server-items-length="libManageTableCount"> -->
+                <template
+                    #item.actions="{ item }">
+                    <v-btn
+                        color="blue"
+                        small
+                        @click="viewLibData(item)">
+                        <v-icon left>mdi-view-list</v-icon>浏览
+                    </v-btn>
+                    <v-btn
+                        color="green"
+                        small
+                        @click="editLibData(item)"
+                        class="tc-lib-manage-btn">
+                        <v-icon left>mdi-content-save-edit</v-icon>编辑
+                    </v-btn>
+                    <v-btn
+                        color="red"
+                        small
+                        @click="deleteLibData(item)"
+                        class="tc-lib-manage-btn">
+                        <v-icon left>mdi-delete</v-icon>删除
+                    </v-btn>
                 </template>
-                <template #item.libRatingStr="{ item }">
-                    <v-chip :color="getLibRatingColor(item.libRatingStr)">
-                        {{ item.libRatingStr }}
-                    </v-chip>
-                </template> -->
             </v-data-table>
         </v-col>
     </v-row>
@@ -26,54 +56,72 @@
         name: "PageLibManage",
         data: function() {
             return {
-                libSearchInfoModel: "",
-                libSearchTypeItems: [{
-                    text: "名称",
-                    value: "name"
-                }, {
-                    text: "作者",
-                    value: "author"
-                }],
-                libSearchTypeModel: {
-                    text: "名称",
-                    value: "name"
-                },
-                libSearchTableItem: {
+                libManageTableItem: {
                     headers: [{
-                        text: "名称",
+                        text: "库名称",
                         value: "libName",
                         align: "center",
-                        sortable: false
+                        sortable: false,
+                        width: 250
                     }, {
-                        text: "作者",
+                        text: "库作者",
                         value: "userName",
                         align: "center",
-                        sortable: false
+                        sortable: false,
+                        width: 250
                     }, {
-                        text: "类型",
+                        text: "库类型",
                         value: "libType",
                         align: "center",
-                        sortable: false
+                        sortable: false,
+                        width: 250
                     }, {
-                        text: "下载",
-                        value: "libDownloadNum",
+                        text: "库工程",
+                        value: "prjName",
                         align: "center",
-                        sortable: false
+                        sortable: false,
+                        width: 250
                     }, {
-                        text: "评价",
-                        value: "libRatingStr",
+                        text: "操作",
+                        value: "actions",
                         align: "center",
                         sortable: false
                     }],
-                    data: []
+                    data: [{
+                        libName: "111",
+                        userName: "张三",
+                        libType: "基础模块",
+                        prjName: "测试工程111"
+                    }, {
+                        libName: "222",
+                        userName: "李四",
+                        libType: "外设模块",
+                        prjName: "测试工程222"
+                    }]
                 },
-                libSearchTableLoading: true,
-                libSearchTableOpt: {},
-                libSearchTableCount: 0,
+                libManageTableLoading: false,
+                // libManageTableOpt: {},
+                // libManageTableCount: 0,
+            }
+        },
+        methods: {
+            deleteLibData: function(item) {
+
+            },
+            editLibData: function(item) {
+
+            },
+            searchLibData: function() {
+
+            },
+            viewLibData: function(item) {
+
             }
         }
     }
 </script>
 <style scoped>
-
+    .tc-lib-manage-btn {
+        margin-left: 5px;
+    }
 </style>
