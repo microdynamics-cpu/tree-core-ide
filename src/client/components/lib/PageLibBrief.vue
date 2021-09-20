@@ -195,10 +195,10 @@
                 }],
                 libSearchInfoModel: "",
                 libSearchTypeItems: [{
-                    text: "名称",
+                    text: "库名称",
                     value: "name"
                 }, {
-                    text: "作者",
+                    text: "库作者",
                     value: "author"
                 }],
                 libSearchTypeModel: {
@@ -207,27 +207,27 @@
                 },
                 libSearchTableItem: {
                     headers: [{
-                        text: "名称",
+                        text: "库名称",
                         value: "libName",
                         align: "center",
                         sortable: false
                     }, {
-                        text: "作者",
+                        text: "库作者",
                         value: "userName",
                         align: "center",
                         sortable: false
                     }, {
-                        text: "类型",
+                        text: "库类型",
                         value: "libType",
                         align: "center",
                         sortable: false
                     }, {
-                        text: "下载",
+                        text: "库下载次数",
                         value: "libDownloadNum",
                         align: "center",
                         sortable: false
                     }, {
-                        text: "评价",
+                        text: "库评价高低",
                         value: "libRatingStr",
                         align: "center",
                         sortable: false
