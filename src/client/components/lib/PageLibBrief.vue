@@ -17,8 +17,7 @@
                 </v-select>
                 <BaseEcharts
                     ref="chartPie"
-                    chartType="pie">
-                </BaseEcharts>
+                    chartType="pie" />
             </v-card>
         </v-col>
         <v-col
@@ -39,8 +38,7 @@
                 </v-card-title>
                 <BaseEcharts
                     ref="chartBar"
-                    chartType="bar">
-                </BaseEcharts>
+                    chartType="bar" />
             </v-card>
         </v-col>
         <v-col

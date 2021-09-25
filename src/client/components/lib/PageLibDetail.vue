@@ -216,10 +216,10 @@
         watch: {
         },
         mounted: function() {
-            this.setLibDetailData();
+            this.initLibDetailData();
         },
         methods: {
-            setLibDetailData: function() {
+            initLibDetailData: function() {
                 let libId = this.$route.query.libId;
                 let tableData = this.$store.state.libRankTableData;
                 let tableObj = {};

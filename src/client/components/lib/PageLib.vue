@@ -56,9 +56,7 @@
             console.log(this.$("#libBrief"));
             console.log(this.$("body"));
         },
-
         methods: {
-
         }
     }
 </script>
