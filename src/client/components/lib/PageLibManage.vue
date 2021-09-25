@@ -49,7 +49,7 @@
                 <template #top>
                     <BaseDialog
                         :dialogShow="libManageDeleteModel"
-                         dialogType="alertError"
+                         dialogType="confirm"
                          dialogText="确定要删除当前库吗？"
                          @handleDialogNo="closeDialogDelete" />
                 </template>

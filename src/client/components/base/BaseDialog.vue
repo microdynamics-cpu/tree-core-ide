@@ -1,6 +1,6 @@
 <template>
     <v-dialog
-        v-model="dialogShow"
+        v-model="dialogModel"
         persistent
         max-width="400px">
         <v-card outlined>
@@ -57,10 +57,13 @@
                     title: "信息",
                     type: "info"
                 },
-                dialogModel: true
+                dialogModel: false
             }
         },
         watch: {
+            dialogShow: function(val) {
+                this.dialogModel = val;
+            }
         },
         mounted: function() {
             this.initDialogAlert();
@@ -71,7 +74,6 @@
             },
             handleDialogNo: function() {
                 this.dialogModel = false;
-                this.dialogShow = false;
                 this.$emit("handleDialogNo");
             },
             initDialogAlert: function() {
