@@ -24,8 +24,7 @@
                 :loading="libManageTableLoading">
                 <!-- :options.sync="libManageTableOpt"
                 :server-items-length="libManageTableCount"> -->
-                <template
-                    #item.actions="{ item }">
+                <template #item.actions="{ item }">
                     <v-btn
                         color="blue"
                         small
@@ -42,20 +41,33 @@
                     <v-btn
                         color="red"
                         small
-                        @click="deleteLibData(item)"
+                        @click="openDialogDelete(item)"
                         class="tc-lib-manage-btn">
                         <v-icon left>mdi-delete</v-icon>删除
                     </v-btn>
+                </template>
+                <template #top>
+                    <BaseDialog
+                        :dialogShow="libManageDeleteModel"
+                         dialogType="alertError"
+                         dialogText="确定要删除当前库吗？"
+                         @handleDialogNo="closeDialogDelete" />
                 </template>
             </v-data-table>
         </v-col>
     </v-row>
 </template>
 <script>
+    import BaseDialog from "@client/components/base/BaseDialog";
+
     export default {
         name: "PageLibManage",
+        components: {
+            BaseDialog
+        },
         data: function() {
             return {
+                libSearchInfoModel: "",
                 libManageTableItem: {
                     headers: [{
                         text: "库名称",
@@ -102,11 +114,22 @@
                 libManageTableLoading: false,
                 // libManageTableOpt: {},
                 // libManageTableCount: 0,
+                libManageDeleteModel: false
             }
         },
         methods: {
-            deleteLibData: function(item) {
+            openDialogDelete: function(item) {
+                this.libManageDeleteModel = true;
+            },
+            closeDialogDelete: function() {
+                this.libManageDeleteModel = false;
+            },
 
+
+
+
+
+            deleteLibData: function(item) {
             },
             editLibData: function(item) {
 
