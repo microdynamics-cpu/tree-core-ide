@@ -3,16 +3,30 @@
         v-model="dialogModel"
         persistent
         max-width="400px">
-        <v-card outlined>
-            <v-card-title>{{ dialogAlert.title }}</v-card-title>
-            <v-card-text style="padding-bottom:0px;">
+        <v-card>
+            <!-- <v-toolbar
+                dense
+                color="">
+                <v-toolbar-title class="text-md-body-1">{{ dialogAlert.title }}</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                    <v-btn
+                        icon
+                        @click="handleDialogClose">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </v-toolbar-items>
+            </v-toolbar> -->
+            <v-card-title class="text-md-body-1">{{ dialogAlert.title }}</v-card-title>
+            <v-card-text class="pb-0">
                 <v-alert
                     outlined
+                    text
                     :type="dialogAlert.type">
                     {{ dialogText }}
                 </v-alert>
             </v-card-text>
-            <v-card-actions>
+            <v-card-actions class="pt-0 pr-6">
                 <v-spacer></v-spacer>
                 <v-btn
                     color="green"
@@ -29,7 +43,6 @@
                     @click="handleDialogNo">
                     <v-icon left>mdi-cancel</v-icon>取消
                 </v-btn>
-                <v-spacer></v-spacer>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -69,7 +82,12 @@
             this.initDialogAlert();
         },
         methods: {
+            handleDialogClose: function() {
+                this.dialogModel = false;
+                this.$emit("handleDialogClose");
+            },
             handleDialogYes: function() {
+                this.dialogModel = false;
                 this.$emit("handleDialogYes");
             },
             handleDialogNo: function() {

@@ -41,17 +41,28 @@
                     <v-btn
                         color="red"
                         small
-                        @click="openDialogDelete(item)"
+                        @click.stop="openDialogDelete(item)"
                         class="tc-lib-manage-btn">
                         <v-icon left>mdi-delete</v-icon>删除
                     </v-btn>
                 </template>
                 <template #top>
                     <BaseDialog
+                        ref="dialogDelete"
                         :dialogShow="libManageDeleteModel"
-                         dialogType="confirm"
-                         dialogText="确定要删除当前库吗？"
-                         @handleDialogNo="closeDialogDelete" />
+                        dialogType="confirm"
+                        dialogText="确定要删除当前库吗？"
+                        @handleDialogYes="deleteLibData"
+                        @handleDialogNo="closeDialogDelete" />
+                    <BaseDialog
+                        ref="dialogMsg"
+                        :dialogShow="libManageMsgModel"
+                        dialogType="msg"
+                        dialogText="操作成功！"
+                        @handleDialogYes="() => {
+                            libManageMsgModel = false;
+                        }"
+                        @handleDialogNo="() => {}" />
                 </template>
             </v-data-table>
         </v-col>
@@ -114,7 +125,8 @@
                 libManageTableLoading: false,
                 // libManageTableOpt: {},
                 // libManageTableCount: 0,
-                libManageDeleteModel: false
+                libManageDeleteModel: false,
+                libManageMsgModel: false
             }
         },
         methods: {
@@ -122,17 +134,16 @@
                 this.libManageDeleteModel = true;
             },
             closeDialogDelete: function() {
+                console.log(1);
                 this.libManageDeleteModel = false;
             },
-
-
-
-
-
             deleteLibData: function(item) {
             },
-            editLibData: function(item) {
 
+
+
+            editLibData: function(item) {
+                this.libManageMsgModel = true;
             },
             searchLibData: function() {
 
