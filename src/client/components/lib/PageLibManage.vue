@@ -34,7 +34,7 @@
                     <v-btn
                         color="green"
                         small
-                        @click="editLibData(item)"
+                        @click="openDialogEdit(item)"
                         class="tc-lib-manage-btn">
                         <v-icon left>mdi-content-save-edit</v-icon>编辑
                     </v-btn>
@@ -54,6 +54,42 @@
                         dialogText="确定要删除当前库吗？"
                         @handleDialogYes="deleteLibData"
                         @handleDialogNo="closeDialogDelete" />
+                    <BaseDialog
+                        ref="dialogEdit"
+                        :dialogShow="libManageEditModel"
+                        dialogType="edit"
+                        dialogText="库编辑窗口"
+                        dialogWidth="500px"
+                        @handleDialogYes="editLibData"
+                        @handleDialogNo="closeDialogEdit">
+                        <template #body>
+                            <v-col
+                                cols="6"
+                                md="12">
+                                <v-select
+                                    dense
+                                    hint="更改软件库的版本"
+                                    :items="['v0.1.0', 'v0.1.1']"
+                                    label="库版本："
+                                    required
+                                    outlined
+                                    persistent-hint>
+                                </v-select>
+                            </v-col>
+                            <v-col
+                                cols="6"
+                                md="12">
+                                 <v-select
+                                    dense
+                                    hint="更改软件库所关联的项目工程"
+                                    :items="['/workspace/project1', '/workspace/project2']"
+                                    label="库工程："
+                                    outlined
+                                    persistent-hint>
+                                 </v-select>
+                            </v-col>
+                        </template>
+                    </BaseDialog>
                     <BaseDialog
                         ref="dialogMsg"
                         :dialogShow="libManageMsgModel"
@@ -126,30 +162,32 @@
                 // libManageTableOpt: {},
                 // libManageTableCount: 0,
                 libManageDeleteModel: false,
-                libManageMsgModel: false
+                libManageMsgModel: false,
+                libManageEditModel: false
             }
         },
         methods: {
             openDialogDelete: function(item) {
                 this.libManageDeleteModel = true;
             },
+            openDialogEdit: function(item) {
+                this.libManageEditModel = true;
+            },
             closeDialogDelete: function() {
-                console.log(1);
                 this.libManageDeleteModel = false;
             },
-            deleteLibData: function(item) {
+            closeDialogEdit: function() {
+                this.libManageEditModel = false;
             },
 
-
-
-            editLibData: function(item) {
-                this.libManageMsgModel = true;
+            deleteLibData: function() {
             },
+            editLibData: function() {
+            },
+
             searchLibData: function() {
-
             },
             viewLibData: function(item) {
-
             }
         }
     }
