@@ -1,5 +1,5 @@
 const router = require("express").Router();
-let dbFunc = require("../models/index");
+let dbFunc = require("../models/mysql");
 let baseFunc = require("../utils/base");
 
 router.post("/api/getLibInfoData", async function(req, res) {
