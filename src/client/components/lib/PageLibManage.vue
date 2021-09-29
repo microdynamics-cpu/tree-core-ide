@@ -28,13 +28,13 @@
                     <v-btn
                         color="blue"
                         small
-                        @click="viewLibData(item)">
+                        @click.stop="viewLibData(item)">
                         <v-icon left>mdi-view-list</v-icon>浏览
                     </v-btn>
                     <v-btn
                         color="green"
                         small
-                        @click="openDialogEdit(item)"
+                        @click.stop="openDialogEdit(item)"
                         class="tc-lib-manage-btn">
                         <v-icon left>mdi-content-save-edit</v-icon>编辑
                     </v-btn>
@@ -95,6 +95,7 @@
                         :dialogShow="libManageMsgModel"
                         dialogType="msg"
                         dialogText="操作成功！"
+                        dialogWidth="250px"
                         @handleDialogYes="() => {
                             libManageMsgModel = false;
                         }"
@@ -181,6 +182,8 @@
             },
 
             deleteLibData: function() {
+                this.libManageDeleteModel = false;
+                this.libManageMsgModel = true;
             },
             editLibData: function() {
             },
