@@ -1,318 +1,319 @@
 {
-    "name": "tree-core-ide",
-    "displayName": "TreeCore IDE",
-    "description": "The next generation integrated development environment for processor.",
-    "version": "1.0.0",
-    "icon": "./resources/images/logos/treecore_logo_200x200.png",
-    "engines": {
-        "vscode": "^1.42.0"
-    },
-    "categories": [
-        "Programming Languages",
-        "Snippets",
-        "Formatters",
-        "Linters"
-    ],
-    "keywords": [
-        "cpu",
-        "verilog",
-        "vhdl",
-        "fpga",
-        "waveform"
-    ],
-    "publisher": "Team Microdynamics",
-    "homepage": "",
-    "license": "GPL-3.0",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/microdynamics-cpu/tree-core-ide"
-    },
-    "bugs": {
-        "url": "https://github.com/microdynamics-cpu/tree-core-ide/issues",
-        "email": "microdynamics@126.com"
-    },
-    "author": {
-        "name": "myyerrol",
-        "email": "myyerrol@126.com",
-        "url": "https://myyerrol.io"
-    },
-    "contributors": [
-        {
-            "name": "maksyuki",
-            "email": "maksyuki@126.com",
-            "url": "http://www.maksyuki.com"
-        }
-    ],
-    "main": "./src/main.js",
-    "activationEvents": [
-        "*"
-    ],
-    "contributes": {
-        "commands": [
-            {
-                "command": "tree-core-ide.helloWorld",
-                "title": "Hello World"
-            },
-            {
-                "command": "waveviewer.start",
-                "title": "Start wave viewer session",
-                "category": "[TreeCore] wave viewer"
-            },
-            {
-                "command": "schviewer.start",
-                "title": "Start sch viewer session",
-                "category": "[TreeCore]sch viewer"
-            },
-            {
-                "command": "treecore.activityBar.rtlproject.refreshEntry",
-                "title": "Refresh",
-                "icon": {
-                    "light": "resources/images/icons/light/refresh.svg",
-                    "dark": "resources/images/icons/dark/refresh.svg"
-                }
-            },
-            {
-                "command": "treecore.activityBar.rtlproject.addEntry",
-                "title": "Add"
-            },
-            {
-                "command": "treecore.activityBar.rtlproject.editEntry",
-                "title": "Edit",
-                "icon": {
-                    "light": "resources/images/icons/light/edit.svg",
-                    "dark": "resources/images/icons/dark/edit.svg"
-                }
-            },
-            {
-                "command": "treecore.activityBar.rtlproject.deleteEntry",
-                "title": "Delete"
-            },
-            {
-                "command": "schviewer.start",
-                "title": "Start sch viewer session",
-                "category": "sch viewer"
-            }
-        ],
-        "menus": {
-            "view/title": [
-                {
-                    "command": "treecore.activityBar.rtlproject.refreshEntry",
-                    "when": "view == treecore.activityBar.rtlproject",
-                    "group": "navigation"
-                },
-                {
-                    "command": "treecore.activityBar.rtlproject.addEntry",
-                    "when": "view == treecore.activityBar.rtlproject"
-                }
-            ],
-            "view/item/context": [
-                {
-                    "command": "treecore.activityBar.rtlproject.editEntry",
-                    "when": "view == treecore.activityBar.rtlproject && viewItem == dependency",
-                    "group": "inline"
-                },
-                {
-                    "command": "treecore.activityBar.rtlproject.deleteEntry",
-                    "when": "view == treecore.activityBar.rtlproject && viewItem == dependency"
-                }
-            ]
-        },
-        "languages": [
-            {
-                "id": "verilog",
-                "aliases": [
-                    "Verilog",
-                    "verilog"
-                ],
-                "extensions": [
-                    ".v",
-                    ".vh",
-                    ".vl"
-                ],
-                "configuration": "./config/verilog.configuration.json"
-            },
-            {
-                "id": "systemverilog",
-                "aliases": [
-                    "System Verilog",
-                    "systemverilog"
-                ],
-                "extensions": [
-                    ".sv",
-                    ".SV"
-                ],
-                "configuration": "./config/systemverilog.configuration.json"
-            },
-            {
-                "id": "bluespec-system-verilog",
-                "aliases": [
-                    "BluespecSystemVerilog",
-                    "Bluespec SystemVerilog",
-                    "BSV"
-                ],
-                "extensions": [
-                    ".bsv",
-                    ".BSV"
-                ],
-                "configuration": "./bluespec-system-verilog.configuration.json"
-            }
-        ],
-        "grammars": [
-            {
-                "language": "verilog",
-                "scopeName": "source.verilog",
-                "path": "./syntaxes/verilog.tmLanguage"
-            },
-            {
-                "language": "systemverilog",
-                "scopeName": "source.systemverilog",
-                "path": "./syntaxes/system-verilog.tmLanguage"
-            },
-            {
-                "language": "bluespec-system-verilog",
-                "scopeName": "source.bluespec-system-verilog",
-                "path": "./syntaxes/bluespec-system-verilog.tmLanguage"
-            }
-        ],
-        "snippets": [
-            {
-                "language": "verilog",
-                "path": "./snippets/verilog.json"
-            }
-        ],
-        "viewsContainers": {
-            "activitybar": [
-                {
-                    "id": "treecore",
-                    "title": "TreeCore",
-                    "icon": "./resources/images/logos/treecore_logo_activity.svg"
-                }
-            ]
-        },
-        "views": {
-            "treecore": [
-                {
-                    "id": "treecore.activityBar.rtlproject",
-                    "name": "RTL Project"
-                },
-                {
-                    "id": "treecore.activityBar.projectTasks",
-                    "name": "Project Tasks"
-                },
-                {
-                    "id": "treecore.activityBar.quickAccess",
-                    "name": "Quick Access"
-                }
-            ]
-        },
-        "configuration": [
-            {
-                "type": "object",
-                "title": "TreeCore IDE Configuration",
-                "properties": {
-                    "treecore.config.showHomePageAtStartup": {
-                        "type": "boolean",
-                        "default": true,
-                        "description": "Show TreeCore Home page at startup."
-                    },
-                    "treecore.config.switchIDELanguage": {
-                        "type": "string",
-                        "enum": [
-                            "English",
-                            "中文"
-                        ],
-                        "default": "English",
-                        "description": "Switch TreeCore IDE language."
-                    }
-                }
-            }
-        ]
-    },
-    "browserslist": [
-        "defaults",
-        "> 1%",
-        "last 2 versions",
-        "not dead"
-    ],
-    "scripts": {
-        "client-build": "cross-env NODE_ENV=production webpack --progress",
-        "client-build-stats": "cross-env NODE_ENV=production-stats webpack --progress",
-        "client-serve": "cross-env NODE_ENV=development webpack-dev-server --progress",
-        "server-run": "node-dev ./src/server/server.js",
-        "lint": "eslint .eslintrc.js src",
-        "test": "jest",
-        "coverage": "jest --coverage",
-        "format": "prettier --single-quote --print-width 88 --write \"src/**/*.js\"",
-        "vscode:package": "webpack --mode production && vsce package",
-        "bundle": "rollup -c ;"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.14.6",
-        "@babel/plugin-transform-runtime": "^7.15.0",
-        "@babel/preset-env": "^7.14.7",
-        "@rollup/plugin-node-resolve": "^13.0.0",
-        "@rollup/plugin-replace": "^2.4.2",
-        "@types/glob": "^7.1.3",
-        "@types/jest": "^26.0.23",
-        "@types/mocha": "^8.0.4",
-        "@types/node": "^12.11.7",
-        "@types/vscode": "^1.42.0",
-        "autoprefixer": "^8.6.5",
-        "babel-loader": "^8.2.2",
-        "clean-webpack-plugin": "^4.0.0-alpha.0",
-        "compression-webpack-plugin": "^6.1.1",
-        "cross-env": "^7.0.3",
-        "css-loader": "^5.2.6",
-        "deepmerge": "^4.2.2",
-        "eslint": "^7.19.0",
-        "file-loader": "^6.2.0",
-        "friendly-errors-webpack-plugin": "^1.7.0",
-        "glob": "^7.1.6",
-        "html-webpack-plugin": "^4.5.2",
-        "http-proxy-middleware": "^0.19.1",
-        "jest": "^27.0.3",
-        "mini-css-extract-plugin": "^1.6.2",
-        "mocha": "^8.2.1",
-        "node-dev": "^7.0.0",
-        "optimize-css-assets-webpack-plugin": "^6.0.1",
-        "postcss-loader": "^3.0.0",
-        "prettier": "^2.3.0",
-        "rollup": "^2.51.1",
-        "rollup-plugin-summary": "^1.3.0",
-        "rollup-plugin-terser": "^7.0.2",
-        "sass": "~1.32.0",
-        "sass-loader": "^10.2.0",
-        "typescript": "^4.1.3",
-        "uglifyjs-webpack-plugin": "^2.2.0",
-        "url-loader": "^4.1.1",
-        "vsce": "^1.88.0",
-        "vscode-test": "^1.5.0",
-        "vue-loader": "^15.9.7",
-        "vue-style-loader": "^4.1.3",
-        "vue-template-compiler": "^2.6.14",
-        "vuetify-loader": "^1.7.2",
-        "webpack": "^4.46.0",
-        "webpack-bundle-analyzer": "^4.4.2",
-        "webpack-cli": "^3.3.12",
-        "webpack-dev-server": "^3.11.2"
-    },
-    "dependencies": {
-        "axios": "^0.21.1",
-        "body-parser": "^1.19.0",
-        "connect-history-api-fallback": "^1.6.0",
-        "cookie-parser": "^1.4.5",
-        "echarts": "^5.1.1",
-        "express": "^4.17.1",
-        "express-session": "^1.17.2",
-        "fs-plus": "^3.1.1",
-        "jquery": "^3.6.0",
-        "lit": "^2.0.0-rc.2",
-        "marked": "^2.1.3",
-        "mysql": "^2.18.1",
-        "session-file-store": "^1.5.0",
-        "vue": "^2.6.14",
-        "vue-router": "^3.5.2",
-        "vuetify": "^2.5.0",
-        "vuex": "^3.6.2"
+  "name": "tree-core-ide",
+  "displayName": "TreeCore IDE",
+  "description": "The next generation integrated development environment for processor.",
+  "version": "1.0.0",
+  "icon": "./resources/images/logos/treecore_logo_200x200.png",
+  "engines": {
+    "vscode": "^1.42.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Formatters",
+    "Linters"
+  ],
+  "keywords": [
+    "cpu",
+    "verilog",
+    "vhdl",
+    "fpga",
+    "waveform"
+  ],
+  "publisher": "Team Microdynamics",
+  "homepage": "",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microdynamics-cpu/tree-core-ide"
+  },
+  "bugs": {
+    "url": "https://github.com/microdynamics-cpu/tree-core-ide/issues",
+    "email": "microdynamics@126.com"
+  },
+  "author": {
+    "name": "myyerrol",
+    "email": "myyerrol@126.com",
+    "url": "https://myyerrol.io"
+  },
+  "contributors": [
+    {
+      "name": "maksyuki",
+      "email": "maksyuki@126.com",
+      "url": "http://www.maksyuki.com"
     }
+  ],
+  "main": "./src/main.js",
+  "activationEvents": [
+    "*"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "tree-core-ide.helloWorld",
+        "title": "Hello World"
+      },
+      {
+        "command": "waveviewer.start",
+        "title": "Start wave viewer session",
+        "category": "[TreeCore] wave viewer"
+      },
+      {
+        "command": "schviewer.start",
+        "title": "Start sch viewer session",
+        "category": "[TreeCore]sch viewer"
+      },
+      {
+        "command": "treecore.activityBar.rtlproject.refreshEntry",
+        "title": "Refresh",
+        "icon": {
+          "light": "resources/images/icons/light/refresh.svg",
+          "dark": "resources/images/icons/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "treecore.activityBar.rtlproject.addEntry",
+        "title": "Add"
+      },
+      {
+        "command": "treecore.activityBar.rtlproject.editEntry",
+        "title": "Edit",
+        "icon": {
+          "light": "resources/images/icons/light/edit.svg",
+          "dark": "resources/images/icons/dark/edit.svg"
+        }
+      },
+      {
+        "command": "treecore.activityBar.rtlproject.deleteEntry",
+        "title": "Delete"
+      },
+      {
+        "command": "schviewer.start",
+        "title": "Start sch viewer session",
+        "category": "sch viewer"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "treecore.activityBar.rtlproject.refreshEntry",
+          "when": "view == treecore.activityBar.rtlproject",
+          "group": "navigation"
+        },
+        {
+          "command": "treecore.activityBar.rtlproject.addEntry",
+          "when": "view == treecore.activityBar.rtlproject"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "treecore.activityBar.rtlproject.editEntry",
+          "when": "view == treecore.activityBar.rtlproject && viewItem == dependency",
+          "group": "inline"
+        },
+        {
+          "command": "treecore.activityBar.rtlproject.deleteEntry",
+          "when": "view == treecore.activityBar.rtlproject && viewItem == dependency"
+        }
+      ]
+    },
+    "languages": [
+      {
+        "id": "verilog",
+        "aliases": [
+          "Verilog",
+          "verilog"
+        ],
+        "extensions": [
+          ".v",
+          ".vh",
+          ".vl"
+        ],
+        "configuration": "./config/verilog.configuration.json"
+      },
+      {
+        "id": "systemverilog",
+        "aliases": [
+          "System Verilog",
+          "systemverilog"
+        ],
+        "extensions": [
+          ".sv",
+          ".SV"
+        ],
+        "configuration": "./config/systemverilog.configuration.json"
+      },
+      {
+        "id": "bluespec-system-verilog",
+        "aliases": [
+          "BluespecSystemVerilog",
+          "Bluespec SystemVerilog",
+          "BSV"
+        ],
+        "extensions": [
+          ".bsv",
+          ".BSV"
+        ],
+        "configuration": "./bluespec-system-verilog.configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "verilog",
+        "scopeName": "source.verilog",
+        "path": "./syntaxes/verilog.tmLanguage"
+      },
+      {
+        "language": "systemverilog",
+        "scopeName": "source.systemverilog",
+        "path": "./syntaxes/system-verilog.tmLanguage"
+      },
+      {
+        "language": "bluespec-system-verilog",
+        "scopeName": "source.bluespec-system-verilog",
+        "path": "./syntaxes/bluespec-system-verilog.tmLanguage"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "verilog",
+        "path": "./snippets/verilog.json"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "treecore",
+          "title": "TreeCore",
+          "icon": "./resources/images/logos/treecore_logo_activity.svg"
+        }
+      ]
+    },
+    "views": {
+      "treecore": [
+        {
+          "id": "treecore.activityBar.rtlproject",
+          "name": "RTL Project"
+        },
+        {
+          "id": "treecore.activityBar.projectTasks",
+          "name": "Project Tasks"
+        },
+        {
+          "id": "treecore.activityBar.quickAccess",
+          "name": "Quick Access"
+        }
+      ]
+    },
+    "configuration": [
+      {
+        "type": "object",
+        "title": "TreeCore IDE Configuration",
+        "properties": {
+          "treecore.config.showHomePageAtStartup": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show TreeCore Home page at startup."
+          },
+          "treecore.config.switchIDELanguage": {
+            "type": "string",
+            "enum": [
+              "English",
+              "中文"
+            ],
+            "default": "English",
+            "description": "Switch TreeCore IDE language."
+          }
+        }
+      }
+    ]
+  },
+  "browserslist": [
+    "defaults",
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "scripts": {
+    "client-build": "cross-env NODE_ENV=production webpack --progress",
+    "client-build-stats": "cross-env NODE_ENV=production-stats webpack --progress",
+    "client-serve": "cross-env NODE_ENV=development webpack-dev-server --progress",
+    "server-run": "node-dev ./src/server/server.js",
+    "lint": "eslint .eslintrc.js src",
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "format": "prettier --single-quote --print-width 88 --write \"src/**/*.js\"",
+    "vscode:package": "webpack --mode production && vsce package",
+    "bundle": "rollup -c ;"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.14.7",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@rollup/plugin-replace": "^2.4.2",
+    "@types/glob": "^7.1.3",
+    "@types/jest": "^26.0.23",
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.42.0",
+    "autoprefixer": "^8.6.5",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "compression-webpack-plugin": "^6.1.1",
+    "cross-env": "^7.0.3",
+    "css-loader": "^5.2.6",
+    "deepmerge": "^4.2.2",
+    "eslint": "^7.19.0",
+    "file-loader": "^6.2.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "glob": "^7.1.6",
+    "html-webpack-plugin": "^4.5.2",
+    "http-proxy-middleware": "^0.19.1",
+    "jest": "^27.0.3",
+    "mini-css-extract-plugin": "^1.6.2",
+    "mocha": "^8.2.1",
+    "node-dev": "^7.0.0",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
+    "postcss-loader": "^3.0.0",
+    "prettier": "^2.3.0",
+    "rollup": "^2.51.1",
+    "rollup-plugin-summary": "^1.3.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "sass": "~1.32.0",
+    "sass-loader": "^10.2.0",
+    "typescript": "^4.1.3",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "url-loader": "^4.1.1",
+    "vsce": "^1.88.0",
+    "vscode-test": "^1.5.0",
+    "vue-loader": "^15.9.7",
+    "vue-style-loader": "^4.1.3",
+    "vue-template-compiler": "^2.6.14",
+    "vuetify-loader": "^1.7.2",
+    "webpack": "^4.46.0",
+    "webpack-bundle-analyzer": "^4.4.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "connect-history-api-fallback": "^1.6.0",
+    "cookie-parser": "^1.4.5",
+    "echarts": "^5.1.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "fs-plus": "^3.1.1",
+    "jquery": "^3.6.0",
+    "lit": "^2.0.0-rc.2",
+    "marked": "^2.1.3",
+    "mysql": "^2.18.1",
+    "session-file-store": "^1.5.0",
+    "sqlite3": "^5.0.2",
+    "vue": "^2.6.14",
+    "vue-router": "^3.5.2",
+    "vuetify": "^2.5.0",
+    "vuex": "^3.6.2"
+  }
 }
