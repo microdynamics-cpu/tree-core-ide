@@ -1,6 +1,6 @@
 const router = require("express").Router();
-let dbFunc = require("../models/index");
-let baseFunc = require("../utils/base");
+const dbFunc = require("../models/mysql");
+const baseFunc = require("../utils/base");
 
 router.post("/api/getLibInfoData", async function(req, res) {
     let searchKey = req.body.searchKey;
