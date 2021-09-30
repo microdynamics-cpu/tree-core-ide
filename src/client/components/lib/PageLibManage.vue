@@ -28,13 +28,13 @@
                     <v-btn
                         color="blue"
                         small
-                        @click="viewLibData(item)">
+                        @click.stop="viewLibData(item)">
                         <v-icon left>mdi-view-list</v-icon>浏览
                     </v-btn>
                     <v-btn
                         color="green"
                         small
-                        @click="editLibData(item)"
+                        @click.stop="openDialogEdit(item)"
                         class="tc-lib-manage-btn">
                         <v-icon left>mdi-content-save-edit</v-icon>编辑
                     </v-btn>
@@ -55,10 +55,47 @@
                         @handleDialogYes="deleteLibData"
                         @handleDialogNo="closeDialogDelete" />
                     <BaseDialog
+                        ref="dialogEdit"
+                        :dialogShow="libManageEditModel"
+                        dialogType="edit"
+                        dialogText="库编辑窗口"
+                        dialogWidth="500px"
+                        @handleDialogYes="editLibData"
+                        @handleDialogNo="closeDialogEdit">
+                        <template #body>
+                            <v-col
+                                cols="6"
+                                md="12">
+                                <v-select
+                                    dense
+                                    hint="更改软件库的版本"
+                                    :items="['v0.1.0', 'v0.1.1']"
+                                    label="库版本："
+                                    required
+                                    outlined
+                                    persistent-hint>
+                                </v-select>
+                            </v-col>
+                            <v-col
+                                cols="6"
+                                md="12">
+                                 <v-select
+                                    dense
+                                    hint="更改软件库所关联的项目工程"
+                                    :items="['/workspace/project1', '/workspace/project2']"
+                                    label="库工程："
+                                    outlined
+                                    persistent-hint>
+                                 </v-select>
+                            </v-col>
+                        </template>
+                    </BaseDialog>
+                    <BaseDialog
                         ref="dialogMsg"
                         :dialogShow="libManageMsgModel"
                         dialogType="msg"
                         dialogText="操作成功！"
+                        dialogWidth="250px"
                         @handleDialogYes="() => {
                             libManageMsgModel = false;
                         }"
@@ -126,30 +163,34 @@
                 // libManageTableOpt: {},
                 // libManageTableCount: 0,
                 libManageDeleteModel: false,
-                libManageMsgModel: false
+                libManageMsgModel: false,
+                libManageEditModel: false
             }
         },
         methods: {
             openDialogDelete: function(item) {
                 this.libManageDeleteModel = true;
             },
+            openDialogEdit: function(item) {
+                this.libManageEditModel = true;
+            },
             closeDialogDelete: function() {
-                console.log(1);
                 this.libManageDeleteModel = false;
             },
-            deleteLibData: function(item) {
+            closeDialogEdit: function() {
+                this.libManageEditModel = false;
             },
 
-
-
-            editLibData: function(item) {
+            deleteLibData: function() {
+                this.libManageDeleteModel = false;
                 this.libManageMsgModel = true;
             },
-            searchLibData: function() {
+            editLibData: function() {
+            },
 
+            searchLibData: function() {
             },
             viewLibData: function(item) {
-
             }
         }
     }
