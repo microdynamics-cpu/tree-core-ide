@@ -49,6 +49,30 @@ module.exports = {
             return false;
         }
     },
+    getJSONDataByField: function(fileName, type, field, value) {
+        const jsonArr = this.getJSONDataAll(fileName);
+        let jsonArrNew = [];
+        jsonArr.forEach((v) => {
+            if (type === "equal") {
+                if (v[field] === value) {
+                    jsonArrNew.push(v);
+                }
+            }
+            else if (type === "like") {
+                if (v[field].indexOf(value) !== -1) {
+                    jsonArrNew.push(v);
+                }
+            }
+            else {
+            }
+        });
+        if (jsonArrNew.length > 0) {
+            return jsonArrNew;
+        }
+        else {
+            return false;
+        }
+    },
     getJSONDataByOrder: function(fileName, sortField, sortType, sortOrder) {
         let jsonArr = this.getJSONDataAll(fileName);
         jsonArr.sort((objA, objB) => {
