@@ -6,6 +6,7 @@ import actions from "./store/actions";
 import mutations from "./store/mutations";
 import state from "./store/state";
 
+import axios from "axios";
 import jquery from "jquery";
 import router from "./router/index";
 import vuetify from "./plugins/vuetify";
@@ -19,6 +20,7 @@ const store = new Vuex.Store({
     actions
 });
 
+Vue.prototype.$http = axios;
 Vue.prototype.$ = jquery;
 Vue.prototype.$jumpToPageByIndex = function(index) {
     console.log("router index: " + index);
