@@ -44,8 +44,19 @@ module.exports = {
                 // false if invalid certificate is accepted)
                 secure: false,
             },
-            // 将"http://localhost:8080/github/xxx"代理到"https://github.com/xxx"上
-            // Proxy "http://localhost:8080/github/xxx" to "https://github.com/xxx"
+            // 将"http://localhost:8080/client/xxx"代理
+            // 到"http://localhost:8082/client/xxx"上
+            // Proxy "http://localhost:8080/client/xxx" to
+            // "http://localhost:8082/client/xxx"
+            "/client": {
+                target: "http://localhost:8082",
+                chageOrigin: true,
+                secure: false,
+            },
+            // 将"http://localhost:8080/github/xxx"代理
+            // 到"https://github.com/xxx"上
+            // Proxy "http://localhost:8080/github/xxx" to
+            // "https://github.com/xxx"
             "/github": {
                 target: "https://github.com",
                 changeOrigin: true,
@@ -54,8 +65,10 @@ module.exports = {
                     "^/github": ""
                 }
             },
-            // 将"http://localhost:8080/gitee/xxx"代理到"https://gitee.com/xxx"上
-            // Proxy "http://localhost:8080/gitee/xxx" to "https://gitee.com/xxx"
+            // 将"http://localhost:8080/gitee/xxx"代理
+            // 到"https://gitee.com/xxx"上
+            // Proxy "http://localhost:8080/gitee/xxx" to
+            // "https://gitee.com/xxx"
             "/gitee": {
                 target: "https://gitee.com",
                 changeOrigin: true,

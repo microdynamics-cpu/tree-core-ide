@@ -1,4 +1,4 @@
-let baseFunc = {
+module.exports = {
     keepDecimalForce: function(num, n) {
         var result = Math.round(num * Math.pow(10, n)) / Math.pow(10, n);
         var resultStr = result.toString();
@@ -16,5 +16,3 @@ let baseFunc = {
         return resultStr;
     }
 };
-
-module.exports = baseFunc;

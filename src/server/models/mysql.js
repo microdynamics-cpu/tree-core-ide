@@ -16,7 +16,6 @@ module.exports = {
                 throw err;
             }
             console.log(sql);
-            console.log("\n");
             conn.query(sql, function(err, res) {
                 if (err) {
                     throw err;
@@ -36,12 +35,13 @@ module.exports = {
                 }
                 else {
                     console.log(sql);
-                    console.log("\n");
                     conn.query(sql, function(err, res) {
                         if (err) {
                             reject(err);
                         }
                         else {
+                            console.log(res);
+                            console.log("\n");
                             resolve(res);
                         }
                     });
@@ -49,45 +49,5 @@ module.exports = {
                 }
             });
         });
-    },
-    handleDBRecordByParams: function(sql, params, callback) {
-        dbPool.getConnection(function(err, conn) {
-            if (err) {
-                throw err;
-            }
-            console.log(sql);
-            console.log("\n");
-            conn.query(sql, params, function(err, res) {
-                if (err) {
-                    throw err;
-                }
-                console.log(res);
-                console.log("\n");
-                callback(res);
-                conn.release();
-            });
-        });
-    },
-    handleDBRecordByParamsSync: function(sql, params) {
-        return new Promise((resolve, reject) => {
-            dbPool.getConnection(function(err, conn) {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    console.log(sql);
-                    console.log("\n");
-                    conn.query(sql, params, function(err, res) {
-                        if (err) {
-                            reject(err);
-                        }
-                        else {
-                            resolve(res);
-                        }
-                    });
-                    conn.release();
-                }
-            });
-        });
-    },
+    }
 };
