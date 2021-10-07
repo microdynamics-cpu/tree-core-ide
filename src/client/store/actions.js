@@ -32,5 +32,20 @@ export default {
                 return false;
             }
         });
+    },
+    getLibManageData: function({ commit }, params) {
+        return axios.post("/client/getLibManageData", params).then((res) => {
+            console.log(res);
+            if (res && res.status === 200 && !res.data.code) {
+                commit("getLibManageData", {
+                    tableOpt: params.tableOpt,
+                    data: res.data.data
+                });
+                return true;
+            }
+            else {
+                return false;
+            }
+        });
     }
 }

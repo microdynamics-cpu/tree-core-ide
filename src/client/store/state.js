@@ -4,5 +4,7 @@ export default {
     libSearchTableCount: 0,
     libChartPieData: [],
     libChartBarXAxisData: [],
-    libChartBarData: []
+    libChartBarData: [],
+    libManageTableData: [],
+    libManageTableCount: 0
 }

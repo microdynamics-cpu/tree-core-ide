@@ -238,6 +238,7 @@
     "client-build": "cross-env NODE_ENV=production webpack --progress",
     "client-build-stats": "cross-env NODE_ENV=production-stats webpack --progress",
     "client-serve": "cross-env NODE_ENV=development webpack-dev-server --progress",
+    "client-run": "node-dev ./src/client/js/server/server.js",
     "server-run": "node-dev ./src/server/server.js",
     "lint": "eslint .eslintrc.js src",
     "test": "jest",

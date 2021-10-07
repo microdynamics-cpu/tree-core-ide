@@ -21,9 +21,9 @@
                 dense
                 :headers="libManageTableItem.headers"
                 :items="libManageTableItem.data"
-                :loading="libManageTableLoading">
-                <!-- :options.sync="libManageTableOpt"
-                :server-items-length="libManageTableCount"> -->
+                :loading="libManageTableLoading"
+                :options.sync="libManageTableOpt"
+                :server-items-length="libManageTableCount">
                 <template #item.actions="{ item }">
                     <v-btn
                         color="blue"
@@ -147,25 +147,22 @@
                         align: "center",
                         sortable: false
                     }],
-                    data: [{
-                        libName: "111",
-                        userName: "张三",
-                        libType: "基础模块",
-                        prjName: "测试工程111"
-                    }, {
-                        libName: "222",
-                        userName: "李四",
-                        libType: "外设模块",
-                        prjName: "测试工程222"
-                    }]
+                    data: []
                 },
                 libManageTableLoading: false,
-                // libManageTableOpt: {},
-                // libManageTableCount: 0,
+                libManageTableOpt: {},
+                libManageTableCount: 0,
                 libManageDeleteModel: false,
                 libManageMsgModel: false,
                 libManageEditModel: false
             }
+        },
+        watch: {
+            libManageTableOpt: function() {
+                this.searchLibData();
+            }
+        },
+        mounted: function() {
         },
         methods: {
             openDialogDelete: function(item) {
@@ -180,15 +177,43 @@
             closeDialogEdit: function() {
                 this.libManageEditModel = false;
             },
-
             deleteLibData: function() {
+                this.$store.dispatch("deleteLibManageData", {
+
+                });
+
+
                 this.libManageDeleteModel = false;
                 this.libManageMsgModel = true;
             },
             editLibData: function() {
             },
-
             searchLibData: function() {
+                let searchKey = "libName";
+                let searchVal = this.libSearchInfoModel;
+                console.log("searchKey: " + searchKey);
+                console.log("searchVal: " + searchVal);
+
+                let that = this;
+                this.libManageTableLoading = true;
+                this.$store.dispatch("getLibManageData", {
+                    searchKey: searchKey,
+                    searchVal: searchVal,
+                    tableOpt: this.libManageTableOpt
+                }).then((status) => {
+                    that.libManageTableLoading = false;
+                    console.log(status);
+                    if (status) {
+                        that.libManageTableItem.data =
+                            that.$store.state.libManageTableData;
+                        that.libManageTableCount =
+                            that.$store.state.libManageTableCount;
+                    }
+                    else {
+                        that.libManageTableItem.data = [];
+                        that.libManageTableCount = 0;
+                    }
+                });
             },
             viewLibData: function(item) {
             }

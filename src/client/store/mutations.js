@@ -19,7 +19,6 @@ export default {
             else if (funcType === "search") {
                 tableObj = dataObj;
             }
-
             tableData.push(tableObj);
         }
 
@@ -48,7 +47,6 @@ export default {
             state.libSearchTableCount = tableCount;
         }
     },
-
     getLibChartData: function(state, { chartType, data }) {
         if (chartType === "pie") {
             state.libChartPieData = data;
@@ -57,5 +55,16 @@ export default {
             state.libChartBarXAxisData = data.xAxisData;
             state.libChartBarData = data.seriesData;
         }
+    },
+    getLibManageData: function(state, { tableOpt, data }) {
+        let tableData = data;
+        let tableCount = data.length;
+        const { sortBy, sortDesc, page, itemsPerPage } = tableOpt;
+        if (itemsPerPage > 0) {
+            tableData = tableData.slice((page - 1) * itemsPerPage,
+                                         page * itemsPerPage);
+        }
+        state.libManageTableData = tableData;
+        state.libManageTableCount = tableCount;
     }
 }
