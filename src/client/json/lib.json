@@ -1,82 +1,57 @@
 [
     {
         "id": 1,
+        "libId": 1,
         "libName": "测试库1",
-        "userName": "张三",
+        "libVersion": "v1.0.0",
         "libType": "基础模块",
-        "prjName": "测试工程1",
+        "prjDir": "/workspace/project1",
         "libDate": "2021-09-01 12:00:00"
     },
     {
         "id": 2,
+        "libId": 222,
         "libName": "测试库2",
-        "userName": "李四",
+        "libVersion": "v1.0.1",
         "libType": "片上系统",
-        "prjName": "测试工程2",
+        "prjDir": "/workspace/project2",
         "libDate": "2021-09-02 12:05:00"
     },
     {
         "id": 3,
+        "libId": 333,
         "libName": "测试库3",
-        "userName": "李四",
+        "libVersion": "v1.0.2",
         "libType": "片上系统",
-        "prjName": "测试工程2",
+        "prjDir": "/workspace/project3",
         "libDate": "2021-09-03 12:05:00"
     },
     {
         "id": 4,
+        "libId": 444,
         "libName": "测试库4",
-        "userName": "李四",
+        "libVersion": "v1.0.3",
         "libType": "片上系统",
-        "prjName": "测试工程2",
+        "prjName": "测试工程4",
+        "prjDir": "/workspace/project4",
         "libDate": "2021-09-04 12:05:00"
     },
     {
         "id": 5,
+        "libId": 555,
         "libName": "测试库5",
-        "userName": "李四",
+        "libVersion": "v1.0.4",
         "libType": "片上系统",
-        "prjName": "测试工程2",
+        "prjDir": "/workspace/project5",
         "libDate": "2021-09-05 12:05:00"
     },
     {
-        "id": 6,
-        "libName": "测试库6",
-        "userName": "李四",
-        "libType": "片上系统",
-        "prjName": "测试工程2",
-        "libDate": "2021-09-06 12:05:00"
-    },
-    {
         "id": 7,
+        "libId": 111,
         "libName": "测试库7",
-        "userName": "李四",
+        "libVersion": "v1.0.0",
         "libType": "片上系统",
-        "prjName": "测试工程2",
+        "prjDir": "/workspace/project1",
         "libDate": "2021-09-07 12:05:00"
-    },
-    {
-        "id": 8,
-        "libName": "测试库8",
-        "userName": "李四",
-        "libType": "片上系统",
-        "prjName": "测试工程2",
-        "libDate": "2021-09-08 12:05:00"
-    },
-    {
-        "id": 9,
-        "libName": "测试库9",
-        "userName": "李四",
-        "libType": "片上系统",
-        "prjName": "测试工程2",
-        "libDate": "2021-09-09 12:05:00"
-    },
-    {
-        "id": 10,
-        "libName": "测试库10",
-        "userName": "李四",
-        "libType": "片上系统",
-        "prjName": "测试工程2",
-        "libDate": "2021-09-10 12:05:00"
     }
 ]

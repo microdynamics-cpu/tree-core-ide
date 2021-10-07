@@ -1,4 +1,15 @@
 export default {
+    // 服务端处理函数
+    // Server handle function
+    getLibChartData: function(state, { chartType, data }) {
+        if (chartType === "pie") {
+            state.libChartPieData = data;
+        }
+        else if (chartType === "bar") {
+            state.libChartBarXAxisData = data.xAxisData;
+            state.libChartBarData = data.seriesData;
+        }
+    },
     getLibInfoData: function(state, { funcType, sortType, tableOpt, data }) {
         let tableData = [];
 
@@ -47,15 +58,15 @@ export default {
             state.libSearchTableCount = tableCount;
         }
     },
-    getLibChartData: function(state, { chartType, data }) {
-        if (chartType === "pie") {
-            state.libChartPieData = data;
+    getLibVersionData: function(state, { data }) {
+        let libVersionArr = [];
+        for (let i = 0; i < data.length; i++) {
+            libVersionArr.push(data[i].libVersion);
         }
-        else if (chartType === "bar") {
-            state.libChartBarXAxisData = data.xAxisData;
-            state.libChartBarData = data.seriesData;
-        }
+        state.libVersionItems = libVersionArr;
     },
+    // 客户端处理函数
+    // Client handle function
     getLibManageData: function(state, { tableOpt, data }) {
         let tableData = data;
         let tableCount = data.length;
@@ -66,5 +77,12 @@ export default {
         }
         state.libManageTableData = tableData;
         state.libManageTableCount = tableCount;
+    },
+    getPrjDirData: function(state, { data }) {
+        let prjDirArr = [];
+        for (let i = 0; i < data.length; i++) {
+            prjDirArr.push(data[i].prjDir);
+        }
+        state.libPrjDirItems = prjDirArr;
     }
 }

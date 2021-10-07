@@ -6,5 +6,7 @@ export default {
     libChartBarXAxisData: [],
     libChartBarData: [],
     libManageTableData: [],
-    libManageTableCount: 0
+    libManageTableCount: 0,
+    libVersionItems: [],
+    libPrjDirItems: []
 }

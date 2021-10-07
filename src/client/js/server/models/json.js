@@ -79,41 +79,6 @@ module.exports = {
                                         sortField,
                                         sortType,
                                         sortOrder);
-        // jsonArr.sort((objA, objB) => {
-        //     let valA = objA[sortField];
-        //     let valB = objB[sortField];
-        //     if (sortType === "val") {
-        //         if (typeof(valA === String)) {
-        //             valA = parseInt(valA);
-        //             valB = parseInt(valB);
-        //         }
-        //         if (sortOrder === "asc") {
-        //             return (valA - valB);
-        //         }
-        //         else if (sortOrder === "desc") {
-        //             return (valB - valA);
-        //         }
-        //         else {
-        //             return 0;
-        //         }
-        //     }
-        //     else if (sortType === "date") {
-        //         let dateA = new Date(valA);
-        //         let dateB = new Date(valB);
-        //         let timeA = dateA.getTime();
-        //         let timeB = dateB.getTime();
-        //         if (sortOrder === "asc") {
-        //             return (timeA - timeB);
-        //         }
-        //         else if (sortOrder === "desc") {
-        //             return (timeB - timeA);
-        //         }
-        //         else {
-        //             return 0;
-        //         }
-        //     }
-        // });
-        // return jsonArr;
     },
     getJSONDataByPage: function(fileName, pageIndex, pagePerNum) {
         const jsonArr = this.getJSONDataAll(fileName);

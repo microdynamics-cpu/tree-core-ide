@@ -27,11 +27,11 @@ module.exports = {
         open: false,
         port: 8080,
         proxy: {
-            // 将"http://localhost:8080/api/xxx"代理
-            // 到"http://localhost:8081/api/xxx"上
-            // Proxy "http://localhost:8080/api/xxx" to
-            // "http://localhost:8081/api/xxx"
-            "/api": {
+            // 将"http://localhost:8080/server/xxx"代理
+            // 到"http://localhost:8081/server/xxx"上
+            // Proxy "http://localhost:8080/server/xxx" to
+            // "http://localhost:8081/server/xxx"
+            "/server": {
                 // 设置虚拟服务器目标地址
                 // Set virtual server target address
                 target: "http://localhost:8081",
