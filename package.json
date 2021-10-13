@@ -154,7 +154,21 @@
           ".bsv",
           ".BSV"
         ],
-        "configuration": "./bluespec-system-verilog.configuration.json"
+        "configuration": "./config/bluespec-system-verilog.configuration.json"
+      },
+      {
+        "id": "riscv-asm",
+        "aliases": [
+            "RISC-V Assembly",
+            "riscv"
+        ],
+        "extensions": [
+            ".S",
+            ".s",
+            ".riscv",
+            ".asm"
+        ],
+        "configuration": "./config/riscv-asm.configuration.json"
       }
     ],
     "grammars": [
@@ -172,6 +186,11 @@
         "language": "bluespec-system-verilog",
         "scopeName": "source.bluespec-system-verilog",
         "path": "./syntaxes/bluespec-system-verilog.tmLanguage"
+      },
+      {
+        "language": "riscv-asm",
+        "scopeName": "source.riscv-asm",
+        "path": "./syntaxes/riscv-asm.tmLanguage"
       }
     ],
     "snippets": [
@@ -186,6 +205,10 @@
       {
           "language": "systemverilog",
           "path": "./snippets/systemverilog.json"
+      },
+      {
+        "language": "riscv-asm",
+        "path": "./snippets/riscv-asm.json"
       }
     ],
     "viewsContainers": {

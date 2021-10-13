@@ -1,0 +1,128 @@
+{
+	"addi": {
+		"prefix": "addi",
+		"body": "addi ${1:t0}, ${2:t1}, ${3:imm}; # $1 = $2 + $3\n",
+		"description": "add immediate",
+		"scope": "source.riscv"
+	},
+	"add": {
+		"prefix": "add",
+		"body": "add ${1:t0}, ${2:t1}, ${3:t2}; # $1 = $2 + $3\n",
+		"description": "add",
+		"scope": "source.riscv"
+	},
+	"beq": {
+		"prefix": "beq",
+		"body": "beq ${1:t0}, ${2:t1}, ${3:target}; # if $1 == $2 then $3\n",
+		"description": "branch if equal",
+		"scope": "source.riscv"
+	},
+	"bge": {
+		"prefix": "bge",
+		"body": "bge ${1:t0}, ${2:t1}, ${3:target} # if $1 >= $2 then $3\n",
+		"description": "branch if greater then or equal",
+		"scope": "source.riscv"
+	},
+	"bgt": {
+		"prefix": "bgt",
+		"body": "bgt ${1:t0}, ${2:t1}, ${3:target} # if $1 > $2 then $3\n",
+		"description": "branch if greater then",
+		"scope": "source.riscv"
+	},
+	"ble": {
+		"prefix": "ble",
+		"body": "ble ${1:t0}, ${2:t1}, ${3:target} # if $1 <= $2 then $3\n",
+		"description": "branch if less then or equal",
+		"scope": "source.riscv"
+	},
+	"blt": {
+		"prefix": "blt",
+		"body": "blt ${1:t0}, ${2:t1}, ${3:target} # if $1 < $2 then $3\n",
+		"description": "branch if less then",
+		"scope": "source.riscv"
+	},
+	"bne": {
+		"prefix": "bne",
+		"body": "bne ${1:t0}, ${2:t1}, ${3:target} # if $1 != $2 then $3\n",
+		"description": "branch if not equal",
+		"scope": "source.riscv"
+	},
+	"jal": {
+		"prefix": "jal",
+		"body": "jal ${1:target}  # jump to $1 and save position to ra\n",
+		"description": "jump and link",
+		"scope": "source.riscv"
+	},
+	"jr": {
+		"prefix": "jr",
+		"body": "jr ${1:ra}   # jump to $1\n",
+		"description": "jump register",
+		"scope": "source.riscv"
+	},
+	"j": {
+		"prefix": "j",
+		"body": "j ${1:target}  # jump to $1\n",
+		"description": "jump",
+		"scope": "source.riscv"
+	},
+	"la": {
+		"prefix": "la",
+		"body": "la ${1:t1}, ${2:var1} # \n",
+		"description": "load address",
+		"scope": "source.riscv"
+	},
+	"lb": {
+		"prefix": "lb",
+		"body": "lb ${1:t1}, ${2:${3:0}(${4:s1})} # \n",
+		"description": "load byte",
+		"scope": "source.riscv"
+	},
+	"li": {
+		"prefix": "li",
+		"body": "li ${1:t1}, $2 # $1 = $2\n",
+		"description": "load immediate",
+		"scope": "source.riscv"
+	},
+	"lw": {
+		"prefix": "lw",
+		"body": "lw ${1:t1}, ${2:${3:0}(${4:s1})} # \n",
+		"description": "load word",
+		"scope": "source.riscv"
+	},
+	"move": {
+		"prefix": "mv",
+		"body": "mv  ${1:t0}, ${2:t1} # $1 = $2",
+		"description": "move",
+		"scope": "source.riscv"
+	},
+	"sb": {
+		"prefix": "sb",
+		"body": "sb ${1:t1}, ${2:${3:0}(${4:s1})} # \n",
+		"description": "store byte",
+		"scope": "source.riscv"
+	},
+	"sw": {
+		"prefix": "sw",
+		"body": "sw ${1:t1}, ${2:${3:0}(${4:s1})} # \n",
+		"description": "store word",
+		"scope": "source.riscv"
+	},
+	"string": {
+		"prefix": "string",
+		"body": "${1:string}: .asciiz \"$2\"",
+		"description": "string var",
+		"scope": "source.riscv"
+	},
+	"sub": {
+		"prefix": "sub",
+		"body": "sub ${1:t0}, ${2:t1}, ${3:t2} # $1 = $2 - $3\n",
+		"description": "substract",
+		"scope": "source.riscv"
+	},
+	"var": {
+		"prefix": "var",
+		"body": "${1:var}: .${2:word} $3",
+		"description": "variable",
+		"scope": "source.riscv"
+	}
+}
