@@ -1,21 +1,24 @@
-import { getRGBColorValue, convertRGBColorStrToArray } from "./Utils.js";
-import { DATA_TYPE, DATA_STATE, DATA_FORMAT } from "./Enum.js";
+import { getRGBColorValue } from "./Utils.js";
+import { DATA_TYPE, DATA_STATE } from "./Enum.js";
+import { DataObject } from "./DataObject.js";
 
 
 export class WaveItems extends PIXI.Container {
     // index: [0, data.length - 1]
     // data: DataObject(contain all the data)
-    constructor(name) {
+    constructor(obj) {
         super();
-        this.name = name;
+        this.name = obj.id.toString();
+        this.config = obj;
         this.gfx = new PIXI.Graphics;
         this.addChild(this.gfx);
+        this.signalPosOffset = 32;
+        console.log('[waveItems]this.offset!!!: ', this.signalPosOffset);
     }
 
 
     static getLabelString(t, e, i) {
-        let r = "",
-            n = !1;
+        let r = "", n = false;
         const o = Array(e).fill(0).concat(t).slice(t.length);
 
         for (let t = 0; t < e; t++) {
@@ -102,15 +105,14 @@ export class WaveItems extends PIXI.Container {
 
     removeLabels() { }
 
-    updateLabels(viewport, waveAmount, displayConfig) {
+    updateLabels(viewport, waveAmount) {
         const lastTextObjPos = this.children.length - 1;
         const textObjDeltaAmount = Math.min(waveAmount, Math.ceil(viewport.width / 8)) - lastTextObjPos;
 
         if (0 != textObjDeltaAmount) {
             if (textObjDeltaAmount < 0) {
                 this.removeChildren(this.children.length + textObjDeltaAmount);
-            }
-            else {
+            } else {
                 for (let i = 0; i < textObjDeltaAmount; i++) {
                     let textObj = new PIXI.Text("", {
                         fontFamily: "monospace",
@@ -123,33 +125,28 @@ export class WaveItems extends PIXI.Container {
                     textObj.anchor.x = .5;
                     textObj.anchor.y = .5;
                     textObj.x = 0;
-                    textObj.y = displayConfig.height / 2;
+                    textObj.y = this.config.display.height / 2;
                     this.addChild(textObj);
                 }
             }
         }
     }
 
-    draw(viewport, index, data) {
+    // e: if true, draw the graphics on the canvas
+    draw(viewport, e = true) {
         // y is the pos of the every wave item
-        this.y = data.getSignalDrawYAxis();
-        if(index < data.getSignalDrawYIdx() || this.y > viewport.height) {
-            return;
-        }
-
-        data.addSignalDrawNumber();
-        // console.log('this.y: %d', this.y);
-        // console.log('viewport.y: ', viewport.height);
-
-        //console.log('[WI]this.y: %d', this.y);
-        switch (data.getSignalDisplayConfig(index).renderer) {
-            case DATA_TYPE.Wire: {
-                this.drawWire(viewport, index, data);
-                break;
-            }
-            case DATA_TYPE.Bus: {
-                this.drawBus(viewport, index, data);
-                break;
+        this.y = Math.floor(this.config.display.y);
+        console.log('[waveItems]this.y: ', this.y);
+        if(e) {
+            switch (this.config.display.renderer) {
+                case DATA_TYPE.Wire: {
+                    this.drawWire(viewport);
+                    break;
+                }
+                case DATA_TYPE.Bus: {
+                    this.drawBus(viewport);
+                    break;
+                }
             }
         }
     }
@@ -187,25 +184,21 @@ export class WaveItems extends PIXI.Container {
         }
     }
 
-    drawBus(viewport, index, data) {
+    drawBus(viewport) {
         this.gfx.clear();
 
-        const displayConfig = data.getSignalDisplayConfig(index);
-        //console.log('displayConfig: %o', displayConfig);
-
-        this.gfx.height = displayConfig.height - 4;
+        this.gfx.height = this.config.display.height - 4;
         this.gfx.y = 0;
 
-        const busValuePos = displayConfig.height - 2;
+        const busValuePos = this.config.display.height - 2;
         const busCenterValuePos = (busValuePos - 2) / 2 + 2;
 
-        const fillAlpha = displayConfig.fill;;
-        const isFillAlphaZero = (0 == displayConfig.fill);
-        const busColor = getRGBColorValue(displayConfig.color);
-        const fillColor = getRGBColorValue(displayConfig.fillColor);
+        const fillAlpha = this.config.display.fill;;
+        const isFillAlphaZero = (0 == this.config.display.fill);
+        const busColor = getRGBColorValue(this.config.display.color, '#');
 
         this.gfx.moveTo(0, busValuePos);
-        this.gfx.lineStyle(displayConfig.strokeWidth, busColor, 1);
+        this.gfx.lineStyle(this.config.display.strokeWidth, busColor, 1);
 
         let d = [];
         let curWaveTime;
@@ -213,22 +206,21 @@ export class WaveItems extends PIXI.Container {
         let drawState = DATA_STATE.HIGH;
 
         if (!isFillAlphaZero) {
-            this.gfx.beginFill(fillColor, fillAlpha);
+            this.gfx.beginFill(busColor, fillAlpha);
         }
 
-        let waveAmount = data.getWaveAmount(index);
-
-        this.updateLabels(viewport, waveAmount, displayConfig);
+        let waveAmount = DataObject.getInst().getWaveAmount(this.config.id);
+        this.updateLabels(viewport, waveAmount);
 
         let g = 1;
         for (let i = 0; i < waveAmount; i += 1) {
             let isLastWave = (i == waveAmount - 1);
 
-            curWaveTime = data.getWaveTime(index, i);
+            curWaveTime = DataObject.getInst().getWaveTime(this.config.id, i);
             if (isLastWave) {
-                nxtWaveTime = viewport.length
+                nxtWaveTime = viewport.length;
             } else {
-                nxtWaveTime = data.getWaveTime(index, i + 1);
+                nxtWaveTime = DataObject.getInst().getWaveTime(this.config.id, i + 1);
             }
 
             const viewportLeftPos = viewport.x;
@@ -282,13 +274,13 @@ export class WaveItems extends PIXI.Container {
                 continue;
             }
 
-            let isDataValid = data.getWaveValue(index, i);
+            let isDataValid = DataObject.getInst().getWaveValue(this.config.id, i);
             if (!isFillAlphaZero) {
                 //console.log('isDataValid: %s', isDataValid);
                 if (isDataValid === 'x' || isDataValid === 'z') {
                     this.gfx.endFill();
                     this.gfx.beginFill(7798818, fillAlpha);
-                    this.gfx.lineStyle(displayConfig.strokeWidth, 16711782, 1);
+                    this.gfx.lineStyle(this.config.display.strokeWidth, 16711782, 1);
                 }
 
                 this.gfx.moveTo(curWaveTime, busCenterValuePos);
@@ -302,8 +294,8 @@ export class WaveItems extends PIXI.Container {
 
                 if (isDataValid === 'x' || isDataValid === 'z') {
                     this.gfx.endFill();
-                    this.gfx.beginFill(fillColor, fillAlpha);
-                    this.gfx.lineStyle(displayConfig.strokeWidth, busColor, 1);
+                    this.gfx.beginFill(busColor, fillAlpha);
+                    this.gfx.lineStyle(this.config.display.strokeWidth, busColor, 1);
                 }
             }
 
@@ -313,7 +305,7 @@ export class WaveItems extends PIXI.Container {
 
                 // (v.x, v.y): position of the text
                 v.x = curWaveTime + timeGap / 2;
-                v.y = Math.floor(displayConfig.height / 2);
+                v.y = Math.floor(this.config.display.height / 2);
 
                 // if the text'd width is larger than signal width, the signal will be invisible
                 // console.log('v.width: %d', v.width);
@@ -322,7 +314,7 @@ export class WaveItems extends PIXI.Container {
                 // 8 is the scale value setted
                 v.visible = !(v.width + 8 > timeGap);
                 if (v.visible) {
-                    v.text = data.getWaveValue(index, i);
+                    v.text = DataObject.getInst().getWaveValue(this.config.id, i);
                 }
             }
         }
@@ -349,25 +341,23 @@ export class WaveItems extends PIXI.Container {
             this.gfx.lineTo(d[t], 1);
             this.gfx.lineTo(d[t + 1], 1);
             this.gfx.lineTo(d[t + 1], busValuePos);
-            this.gfx.endFill()
+            this.gfx.endFill();
         }
     }
 
 
-    drawWire(viewport, index, data) {
+    drawWire(viewport) {
         this.gfx.clear();
 
-        const displayConfig = data.getSignalDisplayConfig(index);
         // zValuePos: the 'z''s y value
-        const wireValuePos = Math.floor(displayConfig.height) - 3;
+        const wireValuePos = Math.floor(this.config.display.height) - 3;
         const zValuePos = Math.floor((wireValuePos - 3) / 2) + 4;
 
-        const wireColor = getRGBColorValue(displayConfig.color);
-        const fillColor = getRGBColorValue(displayConfig.fillColor);
-        const fillAlpha = displayConfig.fill;
-        const isFillAlphaZero = (0 == displayConfig.fill);
+        const wireColor = getRGBColorValue(this.config.display.color, '#');
+        const fillAlpha = this.config.display.fill;
+        const isFillAlphaZero = (0 == this.config.display.fill);
 
-        this.gfx.lineStyle(displayConfig.strokeWidth, wireColor, 1);
+        this.gfx.lineStyle(this.config.display.strokeWidth, wireColor, 1);
         this.gfx.moveTo(0, wireValuePos);
 
         let curWaveTime;
@@ -375,17 +365,17 @@ export class WaveItems extends PIXI.Container {
         let d = [];
         let drawState = DATA_STATE.HIGH;
         // waveAmount: the number of  object of the wave array
-        const waveAmount = data.getWaveAmount(index);
+        const waveAmount = DataObject.getInst().getWaveAmount(this.config.id);
 
         for (let i = 0; i < waveAmount; i += 1) {
             let isLastWave = (i == waveAmount - 1);
 
             // curWaveTime: the time of the wave array in i index
-            curWaveTime = data.getWaveTime(index, i);
+            curWaveTime = DataObject.getInst().getWaveTime(this.config.id, i);
             if (isLastWave) {
                 nxtWaveTIme = viewport.length;
             } else {
-                nxtWaveTIme = data.getWaveTime(index, i + 1);
+                nxtWaveTIme = DataObject.getInst().getWaveTime(this.config.id, i + 1);
             }
 
             // signal: viewport.x and viewport.width
@@ -432,11 +422,11 @@ export class WaveItems extends PIXI.Container {
             // 3: 'z'
             // 2: 'x'
             if (drawState !== DATA_STATE.LOW) {
-                switch (data.getWaveValue(index, i)) {
+                switch (DataObject.getInst().getWaveValue(this.config.id, i)) {
                     case '1': {
                         this.gfx.moveTo(curWaveTime, wireValuePos);
                         if (isSignalGapNotTooNarrow) {
-                            this.gfx.beginFill(fillColor, fillAlpha);
+                            this.gfx.beginFill(wireColor, fillAlpha);
                             this.gfx.lineTo(curWaveTime, wireValuePos);
                             this.gfx.lineTo(curWaveTime, 3);
                             this.gfx.lineTo(nxtWaveTIme, 3);
@@ -457,18 +447,18 @@ export class WaveItems extends PIXI.Container {
                     case 'z': {
                         if (isSignalGapNotTooNarrow) {
                             this.gfx.endFill();
-                            this.gfx.lineStyle(displayConfig.strokeWidth, 16776960, 1);
+                            this.gfx.lineStyle(this.config.display.strokeWidth, 16776960, 1);
                             this.gfx.moveTo(curWaveTime, zValuePos);
                             this.gfx.lineTo(curWaveTime, zValuePos);
                             this.gfx.lineTo(nxtWaveTIme, zValuePos);
                             this.gfx.moveTo(nxtWaveTIme, zValuePos);
-                            this.gfx.lineStyle(displayConfig.strokeWidth, wireColor, 1);
+                            this.gfx.lineStyle(this.config.display.strokeWidth, wireColor, 1);
                         }
                         break;
                     }
                     case 'x': {
                         this.gfx.moveTo(curWaveTime, wireValuePos);
-                        this.gfx.lineStyle(displayConfig.strokeWidth, 16711782, 1);
+                        this.gfx.lineStyle(this.config.display.strokeWidth, 16711782, 1);
                         if (isSignalGapNotTooNarrow) {
                             this.gfx.beginFill(7798818, fillAlpha);
                             this.gfx.lineTo(curWaveTime, wireValuePos);
@@ -477,7 +467,7 @@ export class WaveItems extends PIXI.Container {
                             this.gfx.lineTo(nxtWaveTIme, wireValuePos);
                             this.gfx.endFill();
                         }
-                        this.gfx.lineStyle(displayConfig.strokeWidth, wireColor, 1);
+                        this.gfx.lineStyle(this.config.display.strokeWidth, wireColor, 1);
                         break;
                     }
                 }

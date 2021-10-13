@@ -7,8 +7,7 @@ export class AxisMarker extends PIXI.Container {
         });
 
         
-        // this.text.y = -e.textSize / 2;
-        this.text.y = e.textSize / 2;
+        this.text.y = -e.textSize / 2;
         this.text.anchor.x = .5;
         this.text.anchor.y = .5;
         this.text.scale.set(.5, .5);
