@@ -39,13 +39,16 @@ export class Viewport {
 
         // t < 0: some time only mean that 'go to the end' trigger
         // when this time, the signal end time will center at the screen
-        t < 0 && (i = this.length - t + 1), this.x = i + e / 2;
+        if(t < 0) {
+            i = this.length - t + 1;
+        }
+        this.x = i + e / 2;
     }
 
     fit() {
         this.x = 0;
         let t = this.width / this.length;
-        this.xscale = t
+        this.xscale = t;
     }
 
     // t > 0: pan right t < 0: pan left
@@ -71,9 +74,13 @@ export class Viewport {
 
 
         // limit range[10^-10, 99]
-        this.xscale > 99 && (this.xscale = 99);
-        this.xscale < 0 && (this.xscale = 1e-10);
-
+        if(this.xscale > 99){
+            this.xscale = 99;
+        }
+        
+        if(this.xscale < 0) {
+            this.xscale = 1e-10;
+        }
 
         let o = this.toPs(r) - this.toPs(0);
         // because e === 0, so x -= (o - n) / 2
@@ -91,9 +98,11 @@ export class Viewport {
     screenToPs(t) {
         return Math.round(t * (1 / this.xscale) + this.x);
     }
+
     update() { }
+
     resize(t, e) {
         this.width = t;
-        this.height = e
+        this.height = e;
     }
 }
