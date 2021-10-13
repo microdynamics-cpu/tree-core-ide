@@ -3,7 +3,7 @@
   "displayName": "TreeCore IDE",
   "description": "The next generation integrated development environment for processor.",
   "version": "1.0.0",
-  "icon": "./resources/images/logos/treecore_logo_200x200.png",
+  "icon": "./resources/logos/treecore_logo_200x200.png",
   "engines": {
     "vscode": "^1.42.0"
   },
@@ -67,8 +67,8 @@
         "command": "treecore.activityBar.rtlproject.refreshEntry",
         "title": "Refresh",
         "icon": {
-          "light": "resources/images/icons/light/refresh.svg",
-          "dark": "resources/images/icons/dark/refresh.svg"
+          "light": "resources/light/refresh.svg",
+          "dark": "resources/dark/refresh.svg"
         }
       },
       {
@@ -79,8 +79,8 @@
         "command": "treecore.activityBar.rtlproject.editEntry",
         "title": "Edit",
         "icon": {
-          "light": "resources/images/icons/light/edit.svg",
-          "dark": "resources/images/icons/dark/edit.svg"
+          "light": "resources/light/edit.svg",
+          "dark": "resources/dark/edit.svg"
         }
       },
       {
@@ -176,8 +176,16 @@
     ],
     "snippets": [
       {
-        "language": "verilog",
-        "path": "./snippets/verilog.json"
+          "language": "verilog",
+          "path": "./snippets/verilog.json"
+      },
+      {
+          "language": "systemverilog",
+          "path": "./snippets/verilog.json"
+      },
+      {
+          "language": "systemverilog",
+          "path": "./snippets/systemverilog.json"
       }
     ],
     "viewsContainers": {
@@ -185,7 +193,7 @@
         {
           "id": "treecore",
           "title": "TreeCore",
-          "icon": "./resources/images/logos/treecore_logo_activity.svg"
+          "icon": "./resources/logos/treecore_logo_activity.svg"
         }
       ]
     },
@@ -258,7 +266,9 @@
     "@types/node": "^12.11.7",
     "@types/vscode": "^1.42.0",
     "autoprefixer": "^8.6.5",
+    "babel-core": "^6.26.3",
     "babel-loader": "^8.2.2",
+    "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "compression-webpack-plugin": "^6.1.1",
     "cross-env": "^7.0.3",

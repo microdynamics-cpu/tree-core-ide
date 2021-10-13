@@ -26,6 +26,7 @@ export class DataObject {
         this.timescale = '';
         this.endtime = 0;
         this.scale = '';
+        this.module = [];
         this.signal = [];
         this.firstYIdx = 0;
         this.drawNumber = 0;
@@ -33,8 +34,16 @@ export class DataObject {
         this.orignalData;
     }
 
+    static getInst() {
+        if(!this.instance) {
+            this.instance = new DataObject();
+        }
+
+        return this.instance;
+    }
 
     update(obj) {
+        // deep copy
         this.orignalData = JSON.parse(obj);
         if (this.orignalData) {
             if (this.orignalData.date) {
@@ -55,6 +64,9 @@ export class DataObject {
             if (this.orignalData.signal) {
                 this.signal = this.orignalData.signal;
             }
+            if (this.orignalData.module) {
+                this.module = this.orignalData.module;
+            }
         } else {
             console.log('data is wrong!');
         }
@@ -74,9 +86,14 @@ export class DataObject {
         }
     }
 
+    getModuleAmount() {
+        return this.module.length;
+    }
+
     getSignalAmount() {
         return this.signal.length;
     }
+
 
     getSignalName(idx) {
         return this.signal[idx].name;
@@ -123,15 +140,44 @@ export class DataObject {
         }
     }
 
+
+    // idx(id)
     getWaveAmount(idx) {
-        return this.signal[idx].wave.length;
+        return this.signal[idx-this.getModuleAmount()-1].wave.length;
     }
 
     getWaveTime(signalIdx, waveIdx) {
-        return parseInt(this.signal[signalIdx].wave[waveIdx][0]);
+        return parseInt(this.signal[signalIdx-this.getModuleAmount()-1].wave[waveIdx][0]);
     }
 
     getWaveValue(signalIdx, waveIdx) {
-        return this.signal[signalIdx].wave[waveIdx][1];
+        return this.signal[signalIdx-this.getModuleAmount()-1].wave[waveIdx][1];
     }
+
+    searchWaveValue(signalIdx, t) {
+        let wave =  this.signal[signalIdx-this.getModuleAmount()-1].wave;
+        let res = "", pre = "";
+        for (let v of wave) {
+            if(parseInt(v[0]) >= t) {
+                res = pre;
+                break;
+            } else {
+                pre = v[1];
+            }
+        }
+
+        return res;
+    }
+
+    getAllSignalsType() {
+        let res = [];
+        this.signal.forEach(v => {res.push(v.type)});
+        return res;
+    }
+
+    getAllSignalsObj() {
+        return this.signal;
+    }
+
+    
 }

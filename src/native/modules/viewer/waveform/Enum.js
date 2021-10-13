@@ -12,6 +12,22 @@ class Enum {
     }
 }
 
+export const DATA_CMD_TYPE = new Enum({
+    wire: 'wire',
+    reg: 'reg',
+    group: 'group',
+    module: 'module',
+    integer: 'integer',
+    real: 'real',
+    short: 'short',
+    logic: 'logic',
+    event: 'event',
+    bit: 'bit',
+    parameter: 'parameter',
+    realtime: 'realtime',
+    divider: 'divider'
+});
+
 export const DATA_STATE = new Enum({
     HIGH: 0,
     LOW: 1,
@@ -20,12 +36,20 @@ export const DATA_STATE = new Enum({
 export const DATA_FORMAT = new Enum({
     Bin: "bin", 
     Oct: "oct", 
-    Hex: "hex", 
+    Hex: "hex",
+    SignedDec: 'signed',
+    UnsignedDec: 'unsigned',
+    ASCII: 'ascii',
+    UTF8: 'utf8',
+    Float: 'float'
 });
 
 export const DATA_TYPE = new Enum({
     Wire: "wire",
     Bus: "bus",
+    AnalogStep: 'step',
+    AnalogLinear: 'linear',
+    Event: 'event'
 });
 
 

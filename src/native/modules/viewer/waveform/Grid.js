@@ -1,10 +1,13 @@
 import { AxisMarker } from "./AxisMarker.js";
+import { getRGBColorValue } from "./Utils";
 
 export class Grid extends PIXI.Container {
     constructor() {
         super();
 
         this.style = {
+            // balck? this is default settings
+            // when resize(), will set the right settings
             axisBackgroundColor: 0,
             axisColor: 16777215,
             axisHeight: 38,
@@ -22,7 +25,7 @@ export class Grid extends PIXI.Container {
         this.name = "grid";
         this.gfx = new PIXI.Graphics;
         this.gfx.name = "xaxis";
-        this.drawXaxis();
+        this.drawXaxis(); // important!!!
         this.addChild(this.gfx);
     }
 
@@ -72,11 +75,10 @@ export class Grid extends PIXI.Container {
         this.gfx.clear();
         this.gfx.beginFill(this.style.axisBackgroundColor, 1);
         this.gfx.drawRect(0, -1.5, this.bounds.width, this.style.axisHeight + 1.5);
-        // this.gfx.drawRect(0, 10, this.bounds.width, this.style.axisHeight + 1.5);
-
         this.gfx.endFill();
+
         this.gfx.lineStyle(1, this.style.axisColor, 1);
-        this.gfx.drawPolygon([0, this.style.axisHeight + .5, this.bounds.width, this.style.axisHeight + .5])
+        this.gfx.drawPolygon([0, this.style.axisHeight + .5, this.bounds.width, this.style.axisHeight + .5]);
 
         // this.gfx.moveTo(100, 0);
         // this.gfx.lineTo(100, 100);
@@ -88,6 +90,7 @@ export class Grid extends PIXI.Container {
 
         let e = Math.floor(renderer.width / 32) + 1;
 
+        console.log('[Grid]: this.children.length: ', this.children.length);
         // remove all tick object if have
         if (this.children.length > 1) {
             this.removeChildren(1, this.children.length - 1);
@@ -107,22 +110,21 @@ export class Grid extends PIXI.Container {
     }
 
     reloadStyle(renderer) {
-        function e(renderer) {
-            // return 16711782;
-            return 16777215;
-
-        }
-
-        function i(renderer) {
-            // return parseInt(getComputedStyle(document.documentElement).getPropertyValue(renderer).trim());
-            if (renderer === '--grid-dash' || renderer === '--grid-space') {
-                return 2;
+        function e(element) {
+            let val = getComputedStyle(document.documentElement).getPropertyValue(element).trim();
+            let res = getRGBColorValue(val, '#');
+            if (res !== -1) {
+                return res;
             } else {
-                return 1;
+                return 16777215; // white
             }
+            // return gi(ht(getComputedStyle(document.documentElement).getPropertyValue(element).trim(), "float32").slice(0, 3));
         }
 
-        //console.log('reloadStyle');
+        function i(element) {
+            // console.log('[Grid] reloadStyle i: ', getComputedStyle(document.documentElement).getPropertyValue(renderer));
+            return parseInt(getComputedStyle(document.documentElement).getPropertyValue(element).trim());
+        }
 
         this.style = {
             axisBackgroundColor: e("--axis-background"),
