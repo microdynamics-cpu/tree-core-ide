@@ -1,37 +1,16 @@
 grammar riscv;
 
-prog: inst;
+import rv32i, rv64i;
 
-// label: ID ':';
+prog: directive | label | inst;
+
+directive: DIRECTIVE;
+label: LABEL;
 inst: r_type | i_type | s_type | b_type | u_type | j_type;
 
-u_type: 'lui' | 'auipc';
-j_type: 'jal';
-b_type: 'beq' | 'bne' | 'blt' | 'bge' | 'bltu' | 'bgeu';
-i_type: 'jalr';
-s_type: 'sdfs';
-r_type:
-    'add' (REGNUM | REGNAME) ',' (REGNUM | REGNAME) ',' (
-        REGNUM
-        | REGNAME
-    );
-
-REGNUM: 'x' (DIGIT | [1-2]DIGIT | '30' | '31');
-REGNAME:
-    'zero'
-    | 'ra'
-    | 'sp'
-    | 'gp'
-    | 'tp'
-    | 'fp'
-    | 'a' [0-7]
-    | 's' [0-9]
-    | 's10'
-    | 's11'
-    | 't' [0-6];
-
-DIGIT: [0-9];
-ID: [a-zA-Z]+;
-INT: DIGIT+;
-NEWLINE: '\r'? '\n';
-WS: [ \t]+ -> skip;
+u_type: rv32i_u_type_inst;
+j_type: rv32i_j_type_inst;
+b_type: rv32i_b_type_inst;
+i_type: rv32i_i_type_inst;
+s_type: rv32i_s_type_inst;
+r_type: rv32i_r_type_inst;
