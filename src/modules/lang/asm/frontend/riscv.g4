@@ -2,7 +2,12 @@ grammar riscv;
 
 import rv32i, rv64i;
 
-prog: directive | label | inst;
+prog: stat+;
+stat:
+	directive NEWLINE
+	| label NEWLINE
+	| inst NEWLINE
+	| NEWLINE;
 
 directive: DIRECTIVE;
 label: LABEL;
