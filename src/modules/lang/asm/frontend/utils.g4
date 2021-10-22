@@ -1,20 +1,20 @@
 lexer grammar utils;
 
-DIRECTIVE: '.align' IMM
-| '.file'  STRING
-| '.global' SYMBOL_NAME
-| '.local' SYMBOL_NAME
+DIRECTIVE: '.align' WS IMM
+| '.file' WS STRING
+| '.global'WS SYMBOL_NAME
+| '.local' WS SYMBOL_NAME
 | '.comm'
 | '.common'
-| '.ident' STRING
+| '.ident' WS STRING
 | '.section'
 | '.size'
 | '.text'
 | '.data'
 | '.rodata'
 | '.bss'
-| '.string' STRING
-| '.asciz' STRING
+| '.string' WS STRING
+| '.asciz' WS STRING
 | '.equ'
 | '.macro'
 | '.endm'
