@@ -133,6 +133,7 @@ router.post("/server/getLibChartData", async function(req, res) {
         });
     }
 });
+
 router.post("/server/getLibInfoData", async function(req, res) {
     let searchKey = req.body.searchKey;
     let searchVal = req.body.searchVal;
@@ -226,6 +227,7 @@ router.post("/server/getLibInfoData", async function(req, res) {
         });
     }
 });
+
 router.post("/server/getLibVersionData", async function(req, res) {
     let libId = req.body.libId;
 
