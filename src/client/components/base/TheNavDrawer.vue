@@ -31,37 +31,14 @@
     </v-navigation-drawer>
 </template>
 <script>
+    import config from "@client/configs/index";
+
     export default {
         name: "TheNavDrawer",
         data: function() {
             return {
                 nvSelectedIndex: 0,
-                navListItems: [{
-                    // title: "Home",
-                    title: "插件主页",
-                    icon: "mdi-home",
-                    link: "/home"
-                }, {
-                    // title: "Projects",
-                    title: "工程管理",
-                    icon: "mdi-code-greater-than-or-equal",
-                    link: "/prj"
-                }, {
-                    // title: "Tools",
-                    title: "调试工具",
-                    icon: "mdi-toolbox",
-                    link: "/tool"
-                }, {
-                    // title: "Libraries",
-                    title: "库管理",
-                    icon: "mdi-book",
-                    link: "/lib/brief"
-                }, {
-                    // title: "Settings",
-                    title: "系统设置",
-                    icon: "mdi-cog",
-                    link: "/setting"
-                }]
+                navListItems: config.comp.ideNavListItems
             };
         },
         mounted: function() {

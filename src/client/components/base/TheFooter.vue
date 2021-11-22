@@ -35,8 +35,7 @@
                     md="12"
                     class="py-2 text-md-center">
                     <div class="text-md-body1">
-                        <!-- The next generation integrated development environment for processor. -->
-                        下一代处理器集成开发环境
+                       {{ i18n.projectTagline }}
                     </div>
                     <div class="text-md-body1">
                         2021-{{ new Date().getFullYear() }} Developed by
@@ -48,91 +47,14 @@
     </v-col>
 </template>
 <script>
+    import config from "@client/configs/index";
+
     export default {
         name: "TheFooter",
         data: function() {
             return {
-                footerItems: [{
-                    // title: "Team",
-                    title: "团队",
-                    list: [{
-                        // title: "About Us",
-                        title: "关于我们",
-                        icon: ""
-                    }, {
-                        // title: "Contact Us",
-                        title: "联系我们",
-                        icon: ""
-                    }, {
-                        // title: "Team Blog",
-                        title: "团队博客",
-                        icon: ""
-                    }]
-                }, {
-                    // title: "Development",
-                    title: "开发",
-                    list: [{
-                        // title: "TreeCore IDE",
-                        title: "插件主页",
-                        icon: ""
-                    }, {
-                        // title: "Projects",
-                        title: "工程管理",
-                        icon: ""
-                    }, {
-                        // title: "Libraries",
-                        title: "库管理",
-                        icon: ""
-                    }, {
-                        // title: "Settings",
-                        title: "系统设置",
-                        icon: ""
-                    }]
-                }, {
-                    // title: "Support",
-                    title: "支持",
-                    list: [{
-                        // title: "Documents",
-                        title: "项目文档",
-                        icon: ""
-                    }, {
-                        // title: "WiKi",
-                        title: "项目维基",
-                        icon: ""
-                    }, {
-                        // title: "Ask Questions",
-                        title: "咨询问题",
-                        icon: ""
-                    }, {
-                        // title: "Report Bugs",
-                        title: "报告错误",
-                        icon: ""
-                    }, {
-                        // title: "Donate",
-                        title: "慷慨捐赠",
-                        icon: ""
-                    }]
-                }, {
-                    // title: "Community",
-                    title: "社区",
-                    list: [{
-                        // title: "Website",
-                        title: "项目网站",
-                        icon: "mdi-web"
-                    }, {
-                        // title: "Forum",
-                        title: "项目论坛",
-                        icon: "mdi-forum"
-                    }, {
-                        // title: "GitHub",
-                        title: "代码仓库",
-                        icon: "mdi-github",
-                    }, {
-                        // title: "E-mail",
-                        title: "电子邮箱",
-                        icon: "mdi-email"
-                    }]
-                }]
+                i18n: config.i18n,
+                footerItems: config.comp.ideFooterItems
             };
         }
     }
