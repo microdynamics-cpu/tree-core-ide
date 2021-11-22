@@ -8,10 +8,16 @@
     top: 1px;
     margin-left: 2px;
 }
-.v-data-table th {
-    font-size: 16px !important;
-}
 .tc-text-field-x {
     position: relative;
     top: -6px;
+}
+.tc-icon-text {
+    margin-right: 4px;
+}
+.theme--dark .v-label {
+    color: white;
+}
+.v-data-table th {
+    font-size: 16px !important;
 }

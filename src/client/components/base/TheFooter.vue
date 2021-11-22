@@ -35,7 +35,7 @@
                     md="12"
                     class="py-2 text-md-center">
                     <div class="text-md-body1">
-                       {{ i18n.projectTagline }}
+                       {{ i18n.ideTagline }}
                     </div>
                     <div class="text-md-body1">
                         2021-{{ new Date().getFullYear() }} Developed by
