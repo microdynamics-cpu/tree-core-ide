@@ -2,103 +2,7 @@ const router = require("express").Router();
 const dbFunc = require("../models/mysql");
 const baseFunc = require("../utils/base");
 
-router.post("/api/getLibInfoData", async function(req, res) {
-    let searchKey = req.body.searchKey;
-    let searchVal = req.body.searchVal;
-    let sortType = req.body.sortType;
-
-    let sqlWhereTemp = "";
-    if (searchKey !== "") {
-        let sqlWhereFieldObj = {
-            name: {
-                name: "li.libName",
-                type: "varchar"
-            },
-            author: {
-                name: "ui.userName",
-                type: "varchar"
-            },
-            type: {
-                name: "li.libType",
-                type: "varchar"
-            },
-            download: {
-                name: "li.libDownloadNum",
-                type: "int"
-            },
-            rating: {
-                name: "li.libRating",
-                type: "float"
-            }
-        };
-        let sqlWhereField = sqlWhereFieldObj[searchKey].name;
-        let sqlWhereFieldType = sqlWhereFieldObj[searchKey].type;
-        if (sqlWhereFieldType === "varchar") {
-            sqlWhereTemp = sqlWhereField + " LIKE '%" + searchVal + "%' ";
-        }
-        else if (sqlWhereFieldType === "int" ||
-                 sqlWhereFieldType === "float") {
-            sqlWhereTemp = sqlWhereField + " = " + searchVal + " ";
-        }
-    }
-    else {
-        sqlWhereTemp = "1 = 1 ";
-    }
-    let sqlWhere = "WHERE " + sqlWhereTemp;
-
-    let sqlSortFieldObj = {
-        download: "li.libDownloadNum",
-        rating: "li.libRating"
-    };
-    let sqlSortField = sqlSortFieldObj[sortType];
-    if (sqlSortField == undefined) {
-        sqlSortField = "li.libCreateDate";
-    }
-    let sqlSort = "ORDER BY " + sqlSortField + " DESC";
-
-    let sql = "SELECT li.*, ui.* " +
-              "FROM TCLibInfo li LEFT JOIN TCUserInfo ui " +
-              "ON li.libUserId = ui.userId " + sqlWhere + sqlSort;
-    let resDB = await dbFunc.handleDBRecordSync(sql);
-    for (let i = 0; i < resDB.length; i++) {
-        let obj = resDB[i];
-        let libInfoId = obj.libId;
-        sql = "SELECT lv.* " +
-              "FROM TCLibVersion lv " +
-              "WHERE lv.libInfoId = '" + libInfoId + "' " +
-              "ORDER BY lv.libUpdateDate DESC";
-        let resDBChild = await dbFunc.handleDBRecordSync(sql);
-        let libVersion = [];
-        let libVersionArr = [];
-        libVersion = resDBChild;
-        for (let j = 0; j < resDBChild.length; j++) {
-            libVersionArr.push(resDBChild[j].libVersion);
-        }
-        obj.libVersion = libVersion;
-        obj.libVersionArr = libVersionArr;
-
-        let libRating = obj.libRating;
-        let libRatingStr = baseFunc.keepDecimalForce(libRating, 2);
-        obj.libRatingStr = libRatingStr;
-    }
-
-    if (resDB.length > 0) {
-        res.json({
-            code: 0,
-            msg: "success",
-            data: resDB
-        });
-    }
-    else {
-        res.json({
-            code: 1,
-            msg: "error",
-            data: []
-        });
-    }
-});
-
-router.post("/api/getLibChartData", async function(req, res) {
+router.post("/server/getLibChartData", async function(req, res) {
     let chartType = req.body.chartType;
 
     if (chartType === "pie") {
@@ -118,7 +22,6 @@ router.post("/api/getLibChartData", async function(req, res) {
             if (resDB.length === 4) {
                 res.json({
                     code: 0,
-                    msg: "success",
                     data: [{
                         name: "基础模块",
                         value: resDB[0][0].count
@@ -137,7 +40,6 @@ router.post("/api/getLibChartData", async function(req, res) {
             else {
                 res.json({
                     code: 1,
-                    msg: "error",
                     data: [{
                         name: "基础模块",
                         value: 0
@@ -224,11 +126,126 @@ router.post("/api/getLibChartData", async function(req, res) {
         }
         res.json({
             code: 0,
-            msg: "success",
             data: {
                 xAxisData: xAxisData,
                 seriesData: seriesData
             }
+        });
+    }
+});
+
+router.post("/server/getLibInfoData", async function(req, res) {
+    let searchKey = req.body.searchKey;
+    let searchVal = req.body.searchVal;
+    let sortType = req.body.sortType;
+
+    let sqlWhereTemp = "";
+    if (searchKey !== "") {
+        let sqlWhereFieldObj = {
+            name: {
+                name: "li.libName",
+                type: "varchar"
+            },
+            author: {
+                name: "ui.userName",
+                type: "varchar"
+            },
+            type: {
+                name: "li.libType",
+                type: "varchar"
+            },
+            download: {
+                name: "li.libDownloadNum",
+                type: "int"
+            },
+            rating: {
+                name: "li.libRating",
+                type: "float"
+            }
+        };
+        let sqlWhereField = sqlWhereFieldObj[searchKey].name;
+        let sqlWhereFieldType = sqlWhereFieldObj[searchKey].type;
+        if (sqlWhereFieldType === "varchar") {
+            sqlWhereTemp = sqlWhereField + " LIKE '%" + searchVal + "%' ";
+        }
+        else if (sqlWhereFieldType === "int" ||
+                 sqlWhereFieldType === "float") {
+            sqlWhereTemp = sqlWhereField + " = " + searchVal + " ";
+        }
+    }
+    else {
+        sqlWhereTemp = "1 = 1 ";
+    }
+    let sqlWhere = "WHERE " + sqlWhereTemp;
+
+    let sqlSortFieldObj = {
+        download: "li.libDownloadNum",
+        rating: "li.libRating"
+    };
+    let sqlSortField = sqlSortFieldObj[sortType];
+    if (sqlSortField == undefined) {
+        sqlSortField = "li.libCreateDate";
+    }
+    let sqlSort = "ORDER BY " + sqlSortField + " DESC";
+
+    let sql = "SELECT li.*, ui.* " +
+              "FROM TCLibInfo li LEFT JOIN TCUserInfo ui " +
+              "ON li.libUserId = ui.userId " + sqlWhere + sqlSort;
+    let resDB = await dbFunc.handleDBRecordSync(sql);
+    for (let i = 0; i < resDB.length; i++) {
+        let obj = resDB[i];
+        let libInfoId = obj.libId;
+        sql = "SELECT lv.* " +
+              "FROM TCLibVersion lv " +
+              "WHERE lv.libInfoId = '" + libInfoId + "' " +
+              "ORDER BY lv.libUpdateDate DESC";
+        let resDBChild = await dbFunc.handleDBRecordSync(sql);
+        let libVersion = [];
+        let libVersionArr = [];
+        libVersion = resDBChild;
+        for (let j = 0; j < resDBChild.length; j++) {
+            libVersionArr.push(resDBChild[j].libVersion);
+        }
+        obj.libVersion = libVersion;
+        obj.libVersionArr = libVersionArr;
+
+        let libRating = obj.libRating;
+        let libRatingStr = baseFunc.keepDecimalForce(libRating, 2);
+        obj.libRatingStr = libRatingStr;
+    }
+
+    if (resDB.length > 0) {
+        res.json({
+            code: 0,
+            data: resDB
+        });
+    }
+    else {
+        res.json({
+            code: 1,
+            data: []
+        });
+    }
+});
+
+router.post("/server/getLibVersionData", async function(req, res) {
+    let libId = req.body.libId;
+
+    let sql = "SELECT lv.libVersion " +
+              "FROM TCLibVersion lv " +
+              "WHERE lv.libInfoId = '" + libId + "'";
+    let resDB = await dbFunc.handleDBRecordSync(sql);
+
+    if (resDB.length > 0) {
+        res.json({
+            code: 0,
+            data: resDB
+        });
+    }
+    else {
+        res.json({
+            code: 1,
+            data: []
         });
     }
 });
