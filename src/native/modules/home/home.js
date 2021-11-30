@@ -19,7 +19,7 @@ module.exports = function (context) {
                 "resources/images/logos/treecore_logo_main.svg");
             panel.webview.html = utilExtn.getWebViewContent(
                 context,
-                "src/views/dist/index.html");
+                "src/server/static/index.html");
             panel.webview.onDidReceiveMessage(message => {
                 utilExtn.handleMessageFromWebview(global, message);
             }, undefined, context.subscriptions);

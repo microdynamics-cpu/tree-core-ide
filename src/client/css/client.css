@@ -15,6 +15,18 @@
 .tc-icon-text {
     margin-right: 4px;
 }
+.tc-border-shadow-none {
+    border: thin solid rgb(255, 255, 255, 0.12) !important;
+    box-shadow: none !important;
+}
+.tc-border-bottom-shadow-none {
+    border-bottom: thin solid rgb(255, 255, 255, 0.12) !important;
+    box-shadow: none !important;
+}
+/* .tc-dialog-toolbar .v-toolbar__content {
+    padding-left: 24px;
+    padding-right: 10px;
+} */
 .theme--dark .v-label {
     color: white;
 }

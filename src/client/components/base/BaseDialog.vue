@@ -1,13 +1,17 @@
 <template>
     <v-dialog
         v-model="dialogModel"
+        dark
         :max-width="dialogWidth"
         persistent>
-        <v-card>
-            <!-- <v-toolbar
+        <v-card outlined>
+            <v-toolbar
                 dense
-                color="">
-                <v-toolbar-title class="text-md-body-1">{{ dialogAlert.title }}</v-toolbar-title>
+                class="tc-border-bottom-shadow-none tc-dialog-toolbar">
+                <v-toolbar-title class="text-md-body-1">
+                    <span v-if="dialogType !== 'edit'">{{ dialogAlert.title }}</span>
+                    <span v-else>{{ dialogText }}</span>
+                </v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
                     <v-btn
@@ -16,28 +20,29 @@
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
                 </v-toolbar-items>
-            </v-toolbar> -->
-            <v-card-title class="text-md-body-1">
+            </v-toolbar>
+            <!-- <v-card-title class="text-md-body-1">
                 <span v-if="dialogType !== 'edit'">{{ dialogAlert.title }}</span>
                 <span v-else>{{ dialogText }}</span>
-            </v-card-title>
-            <v-card-text class="pb-0">
+            </v-card-title> -->
+            <v-card-text class="py-6">
                 <v-alert
                     v-if="dialogType !== 'edit'"
                     outlined
                     text
-                    :type="dialogAlert.type">
+                    :type="dialogAlert.type"
+                    class="mb-0">
                     {{ dialogText }}
                 </v-alert>
                 <v-container
                     v-else
-                    class="px-0">
+                    class="px-0 py-0">
                     <v-row>
                         <slot name="body"></slot>
                     </v-row>
                 </v-container>
             </v-card-text>
-            <v-card-actions class="pt-0 pr-6 pb-4">
+            <v-card-actions class="pt-0 pr-6 pb-6">
                 <v-spacer></v-spacer>
                 <v-btn
                     color="green"
@@ -141,5 +146,8 @@
     }
 </script>
 <style scoped>
-
+    .tc-dialog-toolbar .v-toolbar__content {
+        padding-left: 24px;
+        padding-right: 10px;
+    }
 </style>
