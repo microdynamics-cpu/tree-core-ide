@@ -70,11 +70,27 @@ module.exports = {
             return jsonArrNew;
         }
         else {
-            return false;
+            return [];
         }
     },
     getJSONDataByOrder: function(fileName, sortField, sortType, sortOrder) {
         let jsonArr = this.getJSONDataAll(fileName);
+        return this.handleJSONDataOrder(jsonArr,
+                                        sortField,
+                                        sortType,
+                                        sortOrder);
+    },
+    getJSONDataByPage: function(fileName, pageIndex, pagePerNum) {
+        const jsonArr = this.getJSONDataAll(fileName);
+        let jsonNum = jsonArr.length;
+        let pageNum = (pageIndex + 1) * pagePerNum;
+        if (pageNum > jsonNum) {
+            pageNum = jsonNum;
+        }
+        const jsonPageArr = jsonArr.slice((pageIndex * pagePerNum), pageNum);
+        return jsonPageArr;
+    },
+    handleJSONDataOrder: function(jsonArr, sortField, sortType, sortOrder) {
         jsonArr.sort((objA, objB) => {
             let valA = objA[sortField];
             let valB = objB[sortField];
@@ -110,16 +126,6 @@ module.exports = {
             }
         });
         return jsonArr;
-    },
-    getJSONDataByPage: function(fileName, pageIndex, pagePerNum) {
-        const jsonArr = this.getJSONDataAll(fileName);
-        let jsonNum = jsonArr.length;
-        let pageNum = (pageIndex + 1) * pagePerNum;
-        if (pageNum > jsonNum) {
-            pageNum = jsonNum;
-        }
-        const jsonPageArr = jsonArr.slice((pageIndex * pagePerNum), pageNum);
-        return jsonPageArr;
     },
     setJSONDataById: function(fileName, id, obj) {
         const jsonArr = this.getJSONDataAll(fileName);

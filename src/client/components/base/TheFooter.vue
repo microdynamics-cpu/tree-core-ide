@@ -35,7 +35,7 @@
                     md="12"
                     class="py-2 text-md-center">
                     <div class="text-md-body1">
-                        The next generation integrated development environment for processor.
+                       {{ i18n.ideTagline }}
                     </div>
                     <div class="text-md-body1">
                         2021-{{ new Date().getFullYear() }} Developed by
@@ -47,71 +47,14 @@
     </v-col>
 </template>
 <script>
+    import config from "@client/configs/index";
+
     export default {
         name: "TheFooter",
         data: function() {
             return {
-                footerItems: [{
-                    title: "Team",
-                    list: [{
-                        title: "About Us",
-                        icon: ""
-                    }, {
-                        title: "Contact Us",
-                        icon: ""
-                    }, {
-                        title: "Team Blog",
-                        icon: ""
-                    }]
-                }, {
-                    title: "Development",
-                    list: [{
-                        title: "TreeCore IDE",
-                        icon: ""
-                    }, {
-                        title: "Projects",
-                        icon: ""
-                    }, {
-                        title: "Libraries",
-                        icon: ""
-                    }, {
-                        title: "Settings",
-                        icon: ""
-                    }]
-                }, {
-                    title: "Support",
-                    list: [{
-                        title: "Documents",
-                        icon: ""
-                    }, {
-                        title: "WiKi",
-                        icon: ""
-                    }, {
-                        title: "Ask Questions",
-                        icon: ""
-                    }, {
-                        title: "Report Bugs",
-                        icon: ""
-                    }, {
-                        title: "Donate",
-                        icon: ""
-                    }]
-                }, {
-                    title: "Community",
-                    list: [{
-                        title: "Website",
-                        icon: "mdi-web"
-                    }, {
-                        title: "Forum",
-                        icon: "mdi-forum"
-                    }, {
-                        title: "GitHub",
-                        icon: "mdi-github",
-                    }, {
-                        title: "E-mail",
-                        icon: "mdi-email"
-                    }]
-                }]
+                i18n: config.i18n,
+                footerItems: config.comp.ideFooterItems
             };
         }
     }

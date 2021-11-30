@@ -20,7 +20,7 @@
                     color="lime darken-2"
                     class="px-0 text-center">
                     <v-list-item-content @click="$jumpToPageByLink('history', item.link)">
-                        <v-list-item-icon class="mb-0 ml-4">
+                        <v-list-item-icon class="mb-1 ml-4">
                             <v-icon>{{ item.icon }}</v-icon>
                         </v-list-item-icon>
                         <v-list-item-title style="font-size:0.75rem;">{{ item.title }}</v-list-item-title>
@@ -31,32 +31,14 @@
     </v-navigation-drawer>
 </template>
 <script>
+    import config from "@client/configs/index";
+
     export default {
         name: "TheNavDrawer",
         data: function() {
             return {
                 nvSelectedIndex: 0,
-                navListItems: [{
-                    title: "Home",
-                    icon: "mdi-home",
-                    link: "/home"
-                }, {
-                    title: "Projects",
-                    icon: "mdi-code-greater-than-or-equal",
-                    link: "/project"
-                }, {
-                    title: "Tools",
-                    icon: "mdi-toolbox",
-                    link: "/tool"
-                }, {
-                    title: "Libraries",
-                    icon: "mdi-book",
-                    link: "/lib/brief"
-                }, {
-                    title: "Settings",
-                    icon: "mdi-cog",
-                    link: "/setting"
-                }]
+                navListItems: config.comp.ideNavListItems
             };
         },
         mounted: function() {

@@ -49,12 +49,12 @@
             // }
         },
         created: function() {
-            console.log(this.$("#libBrief"));
-            console.log(this.$("body"));
+            // console.log(this.$("#libBrief"));
+            // console.log(this.$("body"));
         },
         mounted: function() {
-            console.log(this.$("#libBrief"));
-            console.log(this.$("body"));
+            // console.log(this.$("#libBrief"));
+            // console.log(this.$("body"));
         },
         methods: {
         }
