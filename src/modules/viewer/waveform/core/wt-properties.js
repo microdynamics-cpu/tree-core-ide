@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { } from './color-picker'
+import { } from './ColorPicker'
 import { DATA_FORMAT, DATA_TYPE, DATA_CMD_TYPE } from '../Enum';
 import { convertRGBColorArrayStrToString } from '../Utils';
 

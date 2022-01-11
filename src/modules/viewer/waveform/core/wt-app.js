@@ -2,7 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { } from './wt-sidebar';
 import { } from "./wt-canvas-nav";
 import { } from "./wt-canvas";
-import { } from "./wt-search";
+import { } from "./SearchPanel";
 import { OPERATE_CONFIG } from "../Config";
 import { DataObject } from "../DataObject";
 import { DATA_CMD_TYPE, DATA_FORMAT } from "../Enum";
@@ -137,8 +137,8 @@ export class Waveform extends LitElement {
                 @setCursor=${t=>{this.sidebar().updateCursor(t.detail)}}
                 ></wt-canvas>
             </main>
-            <wt-search id="wt-search-0" @add=${t => this.addSignals(t.detail)}>
-            </wt-search>
+            <search-panel id="search-panel-0" @add=${t => this.addSignals(t.detail)}>
+            </search-panel>
         `
     }
 
@@ -408,7 +408,7 @@ export class Waveform extends LitElement {
 
     search() {
         console.log('search[wt-app]');
-        return this.shadowRoot.getElementById("wt-search-0");
+        return this.shadowRoot.getElementById("search-panel-0");
     }
 
     canvas() {
