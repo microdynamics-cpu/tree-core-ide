@@ -243,7 +243,7 @@ const au = html`
 </svg>
 `;
 
-export class WtSidebar extends LitElement {
+export class SidebarContainer extends LitElement {
     constructor() {
         super();
         this._signals = [];
@@ -614,7 +614,7 @@ export class WtSidebar extends LitElement {
 
     // get data from the wt-app enterance !!!
     set signals(t) {
-        console.log('[wt-sidebar] set signals: ', t);
+        console.log('[sidebar-container] set signals: ', t);
         let e = this._signals;
         this._signals = t;
         this.requestUpdate("signals", e);
@@ -857,7 +857,7 @@ export class WtSidebar extends LitElement {
             document.removeEventListener("mouseup", t);
             document.documentElement.style.cursor = null;
 
-            const i = document.getElementById("app").shadowRoot.getElementById("wt-sidebar-0");
+            const i = document.getElementById("app").shadowRoot.getElementById("sidebar-container-0");
             const r = () => {
                 i.insert();
                 e.style.zIndex = "100";
@@ -911,4 +911,4 @@ export class WtSidebar extends LitElement {
     }
 }
 
-window.customElements.define('wt-sidebar', WtSidebar);
+window.customElements.define('sidebar-container', SidebarContainer);

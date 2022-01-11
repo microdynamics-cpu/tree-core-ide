@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { } from './wt-sidebar';
+import { } from './SidebarContainer';
 import { } from "./CanvasNav";
 import { } from "./CanvasMain";
 import { } from "./SearchPanel";
@@ -119,7 +119,7 @@ export class Waveform extends LitElement {
         return html`
             <input type="file" id="upload-file" hidden="hidden">
             <aside id="aside-0">
-                <wt-sidebar id="wt-sidebar-0" 
+                <sidebar-container id="sidebar-container-0" 
                     .signals="${this._signals}"
                     .defined="${this.defined}"
                     .error="${this.error}"
@@ -127,7 +127,7 @@ export class Waveform extends LitElement {
                     @redraw="${t => this.handleSidebarRedraw(t.detail)}"
                     @setActiveSignal="${t => this.canvas().setActiveSignal(t.detail)}"
                     @waveformChanged=${this.waveformChanged}>
-                </wt-sidebar>
+                </sidebar-container>
             </aside>
             <div id="resize-handle" class="resize-handle--x"></div>
             <main id="main-0">
@@ -403,7 +403,7 @@ export class Waveform extends LitElement {
 
     // get the DOM instance
     sidebar() {
-        return this.shadowRoot.getElementById("wt-sidebar-0");
+        return this.shadowRoot.getElementById("sidebar-container-0");
     }
 
     search() {

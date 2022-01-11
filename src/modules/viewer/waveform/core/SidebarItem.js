@@ -143,7 +143,7 @@ export class SidebarItem extends LitElement {
         return this;
     }
 
-    // get the data from the wt-sidebar
+    // get the data from the sidebar-container
     set signal(t) {
         let e = t;
         this._signal = t;
