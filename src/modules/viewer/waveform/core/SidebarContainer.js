@@ -1,8 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { } from './wt-properties';
-import { } from "./wt-sidebar-item";
+import { } from './ItemProperty';
+import { } from "./SidebarItem";
 import { DATA_CMD_TYPE } from "../Enum";
 
 const iu = css`
@@ -243,7 +243,7 @@ const au = html`
 </svg>
 `;
 
-export class WtSidebar extends LitElement {
+export class SidebarContainer extends LitElement {
     constructor() {
         super();
         this._signals = [];
@@ -296,7 +296,7 @@ export class WtSidebar extends LitElement {
             padding: 0;
         }
 
-        /* Waveform Group */
+        /* WaveformMain Group */
         .wg-container {
             display: block;
             background: var(--sidebar-group-background);
@@ -325,7 +325,7 @@ export class WtSidebar extends LitElement {
             background: var(--sidebar-item-border);
         }
 
-        /* Waveform Items */
+        /* WaveformMain Items */
         .wi-container {
             overflow: hidden;
             border-top: 1px solid
@@ -429,17 +429,17 @@ export class WtSidebar extends LitElement {
             cursor: grab !important;
         }
 
-        wt-sidebar-item {
+        sidebar-item {
             display: inline-flex;
             width: 100%;
             vertical-align:top;
         }
 
-        wt-sidebar-item.prop-open .wi-item .wi-icon {
+        sidebar-item.prop-open .wi-item .wi-icon {
             opacity: 1;
         }
 
-        .sortable-chosen wt-sidebar-item .wi-item {
+        .sortable-chosen sidebar-item .wi-item {
             background: var(--accent);
         }
 
@@ -575,8 +575,8 @@ export class WtSidebar extends LitElement {
                     stroke-width = "1.5" />
             </symbol> 
             </svg>
-            <wt-properties id = "wt-properties-0" .signals = ${this.selectedSignals}>
-            </wt-properties>
+            <item-property id = "item-property-0" .signals = ${this.selectedSignals}>
+            </item-property>
             <nav id = "nav0">
                 <div id = "treeroot" class = "wi-container" >
                     <div id="placeholder" style="height: 32px"></div>
@@ -586,7 +586,7 @@ export class WtSidebar extends LitElement {
     `}
 
     resize() {
-        const t = this.shadowRoot.querySelectorAll("wt-sidebar-item");
+        const t = this.shadowRoot.querySelectorAll("sidebar-item");
         for (let e = 0; e < t.length; e++) {
             let i = t[e];
             if (i) {
@@ -600,7 +600,7 @@ export class WtSidebar extends LitElement {
     resizeList() { }
 
     updateCursor(t) {
-        const e = this.shadowRoot.querySelectorAll("wt-sidebar-item");
+        const e = this.shadowRoot.querySelectorAll("sidebar-item");
         for (let i = 0; i < e.length; i++) {
             let r = e[i];
             r.value = t[r._signal.id];
@@ -612,9 +612,9 @@ export class WtSidebar extends LitElement {
         return null !== this.draggedIndex;
     }
 
-    // get data from the wt-app enterance !!!
+    // get data from the waveform-main enterance !!!
     set signals(t) {
-        console.log('[wt-sidebar] set signals: ', t);
+        console.log('[sidebar-container] set signals: ', t);
         let e = this._signals;
         this._signals = t;
         this.requestUpdate("signals", e);
@@ -695,7 +695,7 @@ export class WtSidebar extends LitElement {
         return i;
     }
 
-    // capture this 'add' event in the wt-app @add="${this.addSignalClicked}
+    // capture this 'add' event in the waveform-main @add="${this.addSignalClicked}
     // addSignal() {
     //     console.log('add signal');
     //     this.dispatchEvent(new Event("add"));
@@ -706,7 +706,7 @@ export class WtSidebar extends LitElement {
     // }
 
     getSelected() {
-        let t = this.shadowRoot.querySelectorAll("wt-sidebar-item");
+        let t = this.shadowRoot.querySelectorAll("sidebar-item");
         // e: [] 
         let e = [], i = [];
 
@@ -724,7 +724,7 @@ export class WtSidebar extends LitElement {
     }
 
     selectAll() {
-        let t = this.shadowRoot.querySelectorAll("wt-sidebar-item");
+        let t = this.shadowRoot.querySelectorAll("sidebar-item");
         let e = null;
 
         t.forEach(t => {
@@ -738,12 +738,12 @@ export class WtSidebar extends LitElement {
             this.setActiveSignal(e);
         }
 
-        this.shadowRoot.getElementById("wt-properties-0").requestUpdate("signals");
+        this.shadowRoot.getElementById("item-property-0").requestUpdate("signals");
     }
 
     // just for the key
     selectAdjacent(t = true) {
-        const e = this.shadowRoot.querySelectorAll("wt-sidebar-item.selected");
+        const e = this.shadowRoot.querySelectorAll("sidebar-item.selected");
         const i = e.item(t ? e.length - 1 : 0);
         if (i) {
             const e = t ? i.nextElementSibling : i.previousElementSibling;
@@ -757,7 +757,7 @@ export class WtSidebar extends LitElement {
     }
 
     moveSelectedSignals(t = false) {
-        const e = this.shadowRoot.querySelectorAll("wt-sidebar-item.selected");
+        const e = this.shadowRoot.querySelectorAll("sidebar-item.selected");
         for (let i = 0; i < e.length; i++) {
             const r = e.item(i)._signal;
             const n = this._signals.findIndex(t => t.id == r.id);
@@ -791,7 +791,7 @@ export class WtSidebar extends LitElement {
             detail: t
         }));
 
-        this.shadowRoot.getElementById("wt-properties-0").requestUpdate("signals");
+        this.shadowRoot.getElementById("item-property-0").requestUpdate("signals");
     }
 
     startItemDrag(t) {
@@ -818,7 +818,7 @@ export class WtSidebar extends LitElement {
                 this.setActiveSignal(t.id);
             }
 
-            this.shadowRoot.getElementById("wt-properties-0").requestUpdate("signals");
+            this.shadowRoot.getElementById("item-property-0").requestUpdate("signals");
         }
 
         let n = "mousemove", o = "mouseup", s = t => t.pageY;
@@ -826,7 +826,7 @@ export class WtSidebar extends LitElement {
         this.draggedIndex = r.indexOf(e);
 
         const a = parseInt(getComputedStyle(this).getPropertyValue("--axis-height"));
-        const h = this.shadowRoot.querySelectorAll("wt-sidebar-item");
+        const h = this.shadowRoot.querySelectorAll("sidebar-item");
         let l = this.getBoundingClientRect().top + window.scrollY + a;
         let u = s(t);
         e.style.zIndex = "200";
@@ -857,7 +857,7 @@ export class WtSidebar extends LitElement {
             document.removeEventListener("mouseup", t);
             document.documentElement.style.cursor = null;
 
-            const i = document.getElementById("app").shadowRoot.getElementById("wt-sidebar-0");
+            const i = document.getElementById("app").shadowRoot.getElementById("sidebar-container-0");
             const r = () => {
                 i.insert();
                 e.style.zIndex = "100";
@@ -899,7 +899,7 @@ export class WtSidebar extends LitElement {
         const n = t.type == DATA_CMD_TYPE.group ? "wg-" + t.id : "wi-" + t.id;
 
         return html`
-                <wt-sidebar-item
+                <sidebar-item
                     .signal = "${t}"
                     id = "${n}"
                     class = "item ${classMap(i)}"
@@ -907,8 +907,8 @@ export class WtSidebar extends LitElement {
                     @mousedown = '${this.startItemDrag}'
                     @transitionend = '${this.updateItem}'
                     @resizeSignals = ${this.resize}>
-                </wt-sidebar-item>`
+                </sidebar-item>`
     }
 }
 
-window.customElements.define('wt-sidebar', WtSidebar);
+window.customElements.define('sidebar-container', SidebarContainer);

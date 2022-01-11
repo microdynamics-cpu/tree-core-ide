@@ -4,7 +4,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 
 export default {
-  input: './src/native/modules/viewer/waveform/demo/wt-app.js',
+  input: './src/modules/viewer/waveform/core/WaveformMain.js',
   output: {
     file: './dist/waveviewer.bundled.js',
     format: 'esm',

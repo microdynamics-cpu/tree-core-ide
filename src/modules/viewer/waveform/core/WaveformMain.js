@@ -1,13 +1,13 @@
 import { LitElement, html, css } from 'lit';
-import { } from './wt-sidebar';
-import { } from "./wt-canvas-nav";
-import { } from "./wt-canvas";
-import { } from "./wt-search";
+import { } from './SidebarContainer';
+import { } from "./CanvasNav";
+import { } from "./CanvasMain";
+import { } from "./SearchPanel";
 import { OPERATE_CONFIG } from "../Config";
 import { DataObject } from "../DataObject";
 import { DATA_CMD_TYPE, DATA_FORMAT } from "../Enum";
 
-export class WtApp extends LitElement {
+export class WaveformMain extends LitElement {
     constructor() {
         super();
         this._signalLookup = new Map;
@@ -19,12 +19,12 @@ export class WtApp extends LitElement {
         this._signals = [];
 
         this.addEventListener('evt-add-signals', () => {
-            console.log('wt-app trigger evt-add-signals!!!');
+            console.log('waveform-main trigger evt-add-signals!!!');
             this.addSignalClicked();
         }, false);
 
         this.addEventListener('evt-upload-file', () => {
-            console.log('wt-canvas trigger evt-load!!!');
+            console.log('canvas-main trigger evt-load!!!');
             this.renderRoot.querySelector('#upload-file').click();
         }, false);
     }
@@ -99,14 +99,14 @@ export class WtApp extends LitElement {
                 padding: 0;
             }
 
-            wt-canvas {
+            canvas-main {
                 display: flex;
                 flex-flow: column nowrap;
                 width: 100%; 
                 height: 100%;
             }
 
-            wt-canvas-nav {
+            canvas-nav {
                 display: flex;
                 width: 100%;
                 justify-content: center;
@@ -119,7 +119,7 @@ export class WtApp extends LitElement {
         return html`
             <input type="file" id="upload-file" hidden="hidden">
             <aside id="aside-0">
-                <wt-sidebar id="wt-sidebar-0" 
+                <sidebar-container id="sidebar-container-0" 
                     .signals="${this._signals}"
                     .defined="${this.defined}"
                     .error="${this.error}"
@@ -127,23 +127,23 @@ export class WtApp extends LitElement {
                     @redraw="${t => this.handleSidebarRedraw(t.detail)}"
                     @setActiveSignal="${t => this.canvas().setActiveSignal(t.detail)}"
                     @waveformChanged=${this.waveformChanged}>
-                </wt-sidebar>
+                </sidebar-container>
             </aside>
             <div id="resize-handle" class="resize-handle--x"></div>
             <main id="main-0">
-                <wt-canvas-nav @extra-cursor=${t=>{this.canvas().drawExtraCursor(t.detail)}}></wt-canvas-nav>
-                <wt-canvas id="wt-canvas-0"
+                <canvas-nav @extra-cursor=${t=>{this.canvas().drawExtraCursor(t.detail)}}></canvas-nav>
+                <canvas-main id="canvas-main-0"
                 .signalDict=${this._signalLookup}
                 @setCursor=${t=>{this.sidebar().updateCursor(t.detail)}}
-                ></wt-canvas>
+                ></canvas-main>
             </main>
-            <wt-search id="wt-search-0" @add=${t => this.addSignals(t.detail)}>
-            </wt-search>
+            <search-panel id="search-panel-0" @add=${t => this.addSignals(t.detail)}>
+            </search-panel>
         `
     }
 
     getData(e) {
-        console.log('wt-app getData!!!');
+        console.log('waveform-main getData!!!');
         let file = e.target.files[0];
 
         if (!file) {
@@ -189,7 +189,7 @@ export class WtApp extends LitElement {
     // very important!!!
     // should prepare data here
     firstUpdated() {
-        console.log('wt-app: firstUpdated');
+        console.log('waveform-main: firstUpdated');
 
         this.sidebarWidth = OPERATE_CONFIG.sidebar.width;
         this.resize();
@@ -208,10 +208,10 @@ export class WtApp extends LitElement {
         e.style.width = this.sidebarWidth + "px";
         i.style.width = window.innerWidth - this.sidebarWidth + "px";
 
-        console.log('[wt-app] resize: ', t);
+        console.log('[waveform-main] resize: ', t);
 
         if (t) {
-            console.log('wt-app: resize, this.throttle: ', this.throttle);
+            console.log('waveform-main: resize, this.throttle: ', this.throttle);
             if (!this.throttle) return;
             this.throttle = false;
             this.canvas().resize();
@@ -325,7 +325,7 @@ export class WtApp extends LitElement {
     }
 
     addSignals(t) {
-        console.log('[wt-app]addSignals: ', t);
+        console.log('[waveform-main]addSignals: ', t);
 
         // push all the signal obj id
         let e = [];
@@ -381,7 +381,7 @@ export class WtApp extends LitElement {
         console.log('addDivider');
     }
 
-    // when wt-sidebar-item resize
+    // when sidebar-item resize
     // when move, update selected signals
     waveformChanged(t) {
         console.log('waveformchanged');
@@ -403,17 +403,17 @@ export class WtApp extends LitElement {
 
     // get the DOM instance
     sidebar() {
-        return this.shadowRoot.getElementById("wt-sidebar-0");
+        return this.shadowRoot.getElementById("sidebar-container-0");
     }
 
     search() {
-        console.log('search[wt-app]');
-        return this.shadowRoot.getElementById("wt-search-0");
+        console.log('search[waveform-main]');
+        return this.shadowRoot.getElementById("search-panel-0");
     }
 
     canvas() {
-        return this.shadowRoot.getElementById("wt-canvas-0");
+        return this.shadowRoot.getElementById("canvas-main-0");
     }
 }
 
-window.customElements.define('wt-app', WtApp);
+window.customElements.define('waveform-main', WaveformMain);

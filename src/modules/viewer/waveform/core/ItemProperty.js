@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { } from './color-picker'
+import { } from './ColorPicker'
 import { DATA_FORMAT, DATA_TYPE, DATA_CMD_TYPE } from '../Enum';
 import { convertRGBColorArrayStrToString } from '../Utils';
 
@@ -221,7 +221,7 @@ const ru = html`
 </svg>
 `;
 
-export class WtProperties extends LitElement {
+export class ItemProperty extends LitElement {
     constructor() {
         super();
         this.hasBuses = false;
@@ -479,4 +479,4 @@ export class WtProperties extends LitElement {
     }
 }
 
-window.customElements.define('wt-properties', WtProperties);
+window.customElements.define('item-property', ItemProperty);
