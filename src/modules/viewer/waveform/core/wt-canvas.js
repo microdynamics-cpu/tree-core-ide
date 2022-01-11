@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { } from "./wt-canvas-nav";
+import { } from "./CanvasNav";
 import { DataObject } from "../DataObject";
 import { Viewport } from "../Viewport";
 import { Grid } from "../Grid";
@@ -88,7 +88,7 @@ export class WtCanvas extends LitElement {
 
     // render() {
     //     return html`
-    //     <wt-canvas-nav></wt-canvas-nav>
+    //     <canvas-nav></canvas-nav>
     //     `;
     // }
 

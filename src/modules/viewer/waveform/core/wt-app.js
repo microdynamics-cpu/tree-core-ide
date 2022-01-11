@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { } from './wt-sidebar';
-import { } from "./wt-canvas-nav";
+import { } from "./CanvasNav";
 import { } from "./wt-canvas";
 import { } from "./SearchPanel";
 import { OPERATE_CONFIG } from "../Config";
@@ -106,7 +106,7 @@ export class Waveform extends LitElement {
                 height: 100%;
             }
 
-            wt-canvas-nav {
+            canvas-nav {
                 display: flex;
                 width: 100%;
                 justify-content: center;
@@ -131,7 +131,7 @@ export class Waveform extends LitElement {
             </aside>
             <div id="resize-handle" class="resize-handle--x"></div>
             <main id="main-0">
-                <wt-canvas-nav @extra-cursor=${t=>{this.canvas().drawExtraCursor(t.detail)}}></wt-canvas-nav>
+                <canvas-nav @extra-cursor=${t=>{this.canvas().drawExtraCursor(t.detail)}}></canvas-nav>
                 <wt-canvas id="wt-canvas-0"
                 .signalDict=${this._signalLookup}
                 @setCursor=${t=>{this.sidebar().updateCursor(t.detail)}}
