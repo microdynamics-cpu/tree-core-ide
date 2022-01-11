@@ -2,7 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { } from './ItemProperty';
-import { } from "./wt-sidebar-item";
+import { } from "./SidebarItem";
 import { DATA_CMD_TYPE } from "../Enum";
 
 const iu = css`
@@ -429,17 +429,17 @@ export class WtSidebar extends LitElement {
             cursor: grab !important;
         }
 
-        wt-sidebar-item {
+        sidebar-item {
             display: inline-flex;
             width: 100%;
             vertical-align:top;
         }
 
-        wt-sidebar-item.prop-open .wi-item .wi-icon {
+        sidebar-item.prop-open .wi-item .wi-icon {
             opacity: 1;
         }
 
-        .sortable-chosen wt-sidebar-item .wi-item {
+        .sortable-chosen sidebar-item .wi-item {
             background: var(--accent);
         }
 
@@ -586,7 +586,7 @@ export class WtSidebar extends LitElement {
     `}
 
     resize() {
-        const t = this.shadowRoot.querySelectorAll("wt-sidebar-item");
+        const t = this.shadowRoot.querySelectorAll("sidebar-item");
         for (let e = 0; e < t.length; e++) {
             let i = t[e];
             if (i) {
@@ -600,7 +600,7 @@ export class WtSidebar extends LitElement {
     resizeList() { }
 
     updateCursor(t) {
-        const e = this.shadowRoot.querySelectorAll("wt-sidebar-item");
+        const e = this.shadowRoot.querySelectorAll("sidebar-item");
         for (let i = 0; i < e.length; i++) {
             let r = e[i];
             r.value = t[r._signal.id];
@@ -706,7 +706,7 @@ export class WtSidebar extends LitElement {
     // }
 
     getSelected() {
-        let t = this.shadowRoot.querySelectorAll("wt-sidebar-item");
+        let t = this.shadowRoot.querySelectorAll("sidebar-item");
         // e: [] 
         let e = [], i = [];
 
@@ -724,7 +724,7 @@ export class WtSidebar extends LitElement {
     }
 
     selectAll() {
-        let t = this.shadowRoot.querySelectorAll("wt-sidebar-item");
+        let t = this.shadowRoot.querySelectorAll("sidebar-item");
         let e = null;
 
         t.forEach(t => {
@@ -743,7 +743,7 @@ export class WtSidebar extends LitElement {
 
     // just for the key
     selectAdjacent(t = true) {
-        const e = this.shadowRoot.querySelectorAll("wt-sidebar-item.selected");
+        const e = this.shadowRoot.querySelectorAll("sidebar-item.selected");
         const i = e.item(t ? e.length - 1 : 0);
         if (i) {
             const e = t ? i.nextElementSibling : i.previousElementSibling;
@@ -757,7 +757,7 @@ export class WtSidebar extends LitElement {
     }
 
     moveSelectedSignals(t = false) {
-        const e = this.shadowRoot.querySelectorAll("wt-sidebar-item.selected");
+        const e = this.shadowRoot.querySelectorAll("sidebar-item.selected");
         for (let i = 0; i < e.length; i++) {
             const r = e.item(i)._signal;
             const n = this._signals.findIndex(t => t.id == r.id);
@@ -826,7 +826,7 @@ export class WtSidebar extends LitElement {
         this.draggedIndex = r.indexOf(e);
 
         const a = parseInt(getComputedStyle(this).getPropertyValue("--axis-height"));
-        const h = this.shadowRoot.querySelectorAll("wt-sidebar-item");
+        const h = this.shadowRoot.querySelectorAll("sidebar-item");
         let l = this.getBoundingClientRect().top + window.scrollY + a;
         let u = s(t);
         e.style.zIndex = "200";
@@ -899,7 +899,7 @@ export class WtSidebar extends LitElement {
         const n = t.type == DATA_CMD_TYPE.group ? "wg-" + t.id : "wi-" + t.id;
 
         return html`
-                <wt-sidebar-item
+                <sidebar-item
                     .signal = "${t}"
                     id = "${n}"
                     class = "item ${classMap(i)}"
@@ -907,7 +907,7 @@ export class WtSidebar extends LitElement {
                     @mousedown = '${this.startItemDrag}'
                     @transitionend = '${this.updateItem}'
                     @resizeSignals = ${this.resize}>
-                </wt-sidebar-item>`
+                </sidebar-item>`
     }
 }
 

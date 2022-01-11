@@ -30,7 +30,7 @@ const tu = {
     "machine-pc": html`<svg class="icon icon-wire"><use xlink:href="#icon_signal_wire"/></svg>`
 };
 
-export class WtSidebarItem extends LitElement {
+export class SidebarItem extends LitElement {
     constructor() {
         super();
         this.editAlias = false;
@@ -80,13 +80,13 @@ export class WtSidebarItem extends LitElement {
                 </div>
                 <div class='wg-body'>
                     ${this._signal.children.map(t => html`
-                        <wt-sidebar-item 
+                        <sidebar-item 
                             .signal=${t} 
                             id="wi-${t.id}" 
                             class='item wi-container'
                             style="height: ${t.display.height}px" 
                             @resizeSignals=${this.resize}>
-                        </wt-sidebar-item>
+                        </sidebar-item>
                     `)}
                 </div>
             `: this._signal.type == DATA_CMD_TYPE.divider ? html`
@@ -168,4 +168,4 @@ export class WtSidebarItem extends LitElement {
     }
 }
 
-window.customElements.define('wt-sidebar-item', WtSidebarItem);
+window.customElements.define('sidebar-item', SidebarItem);

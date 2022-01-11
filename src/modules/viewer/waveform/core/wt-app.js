@@ -381,7 +381,7 @@ export class Waveform extends LitElement {
         console.log('addDivider');
     }
 
-    // when wt-sidebar-item resize
+    // when sidebar-item resize
     // when move, update selected signals
     waveformChanged(t) {
         console.log('waveformchanged');
