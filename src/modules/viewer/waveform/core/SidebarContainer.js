@@ -296,7 +296,7 @@ export class SidebarContainer extends LitElement {
             padding: 0;
         }
 
-        /* Waveform Group */
+        /* WaveformMain Group */
         .wg-container {
             display: block;
             background: var(--sidebar-group-background);
@@ -325,7 +325,7 @@ export class SidebarContainer extends LitElement {
             background: var(--sidebar-item-border);
         }
 
-        /* Waveform Items */
+        /* WaveformMain Items */
         .wi-container {
             overflow: hidden;
             border-top: 1px solid
@@ -612,7 +612,7 @@ export class SidebarContainer extends LitElement {
         return null !== this.draggedIndex;
     }
 
-    // get data from the wt-app enterance !!!
+    // get data from the waveform-main enterance !!!
     set signals(t) {
         console.log('[sidebar-container] set signals: ', t);
         let e = this._signals;
@@ -695,7 +695,7 @@ export class SidebarContainer extends LitElement {
         return i;
     }
 
-    // capture this 'add' event in the wt-app @add="${this.addSignalClicked}
+    // capture this 'add' event in the waveform-main @add="${this.addSignalClicked}
     // addSignal() {
     //     console.log('add signal');
     //     this.dispatchEvent(new Event("add"));

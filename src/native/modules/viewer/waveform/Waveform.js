@@ -6,7 +6,7 @@ import { WaveItems } from "./WaveItems.js";
 import { OPERATE_CONFIG } from "./Config"
 
 
-class Waveform extends HTMLElement {
+class WaveformMain extends HTMLElement {
     constructor() {
         super();
 
@@ -342,4 +342,4 @@ class Waveform extends HTMLElement {
     }
 }
 
-customElements.define('treecore-waveform', Waveform);
+customElements.define('treecore-waveform', WaveformMain);

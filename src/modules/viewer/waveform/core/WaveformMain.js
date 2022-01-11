@@ -7,7 +7,7 @@ import { OPERATE_CONFIG } from "../Config";
 import { DataObject } from "../DataObject";
 import { DATA_CMD_TYPE, DATA_FORMAT } from "../Enum";
 
-export class Waveform extends LitElement {
+export class WaveformMain extends LitElement {
     constructor() {
         super();
         this._signalLookup = new Map;
@@ -19,7 +19,7 @@ export class Waveform extends LitElement {
         this._signals = [];
 
         this.addEventListener('evt-add-signals', () => {
-            console.log('wt-app trigger evt-add-signals!!!');
+            console.log('waveform-main trigger evt-add-signals!!!');
             this.addSignalClicked();
         }, false);
 
@@ -143,7 +143,7 @@ export class Waveform extends LitElement {
     }
 
     getData(e) {
-        console.log('wt-app getData!!!');
+        console.log('waveform-main getData!!!');
         let file = e.target.files[0];
 
         if (!file) {
@@ -189,7 +189,7 @@ export class Waveform extends LitElement {
     // very important!!!
     // should prepare data here
     firstUpdated() {
-        console.log('wt-app: firstUpdated');
+        console.log('waveform-main: firstUpdated');
 
         this.sidebarWidth = OPERATE_CONFIG.sidebar.width;
         this.resize();
@@ -208,10 +208,10 @@ export class Waveform extends LitElement {
         e.style.width = this.sidebarWidth + "px";
         i.style.width = window.innerWidth - this.sidebarWidth + "px";
 
-        console.log('[wt-app] resize: ', t);
+        console.log('[waveform-main] resize: ', t);
 
         if (t) {
-            console.log('wt-app: resize, this.throttle: ', this.throttle);
+            console.log('waveform-main: resize, this.throttle: ', this.throttle);
             if (!this.throttle) return;
             this.throttle = false;
             this.canvas().resize();
@@ -325,7 +325,7 @@ export class Waveform extends LitElement {
     }
 
     addSignals(t) {
-        console.log('[wt-app]addSignals: ', t);
+        console.log('[waveform-main]addSignals: ', t);
 
         // push all the signal obj id
         let e = [];
@@ -407,7 +407,7 @@ export class Waveform extends LitElement {
     }
 
     search() {
-        console.log('search[wt-app]');
+        console.log('search[waveform-main]');
         return this.shadowRoot.getElementById("search-panel-0");
     }
 
@@ -416,4 +416,4 @@ export class Waveform extends LitElement {
     }
 }
 
-window.customElements.define('wt-app', Waveform);
+window.customElements.define('waveform-main', WaveformMain);

@@ -994,7 +994,7 @@ export class SearchPanel extends LitElement {
             e.push(i);
         }
 
-        // transmit the obj meta data to the wt-app
+        // transmit the obj meta data to the waveform-main
         this.dispatchEvent(new CustomEvent("add", { detail: e }));
     }
 
