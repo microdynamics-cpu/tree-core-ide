@@ -7,7 +7,7 @@ import { OPERATE_CONFIG } from "../Config";
 import { DataObject } from "../DataObject";
 import { DATA_CMD_TYPE, DATA_FORMAT } from "../Enum";
 
-export class WtApp extends LitElement {
+export class Waveform extends LitElement {
     constructor() {
         super();
         this._signalLookup = new Map;
@@ -416,4 +416,4 @@ export class WtApp extends LitElement {
     }
 }
 
-window.customElements.define('wt-app', WtApp);
+window.customElements.define('wt-app', Waveform);
