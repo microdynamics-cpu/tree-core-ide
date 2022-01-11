@@ -94,7 +94,7 @@ const su = html`
 </svg>`
 
 
-export class WtCanvasNav extends LitElement {
+export class CanvasNav extends LitElement {
     constructor() {
         super();
         this.fileChanged = false;
@@ -445,4 +445,4 @@ export class WtCanvasNav extends LitElement {
     }
 }
 
-window.customElements.define('wt-canvas-nav', WtCanvasNav);
+window.customElements.define('canvas-nav', CanvasNav);
