@@ -1,0 +1,192 @@
+{
+    "ALWAYS FF BLOCK": {
+        "prefix": "always_ff",
+        "body": [
+            "always_ff @( ${1:clock} ) begin : ${2:blockName}",
+            "\t$0",
+            "end"
+        ],
+        "description": "Insert an always_ff block"
+    },
+    "ALWAYS COMB BLOCK": {
+        "prefix": "always_comb",
+        "body": [
+            "always_comb begin : ${1:blockName}",
+            "\t$0",
+            "end"
+        ],
+        "description": "Insert an always_comb block"
+    },
+    "ALWAYS LATCH BLOCK": {
+        "prefix": "always_latch",
+        "body": [
+            "always_latch begin : ${1:blockName}",
+            "\t$0",
+            "end"
+        ],
+        "description": "Insert an always_latch block"
+    },
+
+
+    "BIT": {
+        "prefix": "bit",
+        "body": "bit ${1:bit_name} = ${2:value};"
+    },
+    "INT": {
+        "prefix": "int",
+        "body": "int ${1:int_name} = ${2:value};"
+    },
+    "SHORTINT": {
+        "prefix": "shortint",
+        "body": "shortint ${1:name} = ${2:value};"
+    },
+    "LONGINT": {
+        "prefix": "longint",
+        "body": "longint ${1:name} = ${2:value};"
+    },
+    "BYTE": {
+        "prefix": "byte",
+        "body": "byte ${1:byte:_name} = ${2:value};"
+    },
+    "LOGIC": {
+        "prefix": "logic",
+        "body": "logic ${1:logic_name} = ${2:value};"
+    },
+    "PACKED": {
+        "prefix": "packed",
+        "body": "packed"
+    },
+    "THIS": {
+        "prefix": "this",
+        "body": "this"
+    },
+    "TYPEDEF STRUCT PACKED": {
+        "prefix": "typedef struct packed",
+        "body": [
+            "typedef struct packed {",
+            "\t$0",
+            "} ${1:struct_name};"
+        ],
+        "description": "typedef struct packed { ... } name"
+    },
+    "CLASS": {
+        "prefix": "class",
+        "body": [
+            "class ${1:className};",
+            "\tfunction new();",
+            "\t\t$0",
+            "\tendfunction //new()",
+            "endclass //$1"
+        ],
+        "description": "class name; ... endclass"
+    },
+    "CLASS EXTENDS": {
+        "prefix": "class extends",
+        "body": [
+            "class ${1:className} extends ${2:superClass};",
+            "\tfunction new();",
+            "\t\t$0",
+            "\tendfunction //new()",
+            "endclass //$1 extends $2"
+        ],
+        "description": "class name extends super; ... endclass"
+    },
+    "TASK": {
+        "prefix": "task",
+        "body": [
+            "task ${1:automatic} ${2:taskName}(${3:arguments});",
+            "\t$0",
+            "endtask //$1"
+        ],
+        "description": "task name; ... endtask"
+    },
+    "PACKAGE": {
+        "prefix": "package",
+        "body": [
+            "package ${1:package_name}",
+            "\t$2",
+            "endpackage"
+        ],
+        "description": "package name; ... endpackage"
+    },
+    "IMPORT": {
+        "prefix": "import",
+        "body": "import ${1:name}::${2:scope};",
+        "description": "import name::scope"
+    },
+    "INTERFACE": {
+        "prefix": "interface",
+        "body": [
+            "interface ${1:interfacename};",
+            "\t$0",
+            "endinterface //$1"
+        ],
+        "description": "interface name; ... endinterface"
+    },
+    "MODPORT": {
+        "prefix": "modport",
+        "body": [
+            "modport ${1:identifier} (",
+            "input ${2:input_ports},",
+            "output ${3:output_ports}",
+            ");"
+        ],
+        "description": "modport name (input ports_in, output ports_out); "
+    },
+    "DISPLAY": {
+        "prefix": "display",
+        "body": [
+            "\\$display(\"$1\"$2);$0"
+        ],
+        "description": "$display(\"...\", params...)"
+    },
+    "TYPEDEF ENUM": {
+        "prefix": "typedef enum",
+        "body": [
+            "typedef enum ${1:data_type} { $0 } ${2:name};"
+        ],
+        "description": "typedef enum (data_type) { ... } name"
+    },
+    "ENUM": {
+        "prefix": ["en", "enum"],
+        "body": [
+            "enum ${1:data_type} { $0 } ${2:name}"
+        ],
+        "description": "enum (data_type) { ... } name"
+    },
+    "QUEUE": {
+        "prefix": "queue",
+        "body": "${1:data_type} ${2:queue_name}[\\$];",
+        "description": "insert queue."
+    },
+    "MAILBOX": {
+        "prefix": "mailbox",
+        "body": [
+            "mailbox mbx",
+            "${1:mbx = new();}"
+        ],
+        "description": "insert mailbox instance"
+    },
+    "ASSOCIATIVE ARRAY": {
+        "prefix": "AA",
+        "body": "${1:data_type} ${2:name}[${3:index_type}];$0",
+        "description": "insert Associative array(AA)."
+    },
+    "ASSERT": {
+        "prefix": "assert",
+        "body": [
+            "assert (${1:condition}) $2",
+            "else   ${3:error_process}"
+        ],
+        "description": "insert assert() ... else ..."
+    },
+    "FORK-JOIN": {
+        "prefix": "fork join",
+        "body": [
+            "fork",
+            "\t$0",
+            "join"
+        ],
+        "description": "fork ... join"
+    }
+}

@@ -17,7 +17,7 @@ else:
         if(os.system('python' + v + ' -m venv venv') == 0):
             isOk = True
             break
-    
+
     if(isOk == False):
         print("### Maybe you should enter the python3 or python3.x to run this script ###")
         sys.exit(1)
@@ -30,7 +30,7 @@ else:
         else:
             sys.path.append('./venv/lib/python' + v + '/site-packages')
 
-    
+
     coloramaCmd = ''
     if(operSystem == 'Windows'):
         coloramaCmd = '.\\venv\\Scripts\\pip install colorama'
@@ -80,14 +80,14 @@ else:
     print(color.green('[install pixi libraries...]'))
 
     if(operSystem == 'Windows'):
-        pixiLib = '.\\src\\modules\\viewer\\dep-libs'
+        pixiLib = '.\\src\\native\\modules\\viewer\\dep-libs'
     else:
-        pixiLib = './src/modules/viewer/dep-libs'
+        pixiLib = './src/native/modules/viewer/dep-libs'
 
     isExist = os.path.exists(pixiLib)
     if not isExist:
         os.makedirs(pixiLib)
-    
+
     import wget
     try:
         wget.download('https://pixijs.download/v6.0.2/pixi.min.js', out=pixiLib)

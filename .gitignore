@@ -6,4 +6,5 @@ dist/
 pixi.min*
 venv/
 *coverage/
+static/
 dep-libs/

@@ -1,0 +1,35 @@
+.tc-card-title-span-20px {
+    position: relative;
+    top: 1px;
+    margin-left: 4px;
+}
+.tc-card-title-span-14px {
+    position: relative;
+    top: 1px;
+    margin-left: 2px;
+}
+.tc-text-field-x {
+    position: relative;
+    top: -6px;
+}
+.tc-icon-text {
+    margin-right: 4px;
+}
+.tc-border-shadow-none {
+    border: thin solid rgb(255, 255, 255, 0.12) !important;
+    box-shadow: none !important;
+}
+.tc-border-bottom-shadow-none {
+    border-bottom: thin solid rgb(255, 255, 255, 0.12) !important;
+    box-shadow: none !important;
+}
+/* .tc-dialog-toolbar .v-toolbar__content {
+    padding-left: 24px;
+    padding-right: 10px;
+} */
+.theme--dark .v-label {
+    color: white;
+}
+.v-data-table th {
+    font-size: 16px !important;
+}

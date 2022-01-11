@@ -1,65 +1,22 @@
-# tree-core-ide README
+<p align="center">
+    <img width="200px" src="https://github.com/microdynamics-cpu/tree-core-ide-resources/blob/main/images/logos/treecore_logo_200x200.png" align="center" alt="TreeCore IDE" />
+    <h1 align="center">TreeCore IDE</h1>
+    <p align="center">A VSCode-based HDL extension.</p>
+</p>
+<p align="center">
+    <a href="./LICENSE">
+        <img alt="license" src="https://img.shields.io/github/license/microdynamics-cpu/tree_core_cpu.svg" />
+    </a>
+    <img alt="version" src="https://img.shields.io/badge/version-1.0.0-FF69B4.svg" />
+    <img alt="build" src="https://travis-ci.org/microdynamics-cpu/tree_core_cpu.svg?branch=main" />
+</p>
 
-This is the README for your extension "tree-core-ide". After writing up a brief description, we recommend including the following sections.
+
+we are developing a series of easy-to-learn RISC-V processors and related VSCode-based IDE called TreeCore with rich, detailed and interactive online tutorials, which is friendly to the beginners. The VSCode-based IDE integrates code analysis, wave simulation functions and can automatically find and assemble a specific toolchains, IP cores and library dependencies from cloud server to develop processors or applications.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+1. complete language support for verilog, vhdl, chisel and spinalHDL.
+2. Modern UI
+3. Light, out-of-the-box feature
+4. GPU accelerated for fast real-time rendering
