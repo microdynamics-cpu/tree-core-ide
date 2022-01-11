@@ -2,7 +2,7 @@
   "name": "tree-core-ide",
   "displayName": "TreeCore IDE",
   "description": "The next generation integrated development environment for processor.",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "icon": "./resources/logos/treecore_logo_200x200.png",
   "engines": {
     "vscode": "^1.42.0"
