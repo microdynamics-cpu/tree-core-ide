@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { } from './wt-sidebar';
 import { } from "./CanvasNav";
-import { } from "./wt-canvas";
+import { } from "./CanvasMain";
 import { } from "./SearchPanel";
 import { OPERATE_CONFIG } from "../Config";
 import { DataObject } from "../DataObject";
@@ -24,7 +24,7 @@ export class Waveform extends LitElement {
         }, false);
 
         this.addEventListener('evt-upload-file', () => {
-            console.log('wt-canvas trigger evt-load!!!');
+            console.log('canvas-main trigger evt-load!!!');
             this.renderRoot.querySelector('#upload-file').click();
         }, false);
     }
@@ -99,7 +99,7 @@ export class Waveform extends LitElement {
                 padding: 0;
             }
 
-            wt-canvas {
+            canvas-main {
                 display: flex;
                 flex-flow: column nowrap;
                 width: 100%; 
@@ -132,10 +132,10 @@ export class Waveform extends LitElement {
             <div id="resize-handle" class="resize-handle--x"></div>
             <main id="main-0">
                 <canvas-nav @extra-cursor=${t=>{this.canvas().drawExtraCursor(t.detail)}}></canvas-nav>
-                <wt-canvas id="wt-canvas-0"
+                <canvas-main id="canvas-main-0"
                 .signalDict=${this._signalLookup}
                 @setCursor=${t=>{this.sidebar().updateCursor(t.detail)}}
-                ></wt-canvas>
+                ></canvas-main>
             </main>
             <search-panel id="search-panel-0" @add=${t => this.addSignals(t.detail)}>
             </search-panel>
@@ -412,7 +412,7 @@ export class Waveform extends LitElement {
     }
 
     canvas() {
-        return this.shadowRoot.getElementById("wt-canvas-0");
+        return this.shadowRoot.getElementById("canvas-main-0");
     }
 }
 

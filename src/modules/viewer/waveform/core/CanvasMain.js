@@ -7,7 +7,7 @@ import { Cursor } from "../Cursor";
 import { WaveItems } from "../WaveItems";
 import { OPERATE_CONFIG } from "../Config"
 
-export class WtCanvas extends LitElement {
+export class CanvasMain extends LitElement {
     constructor() {
         super();
         this.ready = false;
@@ -94,7 +94,7 @@ export class WtCanvas extends LitElement {
 
     // t: map<id, signal obj>
     set signalDict(t) {
-        console.log('[wt-canvas] set signalDict: t', t);
+        console.log('[canvas-main] set signalDict: t', t);
         for (let [e, i] of t.entries()) {
             if (this._signalDict.has(e)) {
                 this._signalDict.set(e, i);
@@ -102,7 +102,7 @@ export class WtCanvas extends LitElement {
                 this._signalDict.set(e, i);
                 let item = new WaveItems(this._signalDict.get(e));
                 this.waveforms.addChild(item);
-                console.log('[wt-canvas] set signalDict: ', item);
+                console.log('[canvas-main] set signalDict: ', item);
                 item.draw(this.viewport);
             }
         }
@@ -279,7 +279,7 @@ export class WtCanvas extends LitElement {
     }
 
     firstUpdated() {
-        console.log('wt-canvas: firstUpdated');
+        console.log('canvas-main: firstUpdated');
         this.initDrawComponents();
         this.ready = true;
         this.resize();
@@ -337,4 +337,4 @@ export class WtCanvas extends LitElement {
     }
 }
 
-window.customElements.define('wt-canvas', WtCanvas);
+window.customElements.define('canvas-main', CanvasMain);
