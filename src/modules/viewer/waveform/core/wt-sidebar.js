@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { } from './wt-properties';
+import { } from './ItemProperty';
 import { } from "./wt-sidebar-item";
 import { DATA_CMD_TYPE } from "../Enum";
 
@@ -575,8 +575,8 @@ export class WtSidebar extends LitElement {
                     stroke-width = "1.5" />
             </symbol> 
             </svg>
-            <wt-properties id = "wt-properties-0" .signals = ${this.selectedSignals}>
-            </wt-properties>
+            <item-property id = "item-property-0" .signals = ${this.selectedSignals}>
+            </item-property>
             <nav id = "nav0">
                 <div id = "treeroot" class = "wi-container" >
                     <div id="placeholder" style="height: 32px"></div>
@@ -738,7 +738,7 @@ export class WtSidebar extends LitElement {
             this.setActiveSignal(e);
         }
 
-        this.shadowRoot.getElementById("wt-properties-0").requestUpdate("signals");
+        this.shadowRoot.getElementById("item-property-0").requestUpdate("signals");
     }
 
     // just for the key
@@ -791,7 +791,7 @@ export class WtSidebar extends LitElement {
             detail: t
         }));
 
-        this.shadowRoot.getElementById("wt-properties-0").requestUpdate("signals");
+        this.shadowRoot.getElementById("item-property-0").requestUpdate("signals");
     }
 
     startItemDrag(t) {
@@ -818,7 +818,7 @@ export class WtSidebar extends LitElement {
                 this.setActiveSignal(t.id);
             }
 
-            this.shadowRoot.getElementById("wt-properties-0").requestUpdate("signals");
+            this.shadowRoot.getElementById("item-property-0").requestUpdate("signals");
         }
 
         let n = "mousemove", o = "mouseup", s = t => t.pageY;

@@ -221,7 +221,7 @@ const ru = html`
 </svg>
 `;
 
-export class WtProperties extends LitElement {
+export class ItemProperty extends LitElement {
     constructor() {
         super();
         this.hasBuses = false;
@@ -479,4 +479,4 @@ export class WtProperties extends LitElement {
     }
 }
 
-window.customElements.define('wt-properties', WtProperties);
+window.customElements.define('item-property', ItemProperty);
