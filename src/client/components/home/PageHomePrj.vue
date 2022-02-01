@@ -21,7 +21,7 @@
                         large
                         outlined
                         width="100%"
-                        @click="() => { homePrjNewModel = true; }">
+                        @click="item.func()">
                         <v-icon color="lime darken-2"
                                 class="tc-icon-text">
                             {{ item.icon }}
@@ -31,14 +31,15 @@
                 </v-col>
             </v-row>
         </v-card-text>
+            <!-- :ref="new Date().getTime()"
+            :key="new Date().getTime()" -->
         <BaseDialog
-            ref="dialogHomePrjNew"
             :dialogShow="homePrjNewModel"
             dialogType="edit"
-            dialogText="工程向导窗口"
+            :dialogText="i18n.idePrjNewWin"
             dialogWidth="500px"
             @handleDialogClose="closeDialog"
-            @handleDialogYes="saveHomePrjData"
+            @handleDialogYes="openHomePrjNewData"
             @handleDialogNo="closeDialog">
             <template #body>
                 <v-col
@@ -53,14 +54,14 @@
                                 color="lime darken-2"
                                 :complete="homePrjNewStepperModel > 1"
                                 step="1">
-                                基础信息
+                                {{ i18n.idePrjNewWinStep1 }}
                             </v-stepper-step>
                             <v-divider></v-divider>
                             <v-stepper-step
                                 color="lime darken-2"
                                 :complete="homePrjNewStepperModel > 2"
                                 step="2">
-                                第三方库
+                                {{ i18n.idePrjNewWinStep2 }}
                             </v-stepper-step>
                         </v-stepper-header>
                         <v-stepper-items>
@@ -68,12 +69,14 @@
                                 <v-row>
                                     <v-col
                                         cols="12"
-                                        md="12">
+                                        md="12"
+                                        class="pt-5">
                                         <v-text-field
                                             dense
-                                            hint="请填写工程名称"
-                                            label="工程名称："
+                                            :hint="i18n.idePrjNewWinHint1A"
+                                            :label="i18n.idePrjNewWinLabel1A"
                                             required
+                                            :rules="homePrjRules"
                                             outlined
                                             persistent-hint>
                                         </v-text-field>
@@ -83,42 +86,71 @@
                                         md="12">
                                         <v-text-field
                                             dense
-                                            hint="请选择工程目录"
-                                            label="工程目录："
+                                            :hint="i18n.idePrjNewWinHint1B"
+                                            :label="i18n.idePrjNewWinLabel1B"
+                                            readonly
                                             required
+                                            :rules="homePrjRules"
+                                            outlined
+                                            persistent-hint
+                                            @click="openSystemDirWindow">
+                                        </v-text-field>
+                                    </v-col>
+                                </v-row>
+                            </v-stepper-content>
+                            <v-stepper-content step="2">
+                                <v-row>
+                                    <v-col
+                                        cols="12"
+                                        md="12"
+                                        class="pt-5">
+                                        <v-select
+                                            dense
+                                            :hint="i18n.idePrjNewWinHint2A"
+                                            :items="homePrjTempItems"
+                                            :label="i18n.idePrjNewWinLabel2A"
+                                            required
+                                            :rules="homePrjRules"
                                             outlined
                                             persistent-hint>
-                                        </v-text-field>
+                                        </v-select>
+                                    </v-col>
+                                    <v-col
+                                        cols="12"
+                                        md="12">
+                                        <v-select
+                                            dense
+                                            :hint="i18n.idePrjNewWinHint2B"
+                                            :items="homePrjLangItems"
+                                            :label="i18n.idePrjNewWinLabel2B"
+                                            required
+                                            :rules="homePrjRules"
+                                            outlined
+                                            persistent-hint>
+                                        </v-select>
+                                    </v-col>
+                                    <v-col
+                                        cols="12"
+                                        md="12">
+                                        <v-autocomplete
+                                            chips
+                                            deletable-chips
+                                            dense
+                                            hide-no-data
+                                            :hint="i18n.idePrjNewWinHint2C"
+                                            :items="homePrjLibItems"
+                                            :label="i18n.idePrjNewWinLabel2C"
+                                            multiple
+                                            outlined
+                                            persistent-hint
+                                            small-chips>
+                                        </v-autocomplete>
                                     </v-col>
                                 </v-row>
                             </v-stepper-content>
                         </v-stepper-items>
                     </v-stepper>
                 </v-col>
-                <!-- <v-col
-                    cols="12"
-                    md="12">
-                    <v-text-field
-                        dense
-                        hint="请填写工程名称"
-                        label="工程名称："
-                        required
-                        outlined
-                        persistent-hint>
-                    </v-text-field>
-                </v-col>
-                <v-col
-                    cols="12"
-                    md="12">
-                    <v-text-field
-                        dense
-                        hint="请填写工程名称"
-                        label="工程目录："
-                        required
-                        outlined
-                        persistent-hint>
-                    </v-text-field>
-                </v-col> -->
             </template>
         </BaseDialog>
         <BaseDialog
@@ -157,6 +189,10 @@
                 homePrjButtonItems: [{
                     title: config.i18n.idePrjNew,
                     icon: "mdi-plus-box",
+                    func: () => {
+                        this.homePrjNewModel = true;
+                        this.homePrjNewStepperModel = 1;
+                    }
                 }, {
                     title: config.i18n.idePrjOpen,
                     icon: "mdi-folder",
@@ -164,18 +200,31 @@
                     title: config.i18n.idePrjExample,
                     icon: "mdi-file-multiple",
                 }],
-                homePrjNewStepperModel: 1
+                homePrjNewStepperModel: 1,
+                homePrjRules: [
+                    val => (val || "").length > 0 || "字段不能为空！"
+                ],
+                homePrjTempItems: ["无", "一生一芯"],
+                homePrjLangItems: ["Verilog", "Chisel"],
+                // 先用前端数据进行模拟
+                homePrjLibItems: ["Verilator", "Difftest", "NEMU"]
             }
         },
         methods: {
-            saveHomePrjData: function() {
-                this.homePrjNewModel = false;
+            openHomePrjNewData: function() {
+                this.homePrjNewStepperModel++;
+                if (this.homePrjNewStepperModel === 3) {
+                    this.homePrjNewModel = false;
+                }
             },
             openHomePrjData: function() {
                 this.homePrjOpenModel = false;
             },
-            openHomePrjExampleData:function() {
+            openHomePrjExampleData: function() {
                 this.homePrjExampleModel = false;
+            },
+            openSystemDirWindow: function() {
+                console.log("test");
             },
             closeDialog: function() {
                 this.homePrjNewModel = false;

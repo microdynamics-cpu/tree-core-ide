@@ -44,22 +44,24 @@
             </v-card-text>
             <v-card-actions class="pt-0 pr-6 pb-6">
                 <v-spacer></v-spacer>
-                <v-btn
-                    color="green"
-                    dark
-                    small
-                    @click="handleDialogYes">
-                    <v-icon left>mdi-check</v-icon>确定
-                </v-btn>
-                <v-btn
-                    v-if="dialogType === 'confirm' ||
-                          dialogType === 'edit'"
-                    color="red"
-                    dark
-                    small
-                    @click="handleDialogNo">
-                    <v-icon left>mdi-cancel</v-icon>取消
-                </v-btn>
+                <slot name="button">
+                    <v-btn
+                        color="green"
+                        dark
+                        small
+                        @click="handleDialogYes">
+                        <v-icon left>mdi-check</v-icon>确定
+                    </v-btn>
+                    <v-btn
+                        v-if="dialogType === 'confirm' ||
+                            dialogType === 'edit'"
+                        color="red"
+                        dark
+                        small
+                        @click="handleDialogNo">
+                        <v-icon left>mdi-cancel</v-icon>取消
+                    </v-btn>
+                </slot>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -104,15 +106,14 @@
         },
         methods: {
             handleDialogClose: function() {
-                this.dialogModel = false;
+                // this.dialogModel = false;
                 this.$emit("handleDialogClose");
             },
             handleDialogYes: function() {
-                this.dialogModel = false;
                 this.$emit("handleDialogYes");
             },
             handleDialogNo: function() {
-                this.dialogModel = false;
+                // this.dialogModel = false;
                 this.$emit("handleDialogNo");
             },
             initDialogAlert: function() {
