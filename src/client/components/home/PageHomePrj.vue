@@ -31,16 +31,68 @@
                 </v-col>
             </v-row>
         </v-card-text>
-            <!-- :ref="new Date().getTime()"
-            :key="new Date().getTime()" -->
+
+
+
+<v-row justify="center">
+    <v-btn
+      color="primary"
+      dark
+      @click.stop="test">
+      Open Dialog
+    </v-btn>
+
+    <v-dialog
+        ref="test"
+        v-model="dialog"
+        max-width="290"
+    >
+      <v-card>
+        <v-card-title class="text-h5">
+          Use Google's location service?
+        </v-card-title>
+        <v-card-text>
+          Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
+        <v-text-field
+            dense
+            hint="test"
+            label="test"
+            outlined
+            persistent-hint>
+        </v-text-field>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+          >
+            Disagree
+          </v-btn>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+          >
+            Agree
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-row>
+
+
         <BaseDialog
+            ref="dialogHomePrjNew"
             :dialogShow="homePrjNewModel"
             dialogType="edit"
             :dialogText="i18n.idePrjNewWin"
             dialogWidth="500px"
-            @handleDialogClose="closeDialog"
-            @handleDialogYes="openHomePrjNewData"
-            @handleDialogNo="closeDialog">
+            @handleDialogClose="closeDialog">
             <template #body>
                 <v-col
                     cols="12"
@@ -72,10 +124,10 @@
                                         md="12"
                                         class="pt-5">
                                         <v-text-field
+                                            v-model="homePrjNameModel"
                                             dense
                                             :hint="i18n.idePrjNewWinHint1A"
                                             :label="i18n.idePrjNewWinLabel1A"
-                                            required
                                             :rules="homePrjRules"
                                             outlined
                                             persistent-hint>
@@ -85,11 +137,11 @@
                                         cols="12"
                                         md="12">
                                         <v-text-field
+                                            v-model="homePrjDirModel"
                                             dense
                                             :hint="i18n.idePrjNewWinHint1B"
                                             :label="i18n.idePrjNewWinLabel1B"
                                             readonly
-                                            required
                                             :rules="homePrjRules"
                                             outlined
                                             persistent-hint
@@ -105,11 +157,14 @@
                                         md="12"
                                         class="pt-5">
                                         <v-select
+                                            v-model="homePrjTempModel"
                                             dense
                                             :hint="i18n.idePrjNewWinHint2A"
                                             :items="homePrjTempItems"
+                                            item-text="text"
+                                            item-value="value"
                                             :label="i18n.idePrjNewWinLabel2A"
-                                            required
+                                            return-object
                                             :rules="homePrjRules"
                                             outlined
                                             persistent-hint>
@@ -119,11 +174,12 @@
                                         cols="12"
                                         md="12">
                                         <v-select
+                                            v-model="homePrjLangModel"
                                             dense
+                                            :disabled="homePrjLangDisabled"
                                             :hint="i18n.idePrjNewWinHint2B"
                                             :items="homePrjLangItems"
                                             :label="i18n.idePrjNewWinLabel2B"
-                                            required
                                             :rules="homePrjRules"
                                             outlined
                                             persistent-hint>
@@ -133,9 +189,11 @@
                                         cols="12"
                                         md="12">
                                         <v-autocomplete
+                                            v-model="homePrjLibModel"
                                             chips
                                             deletable-chips
                                             dense
+                                            :disabled="homePrjLibDisabled"
                                             hide-no-data
                                             :hint="i18n.idePrjNewWinHint2C"
                                             :items="homePrjLibItems"
@@ -151,6 +209,36 @@
                         </v-stepper-items>
                     </v-stepper>
                 </v-col>
+            </template>
+            <template #button>
+                <v-btn
+                    v-show="homePrjNewPrevBtn"
+                    color="green"
+                    dark
+                    small
+                    @click="handleHomePrjNewData('prev')">
+                    <v-icon left>mdi-arrow-left</v-icon>上一步
+                </v-btn>
+                <v-btn
+                    v-model="homePrjNewNextModel"
+                    color="green"
+                    dark
+                    small
+                    @click="handleHomePrjNewData('next')">
+                    <div v-if="homePrjNewStepperModel < homePrjNewStepperNum">
+                        <v-icon left>mdi-arrow-right</v-icon>下一步
+                    </div>
+                    <div v-else>
+                        <v-icon left>mdi-check</v-icon>确定
+                    </div>
+                </v-btn>
+                <v-btn
+                    color="red"
+                    dark
+                    small
+                    @click="closeDialog">
+                    <v-icon left>mdi-cancel</v-icon>取消
+                </v-btn>
             </template>
         </BaseDialog>
         <BaseDialog
@@ -182,6 +270,7 @@
         },
         data: function() {
             return {
+                dialog: false,
                 i18n: config.i18n,
                 homePrjNewModel: false,
                 homePrjOpenModel: false,
@@ -190,8 +279,8 @@
                     title: config.i18n.idePrjNew,
                     icon: "mdi-plus-box",
                     func: () => {
-                        this.homePrjNewModel = true;
-                        this.homePrjNewStepperModel = 1;
+                        this.handleHomePrjNewData();
+                        // this.homePrjNewModel = true;
                     }
                 }, {
                     title: config.i18n.idePrjOpen,
@@ -201,22 +290,103 @@
                     icon: "mdi-file-multiple",
                 }],
                 homePrjNewStepperModel: 1,
+                homePrjNewStepperNum: 2,
                 homePrjRules: [
-                    val => (val || "").length > 0 || "字段不能为空！"
+                    (val) => {
+                        if (typeof val === "object") {
+                            val = val.value;
+                        }
+                        return (val || "").length > 0 || this.i18n.ideLimitFieldNoEmpty
+                    }
                 ],
-                homePrjTempItems: ["无", "一生一芯"],
+                homePrjNameModel: "",
+                homePrjDirModel: "",
+                homePrjTempModel: "无",
+                homePrjTempItems: [{
+                    text: "无",
+                    value: "none"
+                }, {
+                    text: "一生一芯",
+                    value: "ysyx"
+                }],
+                homePrjLangModel: "Verilog",
+                homePrjLangDisabled: false,
                 homePrjLangItems: ["Verilog", "Chisel"],
+                homePrjLibModel: "",
+                homePrjLibDisabled: false,
                 // 先用前端数据进行模拟
-                homePrjLibItems: ["Verilator", "Difftest", "NEMU"]
+                homePrjLibItems: ["Verilator", "Difftest", "NEMU"],
+                homePrjNewPrevBtn: false,
+                homePrjNewNextModel: "",
+            }
+        },
+        watch: {
+            homePrjTempModel: function(val) {
+                console.log(val);
+                if (val.value === "ysyx") {
+                    this.homePrjLangModel = "Chisel";
+                    this.homePrjLibModel = ["Verilator", "Difftest"];
+                    this.homePrjLibDisabled = true;
+                }
+                else {
+                    this.homePrjLangModel = "Verilog";
+                    this.homePrjLibModel = [];
+                    this.homePrjLibDisabled = false;
+                }
             }
         },
         methods: {
-            openHomePrjNewData: function() {
-                this.homePrjNewStepperModel++;
-                if (this.homePrjNewStepperModel === 3) {
-                    this.homePrjNewModel = false;
+            test: function() {
+                this.dialog = true;
+                this.$nextTick(() => {
+                    // (this.$refs.map as any).refresh();
+                    console.log(this.$refs.test);
+                    // console.log(this.$refs.test.reset());
+                });
+                console.log(this.dialog);
+            },
+            handleHomePrjNewData: function(dir) {
+                if (dir === "next") {
+                    this.homePrjNewStepperModel++;
+                    if (this.homePrjNewStepperModel >
+                        this.homePrjNewStepperNum) {
+                        this.homePrjNewStepperModel =
+                            this.homePrjNewStepperNum;
+                    }
+                }
+                else if (dir === "prev") {
+                    this.homePrjNewStepperModel--;
+                    if (this.homePrjNewStepperModel < 1) {
+                        this.homePrjNewStepperModel = 1;
+                    }
+                }
+                else {
+                    // this.homePrjNewStepperModel = 1;
+                    // this.homePrjNameModel = "";
+                    // this.homePrjDirModel = "",
+                    // this.homePrjTempModel = "无";
+                    // this.homePrjLangModel = "Verilog";
+                    // this.homePrjLibModel = "";
+                    this.homePrjNewModel = true;
+                }
+
+                console.log("homePrjNewStepperModel: " +
+                            this.homePrjNewStepperModel);
+
+                if (this.homePrjNewStepperModel !== 1) {
+                    this.homePrjNewPrevBtn = true;
+                }
+                else {
+                    this.homePrjNewPrevBtn = false;
+                }
+
+                if (this.homePrjNewStepperModel ===
+                    this.homePrjNewStepperNum) {
+                    // 创建本地工程
                 }
             },
+
+
             openHomePrjData: function() {
                 this.homePrjOpenModel = false;
             },

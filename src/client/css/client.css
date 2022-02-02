@@ -23,10 +23,6 @@
     border-bottom: thin solid rgb(255, 255, 255, 0.12) !important;
     box-shadow: none !important;
 }
-/* .tc-dialog-toolbar .v-toolbar__content {
-    padding-left: 24px;
-    padding-right: 10px;
-} */
 .theme--dark .v-label {
     color: white;
 }

@@ -21,10 +21,6 @@
                     </v-btn>
                 </v-toolbar-items>
             </v-toolbar>
-            <!-- <v-card-title class="text-md-body-1">
-                <span v-if="dialogType !== 'edit'">{{ dialogAlert.title }}</span>
-                <span v-else>{{ dialogText }}</span>
-            </v-card-title> -->
             <v-card-text class="py-6">
                 <v-alert
                     v-if="dialogType !== 'edit'"
@@ -54,7 +50,7 @@
                     </v-btn>
                     <v-btn
                         v-if="dialogType === 'confirm' ||
-                            dialogType === 'edit'"
+                              dialogType === 'edit'"
                         color="red"
                         dark
                         small
@@ -106,14 +102,12 @@
         },
         methods: {
             handleDialogClose: function() {
-                // this.dialogModel = false;
                 this.$emit("handleDialogClose");
             },
             handleDialogYes: function() {
                 this.$emit("handleDialogYes");
             },
             handleDialogNo: function() {
-                // this.dialogModel = false;
                 this.$emit("handleDialogNo");
             },
             initDialogAlert: function() {
@@ -147,8 +141,8 @@
     }
 </script>
 <style scoped>
-    .tc-dialog-toolbar .v-toolbar__content {
+    /* .tc-dialog-toolbar .v-toolbar__content {
         padding-left: 24px;
         padding-right: 10px;
-    }
+    } */
 </style>

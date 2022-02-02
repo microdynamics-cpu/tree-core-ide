@@ -24,6 +24,8 @@ const i18nObj = {
         ideName: "木心集成开发环境",
         ideTagline: "下一代处理器集成开发环境",
         ideHomeShowAtStartup: "是否在启动时显示主页",
+        ideLimitFieldNoEmpty: "字段不能为空！",
+
         idePrjNew: "新建工程",
         idePrjOpen: "打开工程",
         idePrjExample: "参考示例",
@@ -40,6 +42,7 @@ const i18nObj = {
         idePrjNewWinHint2A: "请选择标准模板。",
         idePrjNewWinHint2B: "请选择语言类型。",
         idePrjNewWinHint2C: "请选择第三方库。",
+
         projectWebsite: "项目网站",
         projectForum: "项目论坛",
         projectGitHub: "代码仓库",
@@ -69,6 +72,8 @@ const i18nObj = {
         ideName: "TreeCore IDE",
         ideTagline: "The next generation IDE for processor",
         ideHomeShowAtStartup: "Show at startup",
+        ideLimitFieldNoEmpty: "Field cannot be empty!",
+
         idePrjNew: "New Project",
         idePrjOpen: "Open Project",
         idePrjExample: "Project Examples",
@@ -85,6 +90,7 @@ const i18nObj = {
         idePrjNewWinHint2A: "Please select template.",
         idePrjNewWinHint2B: "Please select languate.",
         idePrjNewWinHint2C: "Please select libraries.",
+
         projectWebsite: "Project Website",
         projectForum: "Project Forum",
         projectGitHub: "Project GitHub",
