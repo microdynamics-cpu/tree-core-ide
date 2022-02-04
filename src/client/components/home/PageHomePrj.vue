@@ -31,68 +31,15 @@
                 </v-col>
             </v-row>
         </v-card-text>
-
-
-
-<v-row justify="center">
-    <v-btn
-      color="primary"
-      dark
-      @click.stop="test">
-      Open Dialog
-    </v-btn>
-
-    <v-dialog
-        ref="test"
-        v-model="dialog"
-        max-width="290"
-    >
-      <v-card>
-        <v-card-title class="text-h5">
-          Use Google's location service?
-        </v-card-title>
-        <v-card-text>
-          Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
-        <v-text-field
-            dense
-            hint="test"
-            label="test"
-            outlined
-            persistent-hint>
-        </v-text-field>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn
-            color="green darken-1"
-            text
-            @click="dialog = false"
-          >
-            Disagree
-          </v-btn>
-
-          <v-btn
-            color="green darken-1"
-            text
-            @click="dialog = false"
-          >
-            Agree
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-row>
-
-
         <BaseDialog
             ref="dialogHomePrjNew"
             :dialogShow="homePrjNewModel"
             dialogType="edit"
             :dialogText="i18n.idePrjNewWin"
             dialogWidth="500px"
-            @handleDialogClose="closeDialog">
+            @handleDialogClose="closeDialog"
+            @handleDialogYes="() => {}"
+            @handleDialogNo="() => {}">
             <template #body>
                 <v-col
                     cols="12"
@@ -118,93 +65,101 @@
                         </v-stepper-header>
                         <v-stepper-items>
                             <v-stepper-content step="1">
-                                <v-row>
-                                    <v-col
-                                        cols="12"
-                                        md="12"
-                                        class="pt-5">
-                                        <v-text-field
-                                            v-model="homePrjNameModel"
-                                            dense
-                                            :hint="i18n.idePrjNewWinHint1A"
-                                            :label="i18n.idePrjNewWinLabel1A"
-                                            :rules="homePrjRules"
-                                            outlined
-                                            persistent-hint>
-                                        </v-text-field>
-                                    </v-col>
-                                    <v-col
-                                        cols="12"
-                                        md="12">
-                                        <v-text-field
-                                            v-model="homePrjDirModel"
-                                            dense
-                                            :hint="i18n.idePrjNewWinHint1B"
-                                            :label="i18n.idePrjNewWinLabel1B"
-                                            readonly
-                                            :rules="homePrjRules"
-                                            outlined
-                                            persistent-hint
-                                            @click="openSystemDirWindow">
-                                        </v-text-field>
-                                    </v-col>
-                                </v-row>
+                                <v-form
+                                    ref="homePrjNewForm1"
+                                    lazy-validation>
+                                    <v-row>
+                                        <v-col
+                                            cols="12"
+                                            md="12"
+                                            class="pt-5">
+                                            <v-text-field
+                                                v-model="homePrjNameModel"
+                                                dense
+                                                :hint="i18n.idePrjNewWinHint1A"
+                                                :label="i18n.idePrjNewWinLabel1A"
+                                                :rules="homePrjRules"
+                                                outlined
+                                                persistent-hint>
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col
+                                            cols="12"
+                                            md="12">
+                                            <v-text-field
+                                                v-model="homePrjDirModel"
+                                                dense
+                                                :hint="i18n.idePrjNewWinHint1B"
+                                                :label="i18n.idePrjNewWinLabel1B"
+                                                readonly
+                                                :rules="homePrjRules"
+                                                outlined
+                                                persistent-hint
+                                                @click="openSystemDirWindow">
+                                            </v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                </v-form>
                             </v-stepper-content>
                             <v-stepper-content step="2">
-                                <v-row>
-                                    <v-col
-                                        cols="12"
-                                        md="12"
-                                        class="pt-5">
-                                        <v-select
-                                            v-model="homePrjTempModel"
-                                            dense
-                                            :hint="i18n.idePrjNewWinHint2A"
-                                            :items="homePrjTempItems"
-                                            item-text="text"
-                                            item-value="value"
-                                            :label="i18n.idePrjNewWinLabel2A"
-                                            return-object
-                                            :rules="homePrjRules"
-                                            outlined
-                                            persistent-hint>
-                                        </v-select>
-                                    </v-col>
-                                    <v-col
-                                        cols="12"
-                                        md="12">
-                                        <v-select
-                                            v-model="homePrjLangModel"
-                                            dense
-                                            :disabled="homePrjLangDisabled"
-                                            :hint="i18n.idePrjNewWinHint2B"
-                                            :items="homePrjLangItems"
-                                            :label="i18n.idePrjNewWinLabel2B"
-                                            :rules="homePrjRules"
-                                            outlined
-                                            persistent-hint>
-                                        </v-select>
-                                    </v-col>
-                                    <v-col
-                                        cols="12"
-                                        md="12">
-                                        <v-autocomplete
-                                            v-model="homePrjLibModel"
-                                            chips
-                                            deletable-chips
-                                            dense
-                                            :disabled="homePrjLibDisabled"
-                                            hide-no-data
-                                            :hint="i18n.idePrjNewWinHint2C"
-                                            :items="homePrjLibItems"
-                                            :label="i18n.idePrjNewWinLabel2C"
-                                            multiple
-                                            outlined
-                                            persistent-hint
-                                            small-chips>
-                                        </v-autocomplete>
-                                    </v-col>
-                                </v-row>
+                                <v-form
+                                    ref="homePrjNewForm2"
+                                    lazy-validation>
+                                    <v-row>
+                                        <v-col
+                                            cols="12"
+                                            md="12"
+                                            class="pt-5">
+                                            <v-select
+                                                v-model="homePrjTempModel"
+                                                dense
+                                                :hint="i18n.idePrjNewWinHint2A"
+                                                :items="homePrjTempItems"
+                                                item-text="text"
+                                                item-value="value"
+                                                :label="i18n.idePrjNewWinLabel2A"
+                                                return-object
+                                                :rules="homePrjRules"
+                                                outlined
+                                                persistent-hint>
+                                            </v-select>
+                                        </v-col>
+                                        <v-col
+                                            cols="12"
+                                            md="12">
+                                            <v-select
+                                                v-model="homePrjLangModel"
+                                                dense
+                                                :disabled="homePrjLangDisabled"
+                                                :hint="i18n.idePrjNewWinHint2B"
+                                                :items="homePrjLangItems"
+                                                :label="i18n.idePrjNewWinLabel2B"
+                                                :rules="homePrjRules"
+                                                outlined
+                                                persistent-hint>
+                                            </v-select>
+                                        </v-col>
+                                        <v-col
+                                            cols="12"
+                                            md="12">
+                                            <v-autocomplete
+                                                v-model="homePrjLibModel"
+                                                chips
+                                                deletable-chips
+                                                dense
+                                                :disabled="homePrjLibDisabled"
+                                                hide-no-data
+                                                :hint="i18n.idePrjNewWinHint2C"
+                                                :items="homePrjLibItems"
+                                                :label="i18n.idePrjNewWinLabel2C"
+                                                multiple
+                                                outlined
+                                                persistent-hint
+                                                small-chips>
+                                            </v-autocomplete>
+                                        </v-col>
+                                    </v-row>
+                                </v-form>
                             </v-stepper-content>
                         </v-stepper-items>
                     </v-stepper>
@@ -270,7 +225,6 @@
         },
         data: function() {
             return {
-                dialog: false,
                 i18n: config.i18n,
                 homePrjNewModel: false,
                 homePrjOpenModel: false,
@@ -301,7 +255,7 @@
                 ],
                 homePrjNameModel: "",
                 homePrjDirModel: "",
-                homePrjTempModel: "无",
+                homePrjTempModel: "",
                 homePrjTempItems: [{
                     text: "无",
                     value: "none"
@@ -309,7 +263,7 @@
                     text: "一生一芯",
                     value: "ysyx"
                 }],
-                homePrjLangModel: "Verilog",
+                homePrjLangModel: "",
                 homePrjLangDisabled: false,
                 homePrjLangItems: ["Verilog", "Chisel"],
                 homePrjLibModel: "",
@@ -336,17 +290,17 @@
             }
         },
         methods: {
-            test: function() {
-                this.dialog = true;
-                this.$nextTick(() => {
-                    // (this.$refs.map as any).refresh();
-                    console.log(this.$refs.test);
-                    // console.log(this.$refs.test.reset());
-                });
-                console.log(this.dialog);
-            },
             handleHomePrjNewData: function(dir) {
                 if (dir === "next") {
+                    if (this.homePrjNewStepperModel === 1 &&
+                       !this.$refs.homePrjNewForm1.validate()) {
+                        return;
+                    }
+                    if (this.homePrjNewStepperModel === 2 &&
+                       !this.$refs.homePrjNewForm2.validate()) {
+                        return;
+                    }
+
                     this.homePrjNewStepperModel++;
                     if (this.homePrjNewStepperModel >
                         this.homePrjNewStepperNum) {
@@ -360,14 +314,19 @@
                         this.homePrjNewStepperModel = 1;
                     }
                 }
+                // 重置窗口表单数据
                 else {
-                    // this.homePrjNewStepperModel = 1;
-                    // this.homePrjNameModel = "";
-                    // this.homePrjDirModel = "",
-                    // this.homePrjTempModel = "无";
-                    // this.homePrjLangModel = "Verilog";
-                    // this.homePrjLibModel = "";
+                    this.homePrjNewStepperModel = 1;
+                    this.homePrjNameModel = "";
+                    this.homePrjDirModel = "",
+                    this.homePrjTempModel = "";
+                    this.homePrjLangModel = "";
+                    this.homePrjLibModel = "";
                     this.homePrjNewModel = true;
+                    this.$nextTick(() => {
+                        this.$refs.homePrjNewForm1.resetValidation();
+                        this.$refs.homePrjNewForm2.resetValidation();
+                    });
                 }
 
                 console.log("homePrjNewStepperModel: " +
@@ -382,7 +341,6 @@
 
                 if (this.homePrjNewStepperModel ===
                     this.homePrjNewStepperNum) {
-                    // 创建本地工程
                 }
             },
 
