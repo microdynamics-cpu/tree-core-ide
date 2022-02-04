@@ -1,9 +1,9 @@
 const vscode = require("vscode");
 const utilExtn = require("../../utils/extn");
 
-module.exports = function (context) {
+module.exports = function(context) {
     context.subscriptions.push(
-        vscode.commands.registerCommand("treecore.cmd.showHomePage", function() {
+        vscode.commands.registerCommand("treecore.cmd.showHomePage", () => {
             const panel = vscode.window.createWebviewPanel(
                 "treecoreHome",
                 "TreeCore IDE Home",
@@ -20,7 +20,7 @@ module.exports = function (context) {
             panel.webview.html = utilExtn.getWebViewContent(
                 context,
                 "src/server/static/index.html");
-            panel.webview.onDidReceiveMessage(message => {
+            panel.webview.onDidReceiveMessage((message) => {
                 utilExtn.handleMessageFromWebview(global, message);
             }, undefined, context.subscriptions);
         }

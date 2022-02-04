@@ -343,8 +343,6 @@
                     this.homePrjNewStepperNum) {
                 }
             },
-
-
             openHomePrjData: function() {
                 this.homePrjOpenModel = false;
             },
@@ -353,6 +351,7 @@
             },
             openSystemDirWindow: function() {
                 console.log("test");
+
             },
             closeDialog: function() {
                 this.homePrjNewModel = false;

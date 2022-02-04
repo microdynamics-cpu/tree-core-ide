@@ -18,7 +18,7 @@ const extensionMessageHandlers = {
 
 function handleMessageCallback(panel, message, result) {
     console.log("messageCallback: " + result);
-    if (typeof(result) == "object" &&
+    if (typeof(result) === "object" &&
         result.code && result.code >= 400 && result.code < 600) {
         vscode.window.showErrorMessage("An unknown error occurred in" +
                                         message.cmd + "!");
