@@ -50,10 +50,6 @@
   "contributes": {
     "commands": [
       {
-        "command": "tree-core-ide.helloWorld",
-        "title": "Hello World"
-      },
-      {
         "command": "waveviewer.start",
         "title": "Start wave viewer session",
         "category": "[TreeCore] wave viewer"
