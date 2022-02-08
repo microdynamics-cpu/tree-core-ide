@@ -95,7 +95,7 @@
                                                 :rules="homePrjRules"
                                                 outlined
                                                 persistent-hint
-                                                @click="openSystemDirWindow">
+                                                @click="getHomePrjFileDirPath">
                                             </v-text-field>
                                         </v-col>
                                     </v-row>
@@ -202,7 +202,7 @@
             dialogType="edit"
             dialogText="工程打开窗口"
             @handleDialogClose="closeDialog"
-            @handleDialogYes="openHomePrjData"
+            @handleDialogYes="handleHomePrjOpenData"
             @handleDialogNo="closeDialog" />
         <BaseDialog
             ref="dialogHomePrjExample"
@@ -210,13 +210,16 @@
             dialogType="edit"
             dialogText="工程示例窗口"
             @handleDialogClose="closeDialog"
-            @handleDialogYes="openHomePrjExampleData"
+            @handleDialogYes="handleHomePrjExampleData"
             @handleDialogNo="closeDialog" />
     </v-card>
 </template>
 <script>
     import config from "@client/configs/index";
+    import view from "@native/utils/view";
     import BaseDialog from "@client/components/base/BaseDialog";
+
+    const vscodeLite = acquireVsCodeApi();
 
     export default {
         name: "PageHomePrj",
@@ -268,7 +271,6 @@
                 homePrjLangItems: ["Verilog", "Chisel"],
                 homePrjLibModel: "",
                 homePrjLibDisabled: false,
-                // 先用前端数据进行模拟
                 homePrjLibItems: ["Verilator", "Difftest", "NEMU"],
                 homePrjNewPrevBtn: false,
                 homePrjNewNextModel: "",
@@ -288,6 +290,11 @@
                     this.homePrjLibDisabled = false;
                 }
             }
+        },
+        mounted: function() {
+            window.addEventListener("message", (event) => {
+                view.handleMessageFromExtension(event);
+            });
         },
         methods: {
             handleHomePrjNewData: function(dir) {
@@ -314,7 +321,6 @@
                         this.homePrjNewStepperModel = 1;
                     }
                 }
-                // 重置窗口表单数据
                 else {
                     this.homePrjNewStepperModel = 1;
                     this.homePrjNameModel = "";
@@ -341,17 +347,23 @@
 
                 if (this.homePrjNewStepperModel ===
                     this.homePrjNewStepperNum) {
+
                 }
             },
-            openHomePrjData: function() {
+            handleHomePrjOpenData: function() {
                 this.homePrjOpenModel = false;
             },
-            openHomePrjExampleData: function() {
+            handleHomePrjExampleData: function() {
                 this.homePrjExampleModel = false;
             },
-            openSystemDirWindow: function() {
-                console.log("test");
-
+            getHomePrjFileDirPath: function() {
+                view.sendDataToExtension("getExtnFileDirPath", (result) => {
+                    console.log(result);
+                    if (result.length > 0) {
+                        this.homePrjDirModel = result[0].path;
+                    }
+                },
+                vscodeLite);
             },
             closeDialog: function() {
                 this.homePrjNewModel = false;

@@ -3,16 +3,25 @@ const path   = require("path");
 const vscode = require("vscode");
 
 const extensionMessageHandlers = {
-    getExtensionConfig: function(global, message) {
+    getExtnConfig: function(global, message) {
         const result = vscode.workspace.getConfiguration().get(
             message.key);
         handleMessageCallback(global.panel, message, result);
     },
-    setExtensionConfig: function(global, message) {
-        vscode.workspace.getConfiguration().update(message.key, message.val,
+    setExtnConfig: function(global, message) {
+        vscode.workspace.getConfiguration().update(message.key,
+                                                   message.val,
                                                    true);
         vscode.window.showInformationMessage(
             "Update configuration successfully!");
+    },
+    getExtnFileDirPath: async function(global, message) {
+        let result = await vscode.window.showOpenDialog({
+            canSelectFiles: false,
+            canSelectFolders: true,
+            canSelectMany: false
+        });
+        handleMessageCallback(global.panel, message, result);
     }
 };
 
@@ -20,8 +29,8 @@ function handleMessageCallback(panel, message, result) {
     console.log("messageCallback: " + result);
     if (typeof(result) === "object" &&
         result.code && result.code >= 400 && result.code < 600) {
-        vscode.window.showErrorMessage("An unknown error occurred in" +
-                                        message.cmd + "!");
+        vscode.window.showErrorMessage(
+            "An unknown error occurred in" + message.cmd + "!");
     }
     panel.webview.postMessage({
         cmd: "extensionCallback",
