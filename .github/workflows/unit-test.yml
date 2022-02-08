@@ -1,8 +1,7 @@
 name: unit-test
 on:
   push:
-    branches:
-      - dev
+    branches: [ main, dev, feat-wave ]
 
 jobs:
   setup:
