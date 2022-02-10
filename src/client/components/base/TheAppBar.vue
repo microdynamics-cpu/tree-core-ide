@@ -1,6 +1,7 @@
 <template>
-    <v-app-bar app
-               height="60px">
+    <v-app-bar
+        app
+        height="60px">
         <div v-for="item in appBarItems"
              :key="item.title">
             <v-btn
