@@ -31,7 +31,7 @@
         },
         mounted: function() {
             // 暂时通过手动设置跳转到主页模块
-            // Temporarily jump to the home page module through manual setting
+            // Jump to the home page module through manual setting
             router.push("/home");
         }
     }
