@@ -18,7 +18,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 module.exports = {
     devServer: {
         compress: true,
-        contentBase: path.resolve(__dirname, "./src/server/static"),
+        contentBase: path.resolve(__dirname, "./dist"),
         historyApiFallback: {
             verbose: false
         },
@@ -161,7 +161,7 @@ module.exports = {
     output: {
         filename: "js/[name].bundle.[hash:8].js",
         chunkFilename: "js/[name].chunk.[chunkhash:8].js",
-        path: path.resolve(__dirname, "./src/server/static"),
+        path: path.resolve(__dirname, "./dist"),
     },
     performance: {
         hints: "warning"

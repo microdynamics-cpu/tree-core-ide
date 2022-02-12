@@ -20,7 +20,7 @@ module.exports = {
                     "resources/images/logos/treecore_logo_main.svg");
                 panel.webview.html = extn.getWebViewContent(
                     context,
-                    "src/server/static/index.html");
+                    "dist/index.html");
                 panel.webview.onDidReceiveMessage((message) => {
                     extn.handleMessageFromWebview(global, message);
                 },
