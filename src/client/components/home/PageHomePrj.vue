@@ -78,7 +78,7 @@
                                                 dense
                                                 :hint="i18n.idePrjNewWinHint1A"
                                                 :label="i18n.idePrjNewWinLabel1A"
-                                                :rules="homePrjRules"
+                                                :rules="[homePrjRules.required, homePrjRules.prjName]"
                                                 outlined
                                                 persistent-hint>
                                             </v-text-field>
@@ -92,7 +92,7 @@
                                                 :hint="i18n.idePrjNewWinHint1B"
                                                 :label="i18n.idePrjNewWinLabel1B"
                                                 readonly
-                                                :rules="homePrjRules"
+                                                :rules="[homePrjRules.required]"
                                                 outlined
                                                 persistent-hint
                                                 @click="getHomePrjFileDirPath">
@@ -119,7 +119,7 @@
                                                 item-value="value"
                                                 :label="i18n.idePrjNewWinLabel2A"
                                                 return-object
-                                                :rules="homePrjRules"
+                                                :rules="[homePrjRules.required]"
                                                 outlined
                                                 persistent-hint>
                                             </v-select>
@@ -134,7 +134,7 @@
                                                 :hint="i18n.idePrjNewWinHint2B"
                                                 :items="homePrjLangItems"
                                                 :label="i18n.idePrjNewWinLabel2B"
-                                                :rules="homePrjRules"
+                                                :rules="[homePrjRules.required]"
                                                 outlined
                                                 persistent-hint>
                                             </v-select>
@@ -215,7 +215,7 @@
     </v-card>
 </template>
 <script>
-    import config from "@client/configs/index";
+    import config from "@client/config/index";
     import view from "@native/utils/view";
     import BaseDialog from "@client/components/base/BaseDialog";
 
@@ -249,14 +249,18 @@
                 }],
                 homePrjNewStepperModel: 1,
                 homePrjNewStepperNum: 2,
-                homePrjRules: [
-                    (val) => {
+                homePrjRules: {
+                    required: (val) => {
                         if (typeof val === "object") {
                             val = val.value;
                         }
-                        return (val || "").length > 0 || this.i18n.ideLimitFieldNoEmpty
+                        return ((val || "").length > 0) || this.i18n.ideRuleFieldNoEmpty;
+                    },
+                    prjName: (val) => {
+                        const pattern = /^[a-zA-Z0-9_\-]*$/;
+                        return pattern.test(val) || this.i18n.ideRuleFieldNameValid;
                     }
-                ],
+                },
                 homePrjNameModel: "",
                 homePrjDirModel: "",
                 homePrjTempModel: "",
