@@ -31,7 +31,7 @@
     </v-navigation-drawer>
 </template>
 <script>
-    import config from "@client/configs/index";
+    import config from "@client/config/index";
 
     export default {
         name: "TheNavDrawer",

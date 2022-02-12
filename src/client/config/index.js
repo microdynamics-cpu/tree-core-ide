@@ -24,7 +24,8 @@ const i18nObj = {
         ideName: "木心集成开发环境",
         ideTagline: "下一代处理器集成开发环境",
         ideHomeShowAtStartup: "是否在启动时显示主页",
-        ideLimitFieldNoEmpty: "字段不能为空！",
+        ideRuleFieldNoEmpty: "字段不能为空！",
+        ideRuleFieldNameValid: "字段只能是字母、数字、下划线或短横线的组合！",
 
         idePrjNew: "新建工程",
         idePrjOpen: "打开工程",
@@ -72,7 +73,8 @@ const i18nObj = {
         ideName: "TreeCore IDE",
         ideTagline: "The next generation IDE for processor",
         ideHomeShowAtStartup: "Show at startup",
-        ideLimitFieldNoEmpty: "Field cannot be empty!",
+        ideRuleFieldNoEmpty: "Field cannot be empty!",
+        ideRuleFieldNameValid: "Field can only be a combination of letters, numbers, underscores or dashes!",
 
         idePrjNew: "New Project",
         idePrjOpen: "Open Project",

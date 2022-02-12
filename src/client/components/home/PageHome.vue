@@ -165,7 +165,7 @@
     </v-main>
 </template>
 <script>
-    import config from "@client/configs/index";
+    import config from "@client/config/index";
     import PageHomePrj from "@client/components/home/PageHomePrj";
     import PageHomeTool from "@client/components/home/PageHomeTool";
     import PageHomeLib from "@client/components/home/PageHomeLib";
