@@ -2,63 +2,60 @@ const fs     = require("fs");
 const path   = require("path");
 const vscode = require("vscode");
 
-const extensionMessageHandlers = {
-    getExtnConfig: function(global, message) {
-        const result = vscode.workspace.getConfiguration().get(
-            message.key);
-        handleMessageCallback(global.panel, message, result);
+const extnMsgHandlers = {
+    getExtnConfig: function(global, msg) {
+        const res = vscode.workspace.getConfiguration().get(msg.key);
+        sendExtnDataToView(global.panel, msg, res);
     },
-    setExtnConfig: function(global, message) {
-        vscode.workspace.getConfiguration().update(message.key,
-                                                   message.val,
-                                                   true);
+    setExtnConfig: function(global, msg) {
+        vscode.workspace.getConfiguration().update(msg.key, msg.val, true);
         vscode.window.showInformationMessage(
             "Update configuration successfully!");
     },
-    getExtnFileDirPath: async function(global, message) {
-        let result = await vscode.window.showOpenDialog({
+    getExtnFileDirPath: async function(global, msg) {
+        let res = await vscode.window.showOpenDialog({
             canSelectFiles: false,
             canSelectFolders: true,
             canSelectMany: false
         });
-        handleMessageCallback(global.panel, message, result);
+        sendExtnDataToView(global.panel, msg, res);
     }
 };
 
-function handleMessageCallback(panel, message, result) {
-    console.log("messageCallback: " + result);
-    if (typeof(result) === "object" &&
-        result.code && result.code >= 400 && result.code < 600) {
+function sendExtnDataToView(panel, msg, res) {
+    console.log("msgCallback: " + res);
+    if (typeof(res) === "object" &&
+        res.code && res.code >= 400 && res.code < 600) {
         vscode.window.showErrorMessage(
-            "An unknown error occurred in" + message.cmd + "!");
+            "An unknown error occurred in" + msg.cmd + "!");
     }
     panel.webview.postMessage({
-        cmd: "extensionCallback",
-        cid:  message.cid,
-        data: result
+        cmd: "extnCallback",
+        cid:  msg.cid,
+        data: res
     });
 };
 
 module.exports = {
     // 获取某个扩展文件的绝对路径
     // Get the absolute path of an extension file
-    getExtensionFileAbsolutePath: function(context, relativePath) {
+    getExtnFileAbsolutePath: function(context, relativePath) {
         return path.join(context.extensionPath, relativePath);
     },
     // 获取某个扩展文件的绝对路径（VS Code URL）
     // Get the absolute path of an extension file (VS Code URL)
-    getExtensionFileAbsolutePathUrl: function(context, relativePath) {
+    getExtnFileAbsolutePathUrl: function(context, relativePath) {
         return vscode.Uri.file(
-            this.getExtensionFileAbsolutePath(context, relativePath));
+            this.getExtnFileAbsolutePath(context, relativePath));
     },
     // 获取当前工程的名字
     // Get the name of the current project
-    getProjectName: function(projectPath) {
+    getExtnProjectName: function(projectPath) {
         return path.basename(projectPath);
     },
     // 获取当前工程根目录
     // Get the root directory of the current project
-    getProjectPath: function(document) {
+    getExtnProjectPath: function(document) {
         if (!document) {
             document = vscode.window.activeTextEditor ?
                 vscode.window.activeTextEditor.document : null;
@@ -101,9 +98,9 @@ module.exports = {
     },
     // 获取某个HTML文件的内容
     // Get the content of an HTML file
-    getWebViewContent: function(context, relativePath) {
-        const resourcePath = this.getExtensionFileAbsolutePath(context,
-                                                               relativePath);
+    getExtnContentFromView: function(context, relativePath) {
+        const resourcePath = this.getExtnFileAbsolutePath(context,
+                                                          relativePath);
         const dirPath = path.dirname(resourcePath);
         let html = fs.readFileSync(resourcePath, "utf-8");
         // 由于VSCode不支持直接加载本地资源，所以需要将其中的部分内容替换成专有路径格式
@@ -125,14 +122,14 @@ module.exports = {
         return html;
     },
     // 处理来自页面的消息内容
-    // Handle message contents from Webview
-    handleMessageFromWebview: function(global, message) {
-        if (extensionMessageHandlers[message.cmd]) {
-            extensionMessageHandlers[message.cmd](global, message);
+    // Handle message contents from webview
+    handleExtnMsgFromView: function(global, msg) {
+        if (extnMsgHandlers[msg.cmd]) {
+            extnMsgHandlers[msg.cmd](global, msg);
         }
         else {
             vscode.window.showErrorMessage(
-                `Callback method named ${message.cmd} was not found!`);
+                `Callback method named ${msg.cmd} was not found!`);
         }
     }
 };

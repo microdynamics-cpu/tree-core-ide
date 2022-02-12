@@ -1,7 +1,7 @@
-const webviewMessageCallbacks = {};
+const webviewMsgCallbacks = {};
 
 export default {
-    genExtensionUUID: function() {
+    genViewCallbackUUID: function() {
         return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
             /[xy]/g, function(c) {
             let r = Math.random() * 16 | 0,
@@ -9,27 +9,26 @@ export default {
             return v.toString(16);
         });
     },
-    handleMessageFromExtension: function(event) {
-        const message = event.data;
-        switch (message.cmd) {
-            case "extensionCallback": {
-                console.log(message.data);
-                (webviewMessageCallbacks[message.cid] || function(){})(
-                    message.data);
-                delete webviewMessageCallbacks[message.cid];
+    handleViewMsgFromExtn: function(event) {
+        const msg = event.data;
+        switch (msg.cmd) {
+            case "extnCallback": {
+                console.log(msg.data);
+                (webviewMsgCallbacks[msg.cid] || function(){})(msg.data);
+                delete webviewMsgCallbacks[msg.cid];
             };
             default: break;
         }
     },
-    sendDataToExtension: function(data, callback, vscodeLite) {
+    sendViewDataToExtn: function(data, callback, vscodeLite) {
         if (typeof(data) == "string") {
             data = {
                 cmd: data
             };
         }
         if (callback) {
-            const cid = this.genExtensionUUID();
-            webviewMessageCallbacks[cid] = callback;
+            const cid = this.genViewCallbackUUID();
+            webviewMsgCallbacks[cid] = callback;
             data.cid = cid;
         }
         vscodeLite.postMessage(data);

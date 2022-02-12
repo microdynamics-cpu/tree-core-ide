@@ -294,7 +294,8 @@
         },
         mounted: function() {
             window.addEventListener("message", (event) => {
-                view.handleMessageFromExtension(event);
+                console.log(event);
+                view.handleViewMsgFromExtn(event);
             });
         },
         methods: {
@@ -358,10 +359,10 @@
                 this.homePrjExampleModel = false;
             },
             getHomePrjFileDirPath: function() {
-                view.sendDataToExtension("getExtnFileDirPath", (result) => {
-                    console.log(result);
-                    if (result.length > 0) {
-                        this.homePrjDirModel = result[0].path;
+                view.sendViewDataToExtn("getExtnFileDirPath", (res) => {
+                    console.log(res);
+                    if (res.length > 0) {
+                        this.homePrjDirModel = res[0].path;
                     }
                 },
                 vscodeLite);

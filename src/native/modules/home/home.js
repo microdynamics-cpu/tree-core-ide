@@ -15,14 +15,14 @@ module.exports = {
                     }
                 );
                 let global = { panel };
-                panel.iconPath = extn.getExtensionFileAbsolutePathUrl(
+                panel.iconPath = extn.getExtnFileAbsolutePathUrl(
                     context,
                     "resources/images/logos/treecore_logo_main.svg");
-                panel.webview.html = extn.getWebViewContent(
+                panel.webview.html = extn.getExtnContentFromView(
                     context,
                     "dist/index.html");
-                panel.webview.onDidReceiveMessage((message) => {
-                    extn.handleMessageFromWebview(global, message);
+                panel.webview.onDidReceiveMessage((msg) => {
+                    extn.handleExtnMsgFromView(global, msg);
                 },
                 undefined,
                 context.subscriptions);
@@ -48,14 +48,14 @@ module.exports = {
 //                 }
 //             );
 //             let global = { panel };
-//             panel.iconPath = extn.getExtensionFileAbsolutePathUrl(
+//             panel.iconPath = extn.getExtnFileAbsolutePathUrl(
 //                 context,
 //                 "resources/images/logos/treecore_logo_main.svg");
-//             panel.webview.html = extn.getWebViewContent(
+//             panel.webview.html = extn.getExtnContentFromView(
 //                 context,
 //                 "src/server/static/index.html");
 //             panel.webview.onDidReceiveMessage((message) => {
-//                 extn.handleMessageFromWebview(global, message);
+//                 extn.handleExtnMsgFromView(global, message);
 //             }, undefined, context.subscriptions);
 //         }
 //     ));
@@ -77,7 +77,7 @@ module.exports = {
     //             }
     //         );
 
-    //         panel.webview.html = extn.getWebViewContent(context,
+    //         panel.webview.html = extn.getExtnContentFromView(context,
     //             "src/native/viewer/waveform/WaveViewer.html");
     //     }
     // ));
@@ -94,7 +94,7 @@ module.exports = {
     //             }
     //         );
 
-    //         panel.webview.html = extn.getWebViewContent(context,
+    //         panel.webview.html = extn.getExtnContentFromView(context,
     //             "src/native/viewer/schematic/SchViewer.html");
     //     }
     // ));
