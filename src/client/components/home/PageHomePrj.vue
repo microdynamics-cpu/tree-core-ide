@@ -219,7 +219,8 @@
     import view from "@native/utils/view";
     import BaseDialog from "@client/components/base/BaseDialog";
 
-    const vscodeLite = acquireVsCodeApi();
+    const webDebugFlag = true;
+    const vscodeLite = webDebugFlag ? {} : acquireVsCodeApi();
 
     export default {
         name: "PageHomePrj",
