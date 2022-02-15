@@ -1,3 +1,10 @@
+.theme--dark .v-label {
+    color: white;
+}
+.v-data-table th {
+    font-size: 16px !important;
+}
+
 .tc-card-title-span-20px {
     position: relative;
     top: 1px;
@@ -23,9 +30,14 @@
     border-bottom: thin solid rgb(255, 255, 255, 0.12) !important;
     box-shadow: none !important;
 }
-.theme--dark .v-label {
-    color: white;
+.tc-elem-back-color-grey {
+    background-color: #303030 !important;
 }
-.v-data-table th {
-    font-size: 16px !important;
+.tc-code-back-highlight {
+    padding: 2px 4px;
+    border-radius: 4px;
+    background-color: #9E9E9E;
+    color: #1E1E1E;
+    font-family: monospace;
+    font-size: 90%;
 }

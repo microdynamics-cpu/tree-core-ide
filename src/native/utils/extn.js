@@ -19,7 +19,7 @@ const extnMsgHandlers = {
             canSelectMany: false
         });
         sendExtnDataToView(global.panel, msg, res);
-    }
+    },
 };
 
 function sendExtnDataToView(panel, msg, res) {

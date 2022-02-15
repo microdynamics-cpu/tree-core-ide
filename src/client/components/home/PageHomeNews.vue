@@ -11,7 +11,7 @@
                 </v-card-title>
                 <v-card-text>
                     <v-carousel
-                        height="410px;"
+                        height="410px"
                         show-arrows-on-hover>
                         <v-carousel-item
                             v-for="(item, index) in homeNewsCarouselItems"

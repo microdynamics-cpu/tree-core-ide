@@ -46,7 +46,7 @@
                         dark
                         small
                         @click="handleDialogYes">
-                        <v-icon left>mdi-check</v-icon>确定
+                        <v-icon left>mdi-check</v-icon>{{ i18n.ideButtonConfirm }}
                     </v-btn>
                     <v-btn
                         v-if="dialogType === 'confirm' ||
@@ -55,7 +55,7 @@
                         dark
                         small
                         @click="handleDialogNo">
-                        <v-icon left>mdi-cancel</v-icon>取消
+                        <v-icon left>mdi-cancel</v-icon>{{ i18n.ideButtonCancel }}
                     </v-btn>
                 </slot>
             </v-card-actions>
@@ -63,6 +63,8 @@
     </v-dialog>
 </template>
 <script>
+    import config from "@client/config/index";
+
     export default {
         name: "BaseDialog",
         props: {
@@ -85,6 +87,7 @@
         },
         data: function() {
             return {
+                i18n: config.i18n,
                 dialogAlert: {
                     title: "信息",
                     type: "info"

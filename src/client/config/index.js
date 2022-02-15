@@ -1,6 +1,11 @@
 const lang = "zh-cn";
 const i18nObj = {
     "zh-cn": {
+        ideButtonConfirm: "确定",
+        ideButtonCancel: "取消",
+        ideButtonPrev: "上一步",
+        ideButtonNext: "下一步",
+        ideButtonProgess: "处理中",
         ideGoBack: "后退",
         ideGoForward: "前进",
         ideModuleHome: "插件主页",
@@ -28,9 +33,7 @@ const i18nObj = {
         ideRuleFieldNameValid: "字段只能是字母、数字、下划线或短横线的组合！",
 
         idePrjNew: "新建工程",
-        idePrjOpen: "打开工程",
-        idePrjExample: "参考示例",
-        idePrjNewWin: "工程向导窗口",
+        idePrjNewWin: "工程创建窗口",
         idePrjNewWinStep1: "基础信息",
         idePrjNewWinStep2: "工程配置",
         idePrjNewWinLabel1A: "工程名称",
@@ -43,6 +46,9 @@ const i18nObj = {
         idePrjNewWinHint2A: "请选择标准模板。",
         idePrjNewWinHint2B: "请选择语言类型。",
         idePrjNewWinHint2C: "请选择第三方库。",
+        idePrjWizard: "工程向导窗口",
+        idePrjOpen: "打开工程",
+        idePrjExample: "参考示例",
 
         projectWebsite: "项目网站",
         projectForum: "项目论坛",
@@ -50,6 +56,11 @@ const i18nObj = {
         teamEmail: "团队邮箱",
     },
     "en": {
+        ideButtonConfirm: "Confirm",
+        ideButtonCancel: "Cancel",
+        ideButtonPrev: "Prev",
+        ideButtonNext: "Next",
+        ideButtonProgess: "Progess",
         ideGoBack: "Go Back",
         ideGoForward: "Go Forward",
         ideModuleHome: "Home",
@@ -77,8 +88,6 @@ const i18nObj = {
         ideRuleFieldNameValid: "Field can only be a combination of letters, numbers, underscores or dashes!",
 
         idePrjNew: "New Project",
-        idePrjOpen: "Open Project",
-        idePrjExample: "Project Examples",
         idePrjNewWin: "Project New",
         idePrjNewWinStep1: "Base Info",
         idePrjNewWinStep2: "Settings",
@@ -92,6 +101,9 @@ const i18nObj = {
         idePrjNewWinHint2A: "Please select template.",
         idePrjNewWinHint2B: "Please select languate.",
         idePrjNewWinHint2C: "Please select libraries.",
+        idePrjWizard: "Project Wizard",
+        idePrjOpen: "Open Project",
+        idePrjExample: "Project Examples",
 
         projectWebsite: "Project Website",
         projectForum: "Project Forum",

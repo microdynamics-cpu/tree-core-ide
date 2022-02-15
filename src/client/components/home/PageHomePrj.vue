@@ -91,7 +91,7 @@
                                                 dense
                                                 :hint="i18n.idePrjNewWinHint1B"
                                                 :label="i18n.idePrjNewWinLabel1B"
-                                                readonly
+                                                :readonly="homePrjReadonly"
                                                 :rules="[homePrjRules.required]"
                                                 outlined
                                                 persistent-hint
@@ -172,7 +172,7 @@
                     dark
                     small
                     @click="handleHomePrjNewData('prev')">
-                    <v-icon left>mdi-arrow-left</v-icon>上一步
+                    <v-icon left>mdi-arrow-left</v-icon>{{ i18n.ideButtonPrev }}
                 </v-btn>
                 <v-btn
                     v-model="homePrjNewNextModel"
@@ -181,10 +181,10 @@
                     small
                     @click="handleHomePrjNewData('next')">
                     <div v-if="homePrjNewStepperModel < homePrjNewStepperNum">
-                        <v-icon left>mdi-arrow-right</v-icon>下一步
+                        <v-icon left>mdi-arrow-right</v-icon>{{ i18n.ideButtonNext }}
                     </div>
                     <div v-else>
-                        <v-icon left>mdi-check</v-icon>确定
+                        <v-icon left>mdi-check</v-icon>{{ i18n.ideButtonConfirm }}
                     </div>
                 </v-btn>
                 <v-btn
@@ -192,7 +192,101 @@
                     dark
                     small
                     @click="closeDialog">
-                    <v-icon left>mdi-cancel</v-icon>取消
+                    <v-icon left>mdi-cancel</v-icon>{{ i18n.ideButtonCancel }}
+                </v-btn>
+            </template>
+        </BaseDialog>
+        <BaseDialog
+            ref="dialogHomePrjWizard"
+            :dialogShow="homePrjWizardModel"
+            dialogType="edit"
+            :dialogText="i18n.idePrjWizard"
+            dialogWidth="500px"
+            @handleDialogClose="closeDialog"
+            @handleDialogYes="() => {}"
+            @handleDialogNo="() => {}">
+            <template #body>
+                <v-col
+                    cols="12"
+                    md="12">
+                    <v-carousel
+                        :cycle="true"
+                        :show-arrows="false"
+                        height="250px"
+                        :hide-delimiter-background="true"
+                        interval="10000">
+                        <v-carousel-item>
+                            <v-card
+                                height="100%"
+                                outlined
+                                class="tc-elem-back-color-grey">
+                                <v-card-title>
+                                    <v-icon left>mdi-information-outline</v-icon>
+                                    <span>重要提示</span>
+                                </v-card-title>
+                                <v-card-text>第一次初始化可能需要联网下载依赖的第三方库，请耐心等候！</v-card-text>
+                            </v-card>
+                        </v-carousel-item>
+                        <v-carousel-item>
+                            <v-card
+                                height="100%"
+                                outlined
+                                class="tc-elem-back-color-grey">
+                                <v-card-title>
+                                    <v-icon left>mdi-information-outline</v-icon>
+                                    <span>工程结构</span>
+                                </v-card-title>
+                                <v-card-text>
+                                    <span>木心工程主要包含以下几个项目：</span>
+                                    <v-row
+                                        dense
+                                        class="mt-3">
+                                        <v-col cols="12">
+                                            <v-icon left>mdi-folder-outline</v-icon>
+                                            <span class="tc-code-back-highlight">lib</span>
+                                            <span>:</span>
+                                            <span>存放工程使用的第三方库文件</span>
+                                        </v-col>
+                                        <v-col cols="12">
+                                            <v-icon left>mdi-folder-outline</v-icon>
+                                            <span class="tc-code-back-highlight">sim</span>
+                                            <span>:</span>
+                                            <span>存放工程使用的第三方库文件</span>
+                                        </v-col>
+                                        <v-col cols="12">
+                                            <v-icon left>mdi-file-outline</v-icon>
+                                            <span class="tc-code-back-highlight">project.ini</span>
+                                            <span>:</span>
+                                            <span>记录工程所有配置信息的文件</span>
+                                        </v-col>
+                                    </v-row>
+                                </v-card-text>
+                            </v-card>
+                        </v-carousel-item>
+                    </v-carousel>
+                </v-col>
+            </template>
+            <template #button>
+                <v-btn
+                    color="green"
+                    dark
+                    disabled
+                    small
+                    @click="closeDialog">
+                    <v-progress-circular
+                        color="primary"
+                        indeterminate
+                        size="18"
+                        width="2"
+                        class="mr-3">
+                    </v-progress-circular>{{ i18n.ideButtonProgess }}
+                </v-btn>
+                <v-btn
+                    color="red"
+                    dark
+                    small
+                    @click="closeDialog">
+                    <v-icon left>mdi-cancel</v-icon>{{ i18n.ideButtonCancel }}
                 </v-btn>
             </template>
         </BaseDialog>
@@ -231,14 +325,11 @@
             return {
                 i18n: config.i18n,
                 homePrjNewModel: false,
-                homePrjOpenModel: false,
-                homePrjExampleModel: false,
                 homePrjButtonItems: [{
                     title: config.i18n.idePrjNew,
                     icon: "mdi-plus-box",
                     func: () => {
                         this.handleHomePrjNewData();
-                        // this.homePrjNewModel = true;
                     }
                 }, {
                     title: config.i18n.idePrjOpen,
@@ -249,6 +340,7 @@
                 }],
                 homePrjNewStepperModel: 1,
                 homePrjNewStepperNum: 2,
+                homePrjReadonly: !webDebugFlag,
                 homePrjRules: {
                     required: (val) => {
                         if (typeof val === "object") {
@@ -279,6 +371,9 @@
                 homePrjLibItems: ["Verilator", "Difftest", "NEMU"],
                 homePrjNewPrevBtn: false,
                 homePrjNewNextModel: "",
+                homePrjWizardModel: false,
+                homePrjOpenModel: false,
+                homePrjExampleModel: false,
             }
         },
         watch: {
@@ -316,7 +411,7 @@
 
                     this.homePrjNewStepperModel++;
                     if (this.homePrjNewStepperModel >
-                        this.homePrjNewStepperNum) {
+                        this.homePrjNewStepperNum + 1) {
                         this.homePrjNewStepperModel =
                             this.homePrjNewStepperNum;
                     }
@@ -352,8 +447,14 @@
                 }
 
                 if (this.homePrjNewStepperModel ===
-                    this.homePrjNewStepperNum) {
+                    this.homePrjNewStepperNum + 1) {
+                    this.homePrjNewModel = false;
+                    this.homePrjWizardModel = true;
 
+                    // view.sendViewDataToExtn("addExtnPrjDirBy", (res) => {
+                    //     console.log(res);
+                    // },
+                    // vscodeLite);
                 }
             },
             handleHomePrjOpenData: function() {
@@ -363,18 +464,21 @@
                 this.homePrjExampleModel = false;
             },
             getHomePrjFileDirPath: function() {
-                view.sendViewDataToExtn("getExtnFileDirPath", (res) => {
-                    console.log(res);
-                    if (res.length > 0) {
-                        this.homePrjDirModel = res[0].path;
-                    }
-                },
-                vscodeLite);
+                if (!webDebugFlag) {
+                    view.sendViewDataToExtn("getExtnFileDirPath", (res) => {
+                        console.log(res);
+                        if (res.length > 0) {
+                            this.homePrjDirModel = res[0].path;
+                        }
+                    },
+                    vscodeLite);
+                }
             },
             closeDialog: function() {
                 this.homePrjNewModel = false;
                 this.homePrjOpenModel = false;
                 this.homePrjExampleModel = false;
+                this.homePrjWizardModel = false;
             }
         }
     }
