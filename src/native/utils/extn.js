@@ -4,8 +4,8 @@ const vscode = require("vscode");
 
 const extnMsgHandlers = {
     getExtnConfig: function(global, msg) {
-        const res = vscode.workspace.getConfiguration().get(msg.key);
-        sendExtnDataToView(global.panel, msg, res);
+        let data = vscode.workspace.getConfiguration().get(msg.key);
+        sendExtnMsgToView(global.panel, msg, data);
     },
     setExtnConfig: function(global, msg) {
         vscode.workspace.getConfiguration().update(msg.key, msg.val, true);
@@ -13,26 +13,55 @@ const extnMsgHandlers = {
             "Update configuration successfully!");
     },
     getExtnFileDirPath: async function(global, msg) {
-        let res = await vscode.window.showOpenDialog({
+        let data = await vscode.window.showOpenDialog({
             canSelectFiles: false,
             canSelectFolders: true,
             canSelectMany: false
         });
-        sendExtnDataToView(global.panel, msg, res);
+        sendExtnMsgToView(global.panel, msg, data);
+    },
+    addExtnProjectDir: async function(global, msg) {
+        let path = msg.param.path;
+        console.log(path);
+        fs.mkdir(path, {
+            recursive: false
+        }, async (err) => {
+            if (err) {
+                console.log(err);
+            }
+
+            let pathTree = path + "/tree";
+            await fs.mkdir(pathTree, () => {
+                fs.mkdir(pathTree + "/build", () => {});
+                fs.mkdir(pathTree + "/lib", () => {});
+                fs.mkdir(pathTree + "/sim", () => {});
+                fs.mkdir(pathTree + "/test", () => {});
+                fs.open(pathTree + "/project.json", "w+", (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
+            });
+            await fs.mkdir(path + "/src", () => {});
+
+            // sendExtnMsgToView(global.panel, msg, res);
+        });
     },
 };
 
-function sendExtnDataToView(panel, msg, res) {
-    console.log("msgCallback: " + res);
-    if (typeof(res) === "object" &&
-        res.code && res.code >= 400 && res.code < 600) {
-        vscode.window.showErrorMessage(
+function sendExtnMsgToView(panel, msg, data) {
+    console.log("msgCallback: " + data);
+    if (typeof(data) === "object") {
+        let code = data.code;
+        if (code && code >= 400 && code < 600) {
+            vscode.window.showErrorMessage(
             "An unknown error occurred in" + msg.cmd + "!");
+        }
     }
     panel.webview.postMessage({
         cmd: "extnCallback",
         cid:  msg.cid,
-        data: res
+        data: data
     });
 };
 

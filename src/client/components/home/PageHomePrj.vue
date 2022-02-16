@@ -255,7 +255,7 @@
                                         </v-col>
                                         <v-col cols="12">
                                             <v-icon left>mdi-file-outline</v-icon>
-                                            <span class="tc-code-back-highlight">project.ini</span>
+                                            <span class="tc-code-back-highlight">project.json</span>
                                             <span>:</span>
                                             <span>记录工程所有配置信息的文件</span>
                                         </v-col>
@@ -313,7 +313,7 @@
     import view from "@native/utils/view";
     import BaseDialog from "@client/components/base/BaseDialog";
 
-    const webDebugFlag = true;
+    const webDebugFlag = false;
     const vscodeLite = webDebugFlag ? {} : acquireVsCodeApi();
 
     export default {
@@ -451,10 +451,11 @@
                     this.homePrjNewModel = false;
                     this.homePrjWizardModel = true;
 
-                    // view.sendViewDataToExtn("addExtnPrjDirBy", (res) => {
-                    //     console.log(res);
-                    // },
-                    // vscodeLite);
+                    view.sendViewMsgToExtn("addExtnProjectDir", {
+                        path: this.homePrjDirModel + "/" + this.homePrjNameModel
+                    }, (res) => {
+                    },
+                    vscodeLite);
                 }
             },
             handleHomePrjOpenData: function() {
@@ -465,7 +466,7 @@
             },
             getHomePrjFileDirPath: function() {
                 if (!webDebugFlag) {
-                    view.sendViewDataToExtn("getExtnFileDirPath", (res) => {
+                    view.sendViewMsgToExtn("getExtnFileDirPath", {}, (res) => {
                         console.log(res);
                         if (res.length > 0) {
                             this.homePrjDirModel = res[0].path;

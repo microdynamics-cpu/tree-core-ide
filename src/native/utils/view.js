@@ -13,24 +13,25 @@ export default {
         const msg = event.data;
         switch (msg.cmd) {
             case "extnCallback": {
-                console.log(msg.data);
-                (webviewMsgCallbacks[msg.cid] || function(){})(msg.data);
-                delete webviewMsgCallbacks[msg.cid];
+                let cid = msg.cid;
+                let data = msg.data;
+                console.log("extnCallback: " + data);
+                (webviewMsgCallbacks[cid] || function(){})(data);
+                delete webviewMsgCallbacks[cid];
             };
             default: break;
         }
     },
-    sendViewDataToExtn: function(data, callback, vscodeLite) {
-        if (typeof(data) == "string") {
-            data = {
-                cmd: data
-            };
-        }
+    sendViewMsgToExtn: function(cmd, param, callback, vscodeLite) {
+        let cid = "";
         if (callback) {
-            const cid = this.genViewCallbackUUID();
+            cid = this.genViewCallbackUUID();
             webviewMsgCallbacks[cid] = callback;
-            data.cid = cid;
         }
-        vscodeLite.postMessage(data);
+        vscodeLite.postMessage({
+            cmd: cmd,
+            cid: cid,
+            param: param
+        });
     }
 }
