@@ -313,8 +313,8 @@
     import view from "@native/utils/view";
     import BaseDialog from "@client/components/base/BaseDialog";
 
-    const webDebugFlag = false;
-    const vscodeLite = webDebugFlag ? {} : acquireVsCodeApi();
+    const webDebug = config.flag.webDebug;
+    const vscodeLite = webDebug ? {} : acquireVsCodeApi();
 
     export default {
         name: "PageHomePrj",
@@ -340,7 +340,7 @@
                 }],
                 homePrjNewStepperModel: 1,
                 homePrjNewStepperNum: 2,
-                homePrjReadonly: !webDebugFlag,
+                homePrjReadonly: webDebug,
                 homePrjRules: {
                     required: (val) => {
                         if (typeof val === "object") {
@@ -393,7 +393,6 @@
         },
         mounted: function() {
             window.addEventListener("message", (event) => {
-                console.log(event);
                 view.handleViewMsgFromExtn(event);
             });
         },
@@ -448,14 +447,16 @@
 
                 if (this.homePrjNewStepperModel ===
                     this.homePrjNewStepperNum + 1) {
-                    this.homePrjNewModel = false;
-                    this.homePrjWizardModel = true;
+                    this.$nextTick(() => {
+                        this.homePrjNewModel = false;
+                        this.homePrjWizardModel = true;
 
-                    view.sendViewMsgToExtn("addExtnProjectDir", {
-                        path: this.homePrjDirModel + "/" + this.homePrjNameModel
-                    }, (res) => {
-                    },
-                    vscodeLite);
+                        view.sendViewMsgToExtn("addExtnProjectDir", {
+                            path: this.homePrjDirModel + "/" + this.homePrjNameModel
+                        }, (res) => {
+                        },
+                        vscodeLite);
+                    });
                 }
             },
             handleHomePrjOpenData: function() {
@@ -465,9 +466,8 @@
                 this.homePrjExampleModel = false;
             },
             getHomePrjFileDirPath: function() {
-                if (!webDebugFlag) {
+                if (!webDebug) {
                     view.sendViewMsgToExtn("getExtnFileDirPath", {}, (res) => {
-                        console.log(res);
                         if (res.length > 0) {
                             this.homePrjDirModel = res[0].path;
                         }

@@ -58,7 +58,7 @@ export default {
             homeNewsCarouselItems: [[{
                 date: "2021-06-01",
                 title: "《芯来科技将举行专场研讨会》",
-                src: "https://myyerrol-1257317595.cos.ap-beijing.myqcloud.com/images/test/nuclei_banner.jpeg",
+                src: "https://myyerrol-1257317595.cos.ap-beijing.myqcloud.com/project/treecore/nuclei_banner.jpeg",
                 text: "越来越多的应用方案在芯来科技的产品赋能下“开花结果”。6月RISC-V中国峰会举行之际，正值芯来科技“三”周岁生日，我们特别邀请典型行业客户及生态伙伴一起，共同研讨“本土RISC-V产业生态”，共庆芯来三周年。"
             }, {
                 date: "2021-05-28",
@@ -78,12 +78,12 @@ export default {
             }, {
                 date: "2021-05-20",
                 title: "《木心开发环境功能模块图》",
-                src: "https://myyerrol-1257317595.cos.ap-beijing.myqcloud.com/images/test/test_20210520.png",
+                src: "https://myyerrol-1257317595.cos.ap-beijing.myqcloud.com/project/treecore/test_20210520.png",
                 text: "完成木心开发环境功能模块图设计。"
             }, {
                 date: "2021-05-11",
                 title: "《木心处理器头脑风暴模块图》",
-                src: "https://myyerrol-1257317595.cos.ap-beijing.myqcloud.com/images/test/test_20210511.svg",
+                src: "https://myyerrol-1257317595.cos.ap-beijing.myqcloud.com/project/treecore/test_20210511.svg",
                 text: "完成木心处理器头脑风暴模块图设计。"
             }]]
         }

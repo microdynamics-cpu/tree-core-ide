@@ -12,7 +12,8 @@
                                     <v-avatar
                                         size="200px"
                                         tile>
-                                        <v-img :src="require('../../../../resources/images/logos/treecore_logo_main.svg').default"></v-img>
+                                        <!-- <v-img :src="require('../../../../resources/images/logos/treecore_logo_main.svg').default"></v-img> -->
+                                        <v-img :src="base.projectLogo"></v-img>
                                     </v-avatar>
                                     <div class="mt-8 text-md-h5 font-weight-bold white--text">{{ i18n.ideName }}</div>
                                     <div class="mt-2 text-md-body-1 white--text">{{ i18n.ideTagline }}</div>
@@ -181,6 +182,7 @@
         },
         data: function() {
             return {
+                base: config.base,
                 i18n: config.i18n,
                 homeCheckBoxModel: true,
                 // homeFeatItems: [{

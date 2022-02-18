@@ -115,6 +115,7 @@ const i18n = i18nObj[lang];
 
 const base = {
     projectWebsiteUrl: "https://treecore.xyz",
+    projectLogo: "https://myyerrol-1257317595.cos.ap-beijing.myqcloud.com/project/treecore/logos/treecore_logo_main.svg",
     orgGitHubUrl: "https://github.com/microdynamics-cpu",
     teamEmail: "microdynamics@126.com",
 }
@@ -202,5 +203,8 @@ export default {
             title: i18n.ideCommunity,
             list: baseComp.ideCommItems
         }]
+    },
+    flag: {
+        webDebug: true
     }
 }
