@@ -314,7 +314,7 @@
     import BaseDialog from "@client/components/base/BaseDialog";
 
     const webDebug = config.flag.webDebug;
-    const vscodeLite = webDebug ? {} : acquireVsCodeApi();
+    const vscodeLite = config.code;
 
     export default {
         name: "PageHomePrj",
@@ -389,12 +389,12 @@
                     this.homePrjLibModel = [];
                     this.homePrjLibDisabled = false;
                 }
-            }
+            },
         },
         mounted: function() {
-            window.addEventListener("message", (event) => {
-                view.handleViewMsgFromExtn(event);
-            });
+            // window.addEventListener("message", (event) => {
+            //     view.handleViewMsgFromExtn(event);
+            // });
         },
         methods: {
             handleHomePrjNewData: function(dir) {
@@ -447,16 +447,25 @@
 
                 if (this.homePrjNewStepperModel ===
                     this.homePrjNewStepperNum + 1) {
-                    this.$nextTick(() => {
+                    // this.$nextTick(() => {
                         this.homePrjNewModel = false;
                         this.homePrjWizardModel = true;
-
-                        view.sendViewMsgToExtn("addExtnProjectDir", {
-                            path: this.homePrjDirModel + "/" + this.homePrjNameModel
-                        }, (res) => {
-                        },
-                        vscodeLite);
-                    });
+                        if (!webDebug) {
+                            let path = this.homePrjDirModel + "/" +
+                                       this.homePrjNameModel;
+                            view.sendViewMsgToExtn(
+                                "addExtnProjectDir", {
+                                    path: path
+                                }, (res) => {
+                                    if (res) {
+                                        setTimeout(() => {
+                                            this.homePrjWizardModel = false;
+                                        }, 3000);
+                                    }
+                                },
+                                vscodeLite);
+                        }
+                    // });
                 }
             },
             handleHomePrjOpenData: function() {
@@ -467,12 +476,14 @@
             },
             getHomePrjFileDirPath: function() {
                 if (!webDebug) {
-                    view.sendViewMsgToExtn("getExtnFileDirPath", {}, (res) => {
-                        if (res.length > 0) {
-                            this.homePrjDirModel = res[0].path;
-                        }
-                    },
-                    vscodeLite);
+                    view.sendViewMsgToExtn(
+                        "getExtnFileDirPath", {
+                        }, (res) => {
+                            if (res.length > 0) {
+                                this.homePrjDirModel = res[0].path;
+                            }
+                        },
+                        vscodeLite);
                 }
             },
             closeDialog: function() {
