@@ -160,6 +160,9 @@ const baseComp = {
     }]
 }
 
+// @ts-ignore
+const vscodeLite = false ? {} : acquireVsCodeApi();
+
 export default {
     i18n: i18n,
     base: base,
@@ -206,5 +209,6 @@ export default {
     },
     flag: {
         webDebug: false
-    }
+    },
+    code: vscodeLite
 }
