@@ -34,7 +34,8 @@ app.use(session({
     // Save the session to a file
     store: new SessionFileStore(),
 }));
-app.use(express.static(path.join(__dirname, "static")));
+// app.use(express.static(path.join(__dirname, "static")));
+app.use(express.static(path.join(__dirname, "../../dist")));
 app.use("/", controllers);
 
 module.exports = app;

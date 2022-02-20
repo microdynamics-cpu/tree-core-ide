@@ -14,6 +14,7 @@
     </v-app>
 </template>
 <script>
+    import router from "../router/index";
     import TheAppBar from "@client/components/base/TheAppBar.vue";
     import TheFooter from "@client/components/base/TheFooter.vue";
     import TheNavDrawer from "@client/components/base/TheNavDrawer.vue";
@@ -29,6 +30,9 @@
             return {};
         },
         mounted: function() {
+            // 暂时通过手动设置跳转到主页模块
+            // Jump to the home page module through manual setting
+            router.push("/home");
         }
     }
 </script>

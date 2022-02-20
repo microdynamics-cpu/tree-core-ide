@@ -2,67 +2,117 @@ const fs     = require("fs");
 const path   = require("path");
 const vscode = require("vscode");
 
-const extensionMessageHandlers = {
-    getExtensionConfig: function(global, message) {
-        const result = vscode.workspace.getConfiguration().get(
-            message.key);
-        handleMessageCallback(global.panel, message, result);
+const extnMsgHandlers = {
+    getExtnConfig: function(global, msg) {
+        const param = msg.param;
+        const data = vscode.workspace.getConfiguration().get(param.key);
+        sendExtnMsgToView(global.panel, msg, data);
     },
-    setExtensionConfig: function(global, message) {
-        vscode.workspace.getConfiguration().update(message.key, message.val,
-                                                   true);
-        vscode.window.showInformationMessage(
-            "Update configuration successfully!");
-    }
+    setExtnConfig: function(global, msg) {
+        const param = msg.param;
+        vscode.workspace.getConfiguration().update(param.key, param.val, true);
+        extn.showExtnInfoMsg("Update configuration successfully!");
+    },
+    getExtnFileDirPath: async function(global, msg) {
+        const data = await vscode.window.showOpenDialog({
+            canSelectFiles: false,
+            canSelectFolders: true,
+            canSelectMany: false
+        });
+        sendExtnMsgToView(global.panel, msg, data);
+    },
+    addExtnProjectDir: async function(global, msg) {
+        const path = msg.param.path;
+        console.log(path);
+
+        // 根据模板生成对应的目录和文件
+        // Generate corresponding directories and files according to the
+        // template
+        fs.mkdirSync(path, {
+            recursive: false
+        });
+        fs.mkdirSync(path + "/src");
+        fs.openSync(path + "/.gitignore", "w+");
+        const pathTree = path + "/tree";
+        fs.mkdirSync(pathTree);
+        fs.mkdirSync(pathTree + "/build");
+        fs.mkdirSync(pathTree + "/lib");
+        fs.mkdirSync(pathTree + "/sim");
+        fs.mkdirSync(pathTree + "/test");
+        fs.openSync(pathTree + "/project.json", "w+");
+
+        // 将生成的工程目录添加到工作空间中
+        // Add the generated project catalog to the workspace
+        let addFlag = false;
+        const workspaceFolders = vscode.workspace.workspaceFolders;
+        if (workspaceFolders) {
+            addFlag = vscode.workspace.updateWorkspaceFolders(
+                vscode.workspace.workspaceFolders.length,
+                null, {
+                    uri: vscode.Uri.file(path)
+                });
+        }
+        else {
+            await vscode.commands.executeCommand("vscode.openFolder",
+                                                 vscode.Uri.file(path));
+            addFlag = true;
+        }
+        vscode.commands.executeCommand("workbench.view.explorer");
+
+        sendExtnMsgToView(global.panel, msg, addFlag);
+    },
 };
 
-function handleMessageCallback(panel, message, result) {
-    console.log("messageCallback: " + result);
-    if (typeof(result) == "object" &&
-        result.code && result.code >= 400 && result.code < 600) {
-        vscode.window.showErrorMessage("An unknown error occurred in" +
-                                        message.cmd + "!");
+function sendExtnMsgToView(panel, msg, data) {
+    console.log("msgCallback: ");
+    console.log(data);
+    if (typeof(data) === "object") {
+        let code = data.code;
+        if (code && code >= 400 && code < 600) {
+            vscode.window.showErrorMessage(
+            "An unknown error occurred in" + msg.cmd + "!");
+        }
     }
     panel.webview.postMessage({
-        cmd: "extensionCallback",
-        cid:  message.cid,
-        data: result
+        cmd: "extnCallback",
+        cid:  msg.cid,
+        data: data
     });
 };
 
-module.exports = {
+const extn = {
     // 获取某个扩展文件的绝对路径
     // Get the absolute path of an extension file
-    getExtensionFileAbsolutePath: function(context, relativePath) {
+    getExtnFileAbsolutePath: function(context, relativePath) {
         return path.join(context.extensionPath, relativePath);
     },
     // 获取某个扩展文件的绝对路径（VS Code URL）
     // Get the absolute path of an extension file (VS Code URL)
-    getExtensionFileAbsolutePathUrl: function(context, relativePath) {
+    getExtnFileAbsolutePathUrl: function(context, relativePath) {
         return vscode.Uri.file(
-            this.getExtensionFileAbsolutePath(context, relativePath));
+            this.getExtnFileAbsolutePath(context, relativePath));
     },
     // 获取当前工程的名字
     // Get the name of the current project
-    getProjectName: function(projectPath) {
+    getExtnProjectName: function(projectPath) {
         return path.basename(projectPath);
     },
     // 获取当前工程根目录
     // Get the root directory of the current project
-    getProjectPath: function(document) {
+    getExtnProjectPath: function(document) {
         if (!document) {
             document = vscode.window.activeTextEditor ?
                 vscode.window.activeTextEditor.document : null;
         }
         if (!document) {
-            this.showError("The current active editor is not a file or " +
-                           "no files are open!");
+            this.showExtnErrorMsg("The current active editor is not a file or " +
+                                  "no files are open!");
             return "";
         }
 
         let projectPath = null;
         let workspaceFolders = vscode.workspace.workspaceFolders.map(
-            item => item.uri.path);
+            (item) => item.uri.path);
         // 由于编辑器可能存在多个根工作区，所以暂时没有特别好的判断方法，目前只能采取非常简单
         // 粗暴的方法，即如果发现只有一个根文件夹，则将其所有子文件夹添加到相应的变量中
         // Because there may be multiple root workspaces in the editor,
@@ -74,17 +124,17 @@ module.exports = {
             workspaceFolders[0] === vscode.workspace.rootPath) {
             const rootPath = workspaceFolders[0];
             var files = fs.readdirSync(rootPath);
-            workspaceFolders = files.filter(name => !/^\./g.test(name)).map(
+            workspaceFolders = files.filter((name) => !/^\./g.test(name)).map(
                 name => path.resolve(rootPath, name));
         }
         const currentFile = (document.uri ? document.uri : document).fsPath;
-        workspaceFolders.forEach(folder => {
+        workspaceFolders.forEach((folder) => {
             if (currentFile.indexOf(folder) === 0) {
                 projectPath = folder;
             }
         })
         if (!projectPath) {
-            this.showError("");
+            this.showExtnErrorMsg("");
             return "";
         }
 
@@ -92,9 +142,9 @@ module.exports = {
     },
     // 获取某个HTML文件的内容
     // Get the content of an HTML file
-    getWebViewContent: function(context, relativePath) {
-        const resourcePath = this.getExtensionFileAbsolutePath(context,
-                                                               relativePath);
+    getExtnContentFromView: function(context, relativePath) {
+        const resourcePath = this.getExtnFileAbsolutePath(context,
+                                                          relativePath);
         const dirPath = path.dirname(resourcePath);
         let html = fs.readFileSync(resourcePath, "utf-8");
         // 由于VSCode不支持直接加载本地资源，所以需要将其中的部分内容替换成专有路径格式
@@ -116,14 +166,31 @@ module.exports = {
         return html;
     },
     // 处理来自页面的消息内容
-    // Handle message contents from Webview
-    handleMessageFromWebview: function(global, message) {
-        if (extensionMessageHandlers[message.cmd]) {
-            extensionMessageHandlers[message.cmd](global, message);
+    // Handle message contents from webview
+    handleExtnMsgFromView: function(global, msg) {
+        if (extnMsgHandlers[msg.cmd]) {
+            extnMsgHandlers[msg.cmd](global, msg);
         }
         else {
             vscode.window.showErrorMessage(
-                `Callback method named ${message.cmd} was not found!`);
+                `Callback method named ${msg.cmd} was not found!`);
         }
+    },
+    // 显示错误弹窗消息
+    // Show error pop-up message
+    showExtnErrorMsg: function(msg) {
+        vscode.window.showErrorMessage(msg)
+    },
+    // 显示提示弹窗信息
+    // Show error pop-up message
+    showExtnInfoMsg: function(msg) {
+        vscode.window.showInformationMessage(msg);
+    },
+    // 显示警告弹窗信息
+    // Show warning pop-up message
+    showExtnWarnMsg: function(msg) {
+        vscode.window.showWarningMessage(msg);
     }
-};
+}
+
+module.exports = extn;

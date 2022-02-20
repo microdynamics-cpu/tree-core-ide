@@ -21,10 +21,6 @@
                     </v-btn>
                 </v-toolbar-items>
             </v-toolbar>
-            <!-- <v-card-title class="text-md-body-1">
-                <span v-if="dialogType !== 'edit'">{{ dialogAlert.title }}</span>
-                <span v-else>{{ dialogText }}</span>
-            </v-card-title> -->
             <v-card-text class="py-6">
                 <v-alert
                     v-if="dialogType !== 'edit'"
@@ -44,27 +40,31 @@
             </v-card-text>
             <v-card-actions class="pt-0 pr-6 pb-6">
                 <v-spacer></v-spacer>
-                <v-btn
-                    color="green"
-                    dark
-                    small
-                    @click="handleDialogYes">
-                    <v-icon left>mdi-check</v-icon>确定
-                </v-btn>
-                <v-btn
-                    v-if="dialogType === 'confirm' ||
-                          dialogType === 'edit'"
-                    color="red"
-                    dark
-                    small
-                    @click="handleDialogNo">
-                    <v-icon left>mdi-cancel</v-icon>取消
-                </v-btn>
+                <slot name="button">
+                    <v-btn
+                        color="green"
+                        dark
+                        small
+                        @click="handleDialogYes">
+                        <v-icon left>mdi-check</v-icon>{{ i18n.ideButtonConfirm }}
+                    </v-btn>
+                    <v-btn
+                        v-if="dialogType === 'confirm' ||
+                              dialogType === 'edit'"
+                        color="red"
+                        dark
+                        small
+                        @click="handleDialogNo">
+                        <v-icon left>mdi-cancel</v-icon>{{ i18n.ideButtonCancel }}
+                    </v-btn>
+                </slot>
             </v-card-actions>
         </v-card>
     </v-dialog>
 </template>
 <script>
+    import config from "@client/config/index";
+
     export default {
         name: "BaseDialog",
         props: {
@@ -87,6 +87,7 @@
         },
         data: function() {
             return {
+                i18n: config.i18n,
                 dialogAlert: {
                     title: "信息",
                     type: "info"
@@ -104,15 +105,12 @@
         },
         methods: {
             handleDialogClose: function() {
-                this.dialogModel = false;
                 this.$emit("handleDialogClose");
             },
             handleDialogYes: function() {
-                this.dialogModel = false;
                 this.$emit("handleDialogYes");
             },
             handleDialogNo: function() {
-                this.dialogModel = false;
                 this.$emit("handleDialogNo");
             },
             initDialogAlert: function() {
@@ -146,8 +144,8 @@
     }
 </script>
 <style scoped>
-    .tc-dialog-toolbar .v-toolbar__content {
+    /* .tc-dialog-toolbar .v-toolbar__content {
         padding-left: 24px;
         padding-right: 10px;
-    }
+    } */
 </style>

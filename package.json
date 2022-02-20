@@ -50,8 +50,9 @@
   "contributes": {
     "commands": [
       {
-        "command": "tree-core-ide.helloWorld",
-        "title": "Hello World"
+        "command": "treecore.module.home.showHomePage",
+        "title": "Show Home Page",
+        "category": "TreeCore Module"
       },
       {
         "command": "waveviewer.start",
@@ -229,7 +230,7 @@
               "English",
               "中文"
             ],
-            "default": "English",
+            "default": "中文",
             "description": "Switch TreeCore IDE language."
           }
         }
