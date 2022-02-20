@@ -1,6 +1,7 @@
 <template>
-    <v-app-bar app
-               height="60px">
+    <v-app-bar
+        app
+        height="60px">
         <div v-for="item in appBarItems"
              :key="item.title">
             <v-btn
@@ -40,7 +41,7 @@
     </v-app-bar>
 </template>
 <script>
-    import config from "@client/configs/index";
+    import config from "@client/config/index";
 
     export default {
         name: "TheAppBar",

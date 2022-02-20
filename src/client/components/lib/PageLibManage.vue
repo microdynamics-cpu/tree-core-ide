@@ -73,7 +73,6 @@
                                     :items="libVersionItems"
                                     label="库版本："
                                     :loading="libVersionLoading"
-                                    required
                                     outlined
                                     persistent-hint>
                                 </v-select>

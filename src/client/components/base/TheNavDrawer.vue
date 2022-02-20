@@ -7,7 +7,8 @@
         <v-list>
             <v-list-item class="px-0">
                 <v-list-item-avatar tile>
-                    <v-img :src="require('../../../../resources/images/logos/treecore_logo_main.svg').default"></v-img>
+                    <!-- <v-img :src="require('../../../../resources/images/logos/treecore_logo_main.svg').default"></v-img> -->
+                    <v-img :src="base.projectLogo"></v-img>
                 </v-list-item-avatar>
             </v-list-item>
         </v-list>
@@ -31,12 +32,13 @@
     </v-navigation-drawer>
 </template>
 <script>
-    import config from "@client/configs/index";
+    import config from "@client/config/index";
 
     export default {
         name: "TheNavDrawer",
         data: function() {
             return {
+                base: config.base,
                 nvSelectedIndex: 0,
                 navListItems: config.comp.ideNavListItems
             };

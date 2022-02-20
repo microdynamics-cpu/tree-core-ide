@@ -18,7 +18,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 module.exports = {
     devServer: {
         compress: true,
-        contentBase: path.resolve(__dirname, "./src/server/static"),
+        contentBase: path.resolve(__dirname, "./dist"),
         historyApiFallback: {
             verbose: false
         },
@@ -161,7 +161,7 @@ module.exports = {
     output: {
         filename: "js/[name].bundle.[hash:8].js",
         chunkFilename: "js/[name].chunk.[chunkhash:8].js",
-        path: path.resolve(__dirname, "./src/server/static"),
+        path: path.resolve(__dirname, "./dist"),
     },
     performance: {
         hints: "warning"
@@ -203,47 +203,47 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV.indexOf("production") !== -1) {
-    module.exports.devtool = "none";
-    module.exports.mode = "production";
-    module.exports.optimization = {
-        minimize: true,
-        minimizer: [
-            new UglifyJsPlugin({
-                cache: true,
-                parallel: true,
-                sourceMap: true,
-                uglifyOptions: {
-                    compress: {
-                        drop_console: true,
-                        toplevel: true,
-                    },
-                    output: {
-                        comments: false,
-                    },
-                    warnings: false,
-                }
-            })
-        ],
-        splitChunks: {
-            automaticNameDelimiter: "-",
-            chunks: "all",
-        }
-    };
+    // module.exports.devtool = "none";
+    // module.exports.mode = "production";
+    // module.exports.optimization = {
+    //     minimize: true,
+    //     minimizer: [
+    //         new UglifyJsPlugin({
+    //             cache: true,
+    //             parallel: true,
+    //             sourceMap: true,
+    //             uglifyOptions: {
+    //                 compress: {
+    //                     drop_console: true,
+    //                     toplevel: true,
+    //                 },
+    //                 output: {
+    //                     comments: false,
+    //                 },
+    //                 warnings: false,
+    //             }
+    //         })
+    //     ],
+    //     splitChunks: {
+    //         automaticNameDelimiter: "-",
+    //         chunks: "all",
+    //     }
+    // };
 
-    if (process.env.NODE_ENV.indexOf("stats") !== -1) {
-        module.exports.plugins.push(
-            new BundleAnalyzerPlugin()
-        );
-    }
-    module.exports.plugins.push(
-        new CompressionWebpackPlugin({
-            test:  /\.js$|\.css$|\.html$/,
-            algorithm: "gzip",
-            deleteOriginalAssets: false,
-            filename: "[path][base].gz",
-            minRatio: 0.8,
-            threshold: 0
-        }),
-        new OptimizeCssAssetsPlugin()
-    );
+    // if (process.env.NODE_ENV.indexOf("stats") !== -1) {
+    //     module.exports.plugins.push(
+    //         new BundleAnalyzerPlugin()
+    //     );
+    // }
+    // module.exports.plugins.push(
+    //     new CompressionWebpackPlugin({
+    //         test:  /\.js$|\.css$|\.html$/,
+    //         algorithm: "gzip",
+    //         deleteOriginalAssets: false,
+    //         filename: "[path][base].gz",
+    //         minRatio: 0.8,
+    //         threshold: 0
+    //     }),
+    //     new OptimizeCssAssetsPlugin()
+    // );
 }
