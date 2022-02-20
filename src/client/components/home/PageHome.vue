@@ -18,9 +18,9 @@
                                     <div class="mt-8 text-md-h5 font-weight-bold white--text">{{ i18n.ideName }}</div>
                                     <div class="mt-2 text-md-body-1 white--text">{{ i18n.ideTagline }}</div>
                                     <v-checkbox
+                                        v-model="homeCheckBoxModel"
                                         color="lime darken-2"
                                         :label="i18n.ideHomeShowAtStartup"
-                                        v-model="homeCheckBoxModel"
                                         style="">
                                     </v-checkbox>
                                 </v-card-text>
@@ -167,10 +167,14 @@
 </template>
 <script>
     import config from "@client/config/index";
+    import view from "@native/utils/view";
     import PageHomePrj from "@client/components/home/PageHomePrj";
     import PageHomeTool from "@client/components/home/PageHomeTool";
     import PageHomeLib from "@client/components/home/PageHomeLib";
     import PageHomeNews from "@client/components/home/PageHomeNews";
+
+    const webDebug = config.flag.webDebug;
+    const vscodeLite = config.code;
 
     export default {
         name: "PageHome",
@@ -212,6 +216,33 @@
                 //     text: "经过团队内部的详细讨论，决定开发木心IDE并确定了相关需求。"
                 // }]
             }
-        }
+        },
+        watch: {
+            homeCheckBoxModel: function(val) {
+                if (!webDebug) {
+                    view.sendViewMsgToExtn(
+                        "setExtnConfig", {
+                            key: "treecore.config.showHomePageAtStartup",
+                            val: val
+                        }, (res) => {
+                        },
+                        vscodeLite);
+                }
+            }
+        },
+        mounted: function() {
+            window.addEventListener("message", (event) => {
+                view.handleViewMsgFromExtn(event);
+            });
+            if (!webDebug) {
+                view.sendViewMsgToExtn(
+                    "getExtnConfig", {
+                        key: "treecore.config.showHomePageAtStartup",
+                    }, (res) => {
+                        this.homeCheckBoxModel = res;
+                    },
+                    vscodeLite);
+            }
+        },
     }
 </script>
