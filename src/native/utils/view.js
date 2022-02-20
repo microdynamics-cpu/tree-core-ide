@@ -15,7 +15,8 @@ export default {
             case "extnCallback": {
                 let cid = msg.cid;
                 let data = msg.data;
-                console.log("extnCallback: " + data);
+                console.log("extnCallback:");
+                console.log(data);
                 (webviewMsgCallbacks[cid] || function(){})(data);
                 delete webviewMsgCallbacks[cid];
             };
