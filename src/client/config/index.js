@@ -8,9 +8,9 @@ const i18nObj = {
         ideButtonProgess: "处理中",
         ideGoBack: "后退",
         ideGoForward: "前进",
-        ideModuleHome: "插件主页",
+        ideModuleHome: "系统主页",
         ideModuleProject: "工程管理",
-        ideModuleTool: "调试工具",
+        ideModuleTool: "开发工具",
         ideModuleLib: "库管理",
         ideModuleSetting: "系统设置",
         ideModuleSettingUser: "个人账户",
@@ -205,6 +205,6 @@ export default {
         }]
     },
     flag: {
-        webDebug: true
+        webDebug: false
     }
 }
