@@ -4,7 +4,7 @@ const extn = require("../../utils/extn");
 module.exports = {
     showHomePage: function(context) {
         context.subscriptions.push(
-            vscode.commands.registerCommand("treecore.cmd.showHomePage", () => {
+            vscode.commands.registerCommand("treecore.module.home.showHomePage", () => {
                 const panel = vscode.window.createWebviewPanel(
                     "treecoreHome",
                     "TreeCore IDE Home",
@@ -21,16 +21,17 @@ module.exports = {
                 panel.webview.html = extn.getExtnContentFromView(
                     context,
                     "dist/index.html");
-                panel.webview.onDidReceiveMessage((msg) => {
-                    extn.handleExtnMsgFromView(global, msg);
-                },
-                undefined,
-                context.subscriptions);
+                panel.webview.onDidReceiveMessage(
+                    (msg) => {
+                        extn.handleExtnMsgFromView(global, msg);
+                    },
+                    undefined,
+                    context.subscriptions);
             }
         ));
         const key = "treecore.config.showHomePageAtStartup";
         if (vscode.workspace.getConfiguration().get(key)) {
-            vscode.commands.executeCommand("treecore.cmd.showHomePage");
+            vscode.commands.executeCommand("treecore.module.home.showHomePage");
         }
     }
 };

@@ -50,6 +50,11 @@
   "contributes": {
     "commands": [
       {
+        "command": "treecore.module.home.showHomePage",
+        "title": "Show Home Page",
+        "category": "TreeCore Module"
+      },
+      {
         "command": "waveviewer.start",
         "title": "Start wave viewer session",
         "category": "[TreeCore] wave viewer"
@@ -217,7 +222,7 @@
               "English",
               "中文"
             ],
-            "default": "English",
+            "default": "中文",
             "description": "Switch TreeCore IDE language."
           }
         }
