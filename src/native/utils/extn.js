@@ -14,17 +14,30 @@ const extnMsgHandlers = {
         extn.showExtnInfoMsg("Update configuration successfully!");
     },
     getExtnFileDirPath: async function(global, msg) {
-        const data = await vscode.window.showOpenDialog({
+        let data = {
+            flag: true,
+            path: ""
+        }
+        const uris = await vscode.window.showOpenDialog({
             canSelectFiles: false,
             canSelectFolders: true,
             canSelectMany: false
         });
+        if (uris != undefined && uris.length > 0) {
+            const uri = uris[0];
+            data.path = uri.path;
+            const dirs = await vscode.workspace.fs.readDirectory(uri);
+            const dirsStr = JSON.stringify(dirs);
+            const name = msg.param.name;
+            if (dirsStr.indexOf(name) != -1) {
+                data.flag = false;
+            }
+        }
         sendExtnMsgToView(global.panel, msg, data);
     },
     addExtnProjectDir: async function(global, msg) {
         const path = msg.param.path;
         console.log(path);
-
         // 根据模板生成对应的目录和文件
         // Generate corresponding directories and files according to the
         // template
@@ -40,7 +53,6 @@ const extnMsgHandlers = {
         fs.mkdirSync(pathTree + "/sim");
         fs.mkdirSync(pathTree + "/test");
         fs.openSync(pathTree + "/project.json", "w+");
-
         // 将生成的工程目录添加到工作空间中
         // Add the generated project catalog to the workspace
         let addFlag = false;
@@ -58,7 +70,6 @@ const extnMsgHandlers = {
             addFlag = true;
         }
         vscode.commands.executeCommand("workbench.view.explorer");
-
         sendExtnMsgToView(global.panel, msg, addFlag);
     },
 };

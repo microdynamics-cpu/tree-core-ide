@@ -92,7 +92,7 @@
                                                 :hint="i18n.idePrjNewWinHint1B"
                                                 :label="i18n.idePrjNewWinLabel1B"
                                                 :readonly="homePrjReadonly"
-                                                :rules="[homePrjRules.required]"
+                                                :rules="[homePrjRules.required, homePrjRules.prjDir]"
                                                 outlined
                                                 persistent-hint
                                                 @click="getHomePrjFileDirPath">
@@ -351,10 +351,14 @@
                     prjName: (val) => {
                         const pattern = /^[a-zA-Z0-9_\-]*$/;
                         return pattern.test(val) || this.i18n.ideRuleFieldNameValid;
+                    },
+                    prjDir: (val) => {
+                        return (this.homePrjDirFlag) || this.i18n.ideRuleFileDirExist;
                     }
                 },
                 homePrjNameModel: "",
                 homePrjDirModel: "",
+                homePrjDirFlag: true,
                 homePrjTempModel: "",
                 homePrjTempItems: [{
                     text: "无",
@@ -389,12 +393,9 @@
                     this.homePrjLibModel = [];
                     this.homePrjLibDisabled = false;
                 }
-            },
+            }
         },
         mounted: function() {
-            // window.addEventListener("message", (event) => {
-            //     view.handleViewMsgFromExtn(event);
-            // });
         },
         methods: {
             handleHomePrjNewData: function(dir) {
@@ -478,10 +479,10 @@
                 if (!webDebug) {
                     view.sendViewMsgToExtn(
                         "getExtnFileDirPath", {
+                            name: this.homePrjNameModel
                         }, (res) => {
-                            if (res.length > 0) {
-                                this.homePrjDirModel = res[0].path;
-                            }
+                            this.homePrjDirFlag = res.flag;
+                            this.homePrjDirModel = res.path;
                         },
                         vscodeLite);
                 }

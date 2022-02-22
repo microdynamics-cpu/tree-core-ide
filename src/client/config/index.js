@@ -31,6 +31,7 @@ const i18nObj = {
         ideHomeShowAtStartup: "是否在启动时显示主页",
         ideRuleFieldNoEmpty: "字段不能为空！",
         ideRuleFieldNameValid: "字段只能是字母、数字、下划线或短横线的组合！",
+        ideRuleFileDirExist: "文件目录已经存在！",
 
         idePrjNew: "新建工程",
         idePrjNewWin: "工程创建窗口",
@@ -86,6 +87,7 @@ const i18nObj = {
         ideHomeShowAtStartup: "Show at startup",
         ideRuleFieldNoEmpty: "Field cannot be empty!",
         ideRuleFieldNameValid: "Field can only be a combination of letters, numbers, underscores or dashes!",
+        ideRuleFileDirExist: "File directory already exists!",
 
         idePrjNew: "New Project",
         idePrjNewWin: "Project New",
