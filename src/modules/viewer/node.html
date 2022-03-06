@@ -7,26 +7,93 @@
 
 <body>
   <script>
-    let app = new PIXI.Application({ width: 1200, height: 600 });
-    document.body.appendChild(app.view);
-    const graphics = new PIXI.Graphics();
-    // let sprite = PIXI.Sprite.from('riscv-logo.png');
-    
-    graphics.beginFill(0xDE3249);
-    graphics.drawRect(0, 0, 100, 100);
-    graphics.endFill();
-    graphics.interactive = true;
-    graphics.buttonMode = true;
-    // graphics.anchor.set(0.5);
-    app.stage.addChild(graphics);
-    // app.stage.addChild(sprite);
-    graphics
-      .on('pointerdown', onDragStart)
-      .on('pointerup', onDragEnd)
-      .on('pointerupoutside', onDragEnd)
-      .on('pointermove', onDragMove);
+    let app = new PIXI.Application({
+      width: 1200,
+      height: 600,
+      antialias: true // important!!!
+    });
 
-    function onDragStart(event) {
+    document.body.appendChild(app.view);
+    const item = new PIXI.Graphics();
+    // let sprite = PIXI.Sprite.from('riscv-logo.png');
+    item.beginFill(0xDE3249);
+    item.drawRect(0, 0, 100, 100);
+    item.endFill();
+    item.interactive = true;
+    item.buttonMode = true;
+    // item.anchor.set(0.5);
+    app.stage.addChild(item);
+
+    item
+      .on('pointerdown', onGraphicDragStart)
+      .on('pointerup', onGraphicDragEnd)
+      .on('pointerupoutside', onGraphicDragEnd)
+      .on('pointermove', onGraphicDragMove);
+
+    cir1 = createCircle(120, 50);
+    cir2 = createCircle(240, 50);
+    app.stage.addChild(cir1);
+    app.stage.addChild(cir2);
+    let addBtn = new PIXI.Text('add', { fontFamily: 'Arial', fontSize: 24, fill: 0xff1010, align: 'center' });
+    addBtn.x = 400;
+    addBtn.y = 0;
+    addBtn.interactive = true;
+    addBtn.buttonMode = true;
+    addBtn.on('pointerdown', (event) => {
+
+    });
+
+    let removeBtn = new PIXI.Text('remove', { fontFamily: 'Arial', fontSize: 24, fill: 0xff1010, align: 'center' });
+    removeBtn.x = 450;
+    removeBtn.y = 0;
+    removeBtn.interactive = true;
+    removeBtn.buttonMode = true;
+    removeBtn.on('pointerdown', (event) => {
+
+    });
+    app.stage.addChild(addBtn);
+    app.stage.addChild(removeBtn);
+
+    // app.stage.addChild(sprite);
+
+    function createCircle(x, y) {
+      const cir = new PIXI.Graphics();
+      cir.lineStyle(0); // draw a circle, set the lineStyle to zero so the circle doesn't have an outline
+      cir.beginFill(0xFFFFFF, 1);
+      cir.drawCircle(x, y, 10);
+      cir.endFill();
+      cir.interactive = true;
+      cir.buttonMode = true;
+      cir.on('pointerdown', (event) => {
+        console.log('down');
+      // const lin = new PIXI.Graphics();
+      // lin.lineStyle(2, 0xFFFFFF, 1);
+      // lin.moveTo(120, 50);
+      // cir.addChild(lin);
+      this.drag = true;
+    });
+
+    cir.on('pointerup', (event) => {
+      console.log('up');
+      // this.alpha = 1;
+      this.drag = false;
+      // set the interaction data to null
+    });
+
+    cir.on('pointermove', (event) => {
+      if (this.drag) {
+        console.log('move');
+        // const newPosition = this.data.getLocalPosition(this.parent);
+        // this.x = newPosition.x;
+        // this.y = newPosition.y;
+        // console.log('x: ', newPosition.x);
+        // console.log('y: ', newPosition.y);
+      }
+    });
+      return cir;
+    }
+
+    function onGraphicDragStart(event) {
       // store a reference to the data
       // the reason for this is because of multitouch
       // we want to track the movement of this particular touch
@@ -35,14 +102,14 @@
       this.dragging = true;
     }
 
-    function onDragEnd() {
+    function onGraphicDragEnd() {
       this.alpha = 1;
       this.dragging = false;
       // set the interaction data to null
       this.data = null;
     }
 
-    function onDragMove() {
+    function onGraphicDragMove() {
       if (this.dragging) {
         const newPosition = this.data.getLocalPosition(this.parent);
         this.x = newPosition.x;
