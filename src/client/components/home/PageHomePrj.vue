@@ -88,14 +88,15 @@
                                             md="12">
                                             <v-text-field
                                                 v-model="homePrjDirModel"
+                                                :error-messages="homePrjDirErrorMsg"
                                                 dense
                                                 :hint="i18n.idePrjNewWinHint1B"
                                                 :label="i18n.idePrjNewWinLabel1B"
                                                 :readonly="homePrjReadonly"
-                                                :rules="[homePrjRules.required, homePrjRules.prjDir]"
+                                                :rules="[homePrjRules.required]"
                                                 outlined
                                                 persistent-hint
-                                                @click="getHomePrjFileDirPath">
+                                                @click="getHomePrjFileDirPath('dir')">
                                             </v-text-field>
                                         </v-col>
                                     </v-row>
@@ -359,6 +360,7 @@
                 homePrjNameModel: "",
                 homePrjDirModel: "",
                 homePrjDirFlag: true,
+                homePrjDirErrorMsg: "",
                 homePrjTempModel: "",
                 homePrjTempItems: [{
                     text: "无",
@@ -393,6 +395,12 @@
                     this.homePrjLibModel = [];
                     this.homePrjLibDisabled = false;
                 }
+            },
+            homePrjNameModel: function(val) {
+                this.getHomePrjFileDirPath("name");
+            },
+            homePrjDirFlag: function(val) {
+                this.homePrjDirErrorMsg = val ? "" : this.i18n.ideRuleFileDirExist;
             }
         },
         mounted: function() {
@@ -402,6 +410,10 @@
                 if (dir === "next") {
                     if (this.homePrjNewStepperModel === 1 &&
                        !this.$refs.homePrjNewForm1.validate()) {
+                        return;
+                    }
+                    if (this.homePrjNewStepperModel === 1 &&
+                       !this.homePrjDirFlag) {
                         return;
                     }
                     if (this.homePrjNewStepperModel === 2 &&
@@ -451,21 +463,21 @@
                     // this.$nextTick(() => {
                         this.homePrjNewModel = false;
                         this.homePrjWizardModel = true;
-                        if (!webDebug) {
-                            let path = this.homePrjDirModel + "/" +
-                                       this.homePrjNameModel;
-                            view.sendViewMsgToExtn(
-                                "addExtnProjectDir", {
-                                    path: path
-                                }, (res) => {
-                                    if (res) {
-                                        setTimeout(() => {
-                                            this.homePrjWizardModel = false;
-                                        }, 3000);
-                                    }
-                                },
-                                vscodeLite);
-                        }
+                        // if (!webDebug) {
+                        //     let path = this.homePrjDirModel + "/" +
+                        //                this.homePrjNameModel;
+                        //     view.sendViewMsgToExtn(
+                        //         "addExtnProjectDir", {
+                        //             path: path
+                        //         }, (res) => {
+                        //             if (res) {
+                        //                 setTimeout(() => {
+                        //                     this.homePrjWizardModel = false;
+                        //                 }, 3000);
+                        //             }
+                        //         },
+                        //         vscodeLite);
+                        // }
                     // });
                 }
             },
@@ -475,14 +487,18 @@
             handleHomePrjExampleData: function() {
                 this.homePrjExampleModel = false;
             },
-            getHomePrjFileDirPath: function() {
+            getHomePrjFileDirPath: function(type) {
                 if (!webDebug) {
                     view.sendViewMsgToExtn(
                         "getExtnFileDirPath", {
-                            name: this.homePrjNameModel
+                            type: type,
+                            name: this.homePrjNameModel,
+                            path: this.homePrjDirModel
                         }, (res) => {
                             this.homePrjDirFlag = res.flag;
-                            this.homePrjDirModel = res.path;
+                            if (type === "dir") {
+                                this.homePrjDirModel = res.path;
+                            }
                         },
                         vscodeLite);
                 }

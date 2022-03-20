@@ -3,38 +3,6 @@ const path   = require("path");
 const vscode = require("vscode");
 
 const extnMsgHandlers = {
-    getExtnConfig: function(global, msg) {
-        const param = msg.param;
-        const data = vscode.workspace.getConfiguration().get(param.key);
-        sendExtnMsgToView(global.panel, msg, data);
-    },
-    setExtnConfig: function(global, msg) {
-        const param = msg.param;
-        vscode.workspace.getConfiguration().update(param.key, param.val, true);
-        extn.showExtnInfoMsg("Update configuration successfully!");
-    },
-    getExtnFileDirPath: async function(global, msg) {
-        let data = {
-            flag: true,
-            path: ""
-        }
-        const uris = await vscode.window.showOpenDialog({
-            canSelectFiles: false,
-            canSelectFolders: true,
-            canSelectMany: false
-        });
-        if (uris != undefined && uris.length > 0) {
-            const uri = uris[0];
-            data.path = uri.path;
-            const dirs = await vscode.workspace.fs.readDirectory(uri);
-            const dirsStr = JSON.stringify(dirs);
-            const name = msg.param.name;
-            if (dirsStr.indexOf(name) != -1) {
-                data.flag = false;
-            }
-        }
-        sendExtnMsgToView(global.panel, msg, data);
-    },
     addExtnProjectDir: async function(global, msg) {
         const path = msg.param.path;
         console.log(path);
@@ -45,7 +13,8 @@ const extnMsgHandlers = {
             recursive: false
         });
         fs.mkdirSync(path + "/src");
-        fs.openSync(path + "/.gitignore", "w+");
+        const fd = fs.openSync(path + "/.gitignore", "w+");
+        fs.writeFileSync(fd, "/build\n");
         const pathTree = path + "/tree";
         fs.mkdirSync(pathTree);
         fs.mkdirSync(pathTree + "/build");
@@ -71,6 +40,67 @@ const extnMsgHandlers = {
         }
         vscode.commands.executeCommand("workbench.view.explorer");
         sendExtnMsgToView(global.panel, msg, addFlag);
+    },
+    getExtnConfig: function(global, msg) {
+        const param = msg.param;
+        const data = vscode.workspace.getConfiguration().get(param.key);
+        sendExtnMsgToView(global.panel, msg, data);
+    },
+    getExtnFileDirPath: async function(global, msg) {
+        const param = msg.param;
+        let data = {
+            flag: true,
+            path: ""
+        }
+        // const uris = await vscode.window.showOpenDialog({
+        //     canSelectFiles: false,
+        //     canSelectFolders: true,
+        //     canSelectMany: false
+        // });
+        if (param.type === "name" && param.path === "") {
+            data.flag = true;
+        }
+        else {
+            let uri = null;
+            if (param.type === "name") {
+                uri = vscode.Uri.file(param.path);
+            }
+            else if (param.type === "dir") {
+                const uris = await vscode.window.showOpenDialog({
+                    canSelectFiles: false,
+                    canSelectFolders: true,
+                    canSelectMany: false
+                });
+                if (uris != undefined && uris.length > 0) {
+                    uri = uris[0];
+                    data.path = uri.path;
+                }
+            }
+            const dirs = await vscode.workspace.fs.readDirectory(uri);
+            const dirsStr = JSON.stringify(dirs);
+            const name = param.name;
+            if (dirsStr.indexOf(name) != -1) {
+                data.flag = false;
+            }
+        }
+        // if (uris != undefined && uris.length > 0) {
+        //     const uri = uris[0];
+        //     data.path = uri.path;
+        //     const dirs = await vscode.workspace.fs.readDirectory(uri);
+        //     const dirsStr = JSON.stringify(dirs);
+        //     const name = param.name;
+        //     if (dirsStr.indexOf(name) != -1) {
+        //         data.flag = false;
+        //     }
+        // }
+        sendExtnMsgToView(global.panel, msg, data);
+    },
+    setExtnConfig: function(global, msg) {
+        const param = msg.param;
+        vscode.workspace.getConfiguration().update(param.key, param.val, true);
+        if (param.show) {
+            extn.showExtnInfoMsg("Update configuration successfully!");
+        }
     },
 };
 
