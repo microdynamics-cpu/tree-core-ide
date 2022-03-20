@@ -119,10 +119,10 @@
                                                 item-text="text"
                                                 item-value="value"
                                                 :label="i18n.idePrjNewWinLabel2A"
-                                                return-object
-                                                :rules="[homePrjRules.required]"
                                                 outlined
-                                                persistent-hint>
+                                                persistent-hint
+                                                return-object
+                                                :rules="[homePrjRules.required]">
                                             </v-select>
                                         </v-col>
                                         <v-col
@@ -135,9 +135,9 @@
                                                 :hint="i18n.idePrjNewWinHint2B"
                                                 :items="homePrjLangItems"
                                                 :label="i18n.idePrjNewWinLabel2B"
-                                                :rules="[homePrjRules.required]"
                                                 outlined
-                                                persistent-hint>
+                                                persistent-hint
+                                                :rules="[homePrjRules.required]">
                                             </v-select>
                                         </v-col>
                                         <v-col
@@ -296,6 +296,7 @@
             :dialogShow="homePrjOpenModel"
             dialogType="edit"
             :dialogText="i18n.idePrjOpenWin"
+            dialogWidth="500px"
             @handleDialogClose="closeDialog"
             @handleDialogYes="() => {}"
             @handleDialogNo="() => {}" />
@@ -304,9 +305,93 @@
             :dialogShow="homePrjExampleModel"
             dialogType="edit"
             :dialogText="i18n.idePrjExampleWin"
+            dialogWidth="500px"
             @handleDialogClose="closeDialog"
             @handleDialogYes="() => {}"
-            @handleDialogNo="() => {}" />
+            @handleDialogNo="() => {}">
+            <template #body>
+                <v-col
+                    cols="12"
+                    md="12">
+                    <v-stepper
+                        v-model="homePrjExampleStepperModel"
+                        alt-labels
+                        class="tc-border-shadow-none">
+                        <v-stepper-header
+                            class="tc-border-bottom-shadow-none"
+                            style="justify-content:center;">
+                            <v-stepper-step
+                                color="lime darken-2"
+                                :complete="homePrjExampleStepperModel > 1"
+                                step="1">
+                                {{ i18n.idePrjExampleWinStep1 }}
+                            </v-stepper-step>
+                        </v-stepper-header>
+                        <v-stepper-items>
+                            <v-stepper-content step="1">
+                                <v-form
+                                    ref="homePrjExampleForm1"
+                                    lazy-validation>
+                                    <v-row>
+                                        <v-col
+                                            cols="12"
+                                            md="12"
+                                            class="pt-5">
+                                            <v-autocomplete
+                                                v-model="homePrjNameModel"
+                                                dense
+                                                hide-no-data
+                                                :hint="i18n.idePrjExampleWinHint1A"
+                                                :items="homePrjExampleItems"
+                                                item-text="text"
+                                                item-value="value"
+                                                :label="i18n.idePrjExampleWinLabel1A"
+                                                outlined
+                                                persistent-hint
+                                                return-object
+                                                :rules="[homePrjRules.required]">
+                                            </v-autocomplete>
+                                        </v-col>
+                                        <v-col
+                                            cols="12"
+                                            md="12">
+                                            <v-text-field
+                                                v-model="homePrjDirModel"
+                                                :error-messages="homePrjDirErrorMsg"
+                                                dense
+                                                :hint="i18n.idePrjExampleWinHint1B"
+                                                :label="i18n.idePrjExampleWinLabel1B"
+                                                :readonly="homePrjReadonly"
+                                                outlined
+                                                persistent-hint
+                                                :rules="[homePrjRules.required]"
+                                                @click="getHomePrjFileDirPath('dir')">
+                                            </v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                </v-form>
+                            </v-stepper-content>
+                        </v-stepper-items>
+                    </v-stepper>
+                </v-col>
+            </template>
+            <template #button>
+                <v-btn
+                    color="green"
+                    dark
+                    small
+                    @click="handleHomePrjExampleData('next')">
+                    <v-icon left>mdi-check</v-icon>{{ i18n.ideButtonConfirm }}
+                </v-btn>
+                <v-btn
+                    color="red"
+                    dark
+                    small
+                    @click="closeDialog">
+                    <v-icon left>mdi-cancel</v-icon>{{ i18n.ideButtonCancel }}
+                </v-btn>
+            </template>
+        </BaseDialog>
     </v-card>
 </template>
 <script>
@@ -358,9 +443,6 @@
                     prjName: (val) => {
                         const pattern = /^[a-zA-Z0-9_\-]*$/;
                         return pattern.test(val) || this.i18n.ideRuleFieldNameValid;
-                    },
-                    prjDir: (val) => {
-                        return (this.homePrjDirFlag) || this.i18n.ideRuleFileDirExist;
                     }
                 },
                 homePrjNameModel: "",
@@ -385,7 +467,17 @@
                 homePrjNewNextModel: "",
                 homePrjWizardModel: false,
                 homePrjOpenModel: false,
-                homePrjExampleModel: false
+                homePrjExampleModel: false,
+                homePrjExampleStepperModel: 1,
+                homePrjExampleNameModel: "",
+                homePrjExampleItems: [{
+                    text: "示例A",
+                    value: "ExampleA",
+                }, {
+                    text: "示例B",
+                    value: "ExampleB"
+                }],
+                homePrjExampleDirModel: ""
             }
         },
         watch: {
@@ -466,25 +558,23 @@
 
                 if (this.homePrjNewStepperModel ===
                     this.homePrjNewStepperNum + 1) {
-                    // this.$nextTick(() => {
                         this.homePrjNewModel = false;
                         this.homePrjWizardModel = true;
-                        // if (!webDebug) {
-                        //     let path = this.homePrjDirModel + "/" +
-                        //                this.homePrjNameModel;
-                        //     view.sendViewMsgToExtn(
-                        //         "addExtnProjectDir", {
-                        //             path: path
-                        //         }, (res) => {
-                        //             if (res) {
-                        //                 setTimeout(() => {
-                        //                     this.homePrjWizardModel = false;
-                        //                 }, 3000);
-                        //             }
-                        //         },
-                        //         vscodeLite);
-                        // }
-                    // });
+                        if (!webDebug) {
+                            let path = this.homePrjDirModel + "/" +
+                                       this.homePrjNameModel;
+                            view.sendViewMsgToExtn(
+                                "addExtnProjectDir", {
+                                    path: path
+                                }, (res) => {
+                                    if (res) {
+                                        setTimeout(() => {
+                                            this.homePrjWizardModel = false;
+                                        }, 3000);
+                                    }
+                                },
+                                vscodeLite);
+                        }
                 }
             },
             handleHomePrjOpenData: function() {
@@ -496,15 +586,49 @@
                         vscodeLite);
                 }
             },
-            handleHomePrjExampleData: function() {
-                // this.homePrjExampleModel = false;
+            handleHomePrjExampleData: function(dir) {
+                if (dir === "next") {
+                    if (this.homePrjNewStepperModel === 1 &&
+                       !this.$refs.homePrjExampleForm1.validate()) {
+                        return;
+                    }
+
+                    this.homePrjExampleModel = false;
+                    this.homePrjWizardModel = true;
+                    if (!webDebug) {
+                        let path = this.homePrjDirModel + "/" +
+                                   this.homePrjNameModel.value;
+                        view.sendViewMsgToExtn(
+                            "addExtnProjectDir", {
+                                path: path
+                            }, (res) => {
+                                if (res) {
+                                    setTimeout(() => {
+                                        this.homePrjWizardModel = false;
+                                    }, 3000);
+                                }
+                            },
+                            vscodeLite);
+                    }
+                }
+                else {
+                    this.homePrjExampleStepperModel = 1;
+                    this.homePrjNameModel = {};
+                    this.homePrjDirModel = "",
+                    this.homePrjExampleModel = true;
+                    this.$nextTick(() => {
+                        this.$refs.homePrjExampleForm1.resetValidation();
+                    });
+                }
             },
             getHomePrjFileDirPath: function(type) {
                 if (!webDebug) {
                     view.sendViewMsgToExtn(
                         "getExtnFileDirPath", {
                             type: type,
-                            name: this.homePrjNameModel,
+                            name: this.homePrjNameModel.value ?
+                                  this.homePrjNameModel.value :
+                                  this.homePrjNameModel,
                             path: this.homePrjDirModel
                         }, (res) => {
                             this.homePrjDirFlag = res.flag;

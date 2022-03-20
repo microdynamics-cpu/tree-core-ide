@@ -55,6 +55,7 @@ const extnMsgHandlers = {
             flag: true,
             path: ""
         }
+
         if (param.type === "name" && param.path === "") {
             data.flag = true;
         }
@@ -81,6 +82,7 @@ const extnMsgHandlers = {
                 data.flag = false;
             }
         }
+
         sendExtnMsgToView(global.panel, msg, data);
     },
     openExtnProjectDir: async function(global, msg) {
