@@ -223,7 +223,8 @@
                     view.sendViewMsgToExtn(
                         "setExtnConfig", {
                             key: "treecore.config.showHomePageAtStartup",
-                            val: val
+                            val: val,
+                            show: false
                         }, (res) => {
                         },
                         vscodeLite);
