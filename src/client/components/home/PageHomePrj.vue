@@ -201,7 +201,7 @@
             ref="dialogHomePrjWizard"
             :dialogShow="homePrjWizardModel"
             dialogType="edit"
-            :dialogText="i18n.idePrjWizard"
+            :dialogText="i18n.idePrjWizardWin"
             dialogWidth="500px"
             @handleDialogClose="closeDialog"
             @handleDialogYes="() => {}"
@@ -295,18 +295,18 @@
             ref="dialogHomePrjOpen"
             :dialogShow="homePrjOpenModel"
             dialogType="edit"
-            dialogText="工程打开窗口"
+            :dialogText="i18n.idePrjOpenWin"
             @handleDialogClose="closeDialog"
-            @handleDialogYes="handleHomePrjOpenData"
-            @handleDialogNo="closeDialog" />
+            @handleDialogYes="() => {}"
+            @handleDialogNo="() => {}" />
         <BaseDialog
             ref="dialogHomePrjExample"
             :dialogShow="homePrjExampleModel"
             dialogType="edit"
-            dialogText="工程示例窗口"
+            :dialogText="i18n.idePrjExampleWin"
             @handleDialogClose="closeDialog"
-            @handleDialogYes="handleHomePrjExampleData"
-            @handleDialogNo="closeDialog" />
+            @handleDialogYes="() => {}"
+            @handleDialogNo="() => {}" />
     </v-card>
 </template>
 <script>
@@ -335,9 +335,15 @@
                 }, {
                     title: config.i18n.idePrjOpen,
                     icon: "mdi-folder",
+                    func: () => {
+                        this.handleHomePrjOpenData();
+                    }
                 }, {
                     title: config.i18n.idePrjExample,
                     icon: "mdi-file-multiple",
+                    func: () => {
+                        this.handleHomePrjExampleData()
+                    }
                 }],
                 homePrjNewStepperModel: 1,
                 homePrjNewStepperNum: 2,
@@ -379,7 +385,7 @@
                 homePrjNewNextModel: "",
                 homePrjWizardModel: false,
                 homePrjOpenModel: false,
-                homePrjExampleModel: false,
+                homePrjExampleModel: false
             }
         },
         watch: {
@@ -482,10 +488,16 @@
                 }
             },
             handleHomePrjOpenData: function() {
-                this.homePrjOpenModel = false;
+                if (!webDebug) {
+                    view.sendViewMsgToExtn(
+                        "openExtnProjectDir", {
+                        }, (res) => {
+                        },
+                        vscodeLite);
+                }
             },
             handleHomePrjExampleData: function() {
-                this.homePrjExampleModel = false;
+                // this.homePrjExampleModel = false;
             },
             getHomePrjFileDirPath: function(type) {
                 if (!webDebug) {

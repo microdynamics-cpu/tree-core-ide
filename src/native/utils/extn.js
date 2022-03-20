@@ -6,6 +6,7 @@ const extnMsgHandlers = {
     addExtnProjectDir: async function(global, msg) {
         const path = msg.param.path;
         console.log(path);
+
         // 根据模板生成对应的目录和文件
         // Generate corresponding directories and files according to the
         // template
@@ -22,6 +23,7 @@ const extnMsgHandlers = {
         fs.mkdirSync(pathTree + "/sim");
         fs.mkdirSync(pathTree + "/test");
         fs.openSync(pathTree + "/project.json", "w+");
+
         // 将生成的工程目录添加到工作空间中
         // Add the generated project catalog to the workspace
         let addFlag = false;
@@ -39,6 +41,7 @@ const extnMsgHandlers = {
             addFlag = true;
         }
         vscode.commands.executeCommand("workbench.view.explorer");
+
         sendExtnMsgToView(global.panel, msg, addFlag);
     },
     getExtnConfig: function(global, msg) {
@@ -52,11 +55,6 @@ const extnMsgHandlers = {
             flag: true,
             path: ""
         }
-        // const uris = await vscode.window.showOpenDialog({
-        //     canSelectFiles: false,
-        //     canSelectFolders: true,
-        //     canSelectMany: false
-        // });
         if (param.type === "name" && param.path === "") {
             data.flag = true;
         }
@@ -83,23 +81,56 @@ const extnMsgHandlers = {
                 data.flag = false;
             }
         }
-        // if (uris != undefined && uris.length > 0) {
-        //     const uri = uris[0];
-        //     data.path = uri.path;
-        //     const dirs = await vscode.workspace.fs.readDirectory(uri);
-        //     const dirsStr = JSON.stringify(dirs);
-        //     const name = param.name;
-        //     if (dirsStr.indexOf(name) != -1) {
-        //         data.flag = false;
-        //     }
-        // }
         sendExtnMsgToView(global.panel, msg, data);
+    },
+    openExtnProjectDir: async function(global, msg) {
+        const uris = await vscode.window.showOpenDialog({
+            canSelectFiles: false,
+            canSelectFolders: true,
+            canSelectMany: false
+        });
+        let path = "";
+        if (uris != undefined && uris.length > 0) {
+            const uri = uris[0];
+            path = uri.path;
+        }
+        console.log(path);
+
+        // 判断当前选择的路径是否为木心工程目录
+        // Judge whether the currently selected path is the project directory
+        // of TreeCore
+        let openFlag = false;
+        if (fs.existsSync(path + "/tree")) {
+            openFlag = true;
+            const workspaceFolders = vscode.workspace.workspaceFolders;
+            if (workspaceFolders) {
+                vscode.workspace.updateWorkspaceFolders(
+                    vscode.workspace.workspaceFolders.length,
+                    null, {
+                        uri: vscode.Uri.file(path)
+                    });
+            }
+            else {
+                await vscode.commands.executeCommand("vscode.openFolder",
+                                                     vscode.Uri.file(path));
+            }
+            vscode.commands.executeCommand("workbench.view.explorer");
+            extn.showExtnInfoMsg("打开成功！");
+        }
+        else {
+            openFlag = false;
+            if (path !== "") {
+                extn.showExtnWarnMsg("打开失败，当前选择的路径不是木心工程目录！");
+            }
+        }
+
+        sendExtnMsgToView(global.panel, msg, openFlag);
     },
     setExtnConfig: function(global, msg) {
         const param = msg.param;
         vscode.workspace.getConfiguration().update(param.key, param.val, true);
         if (param.show) {
-            extn.showExtnInfoMsg("Update configuration successfully!");
+            extn.showExtnInfoMsg("更新成功！");
         }
     },
 };
@@ -110,8 +141,8 @@ function sendExtnMsgToView(panel, msg, data) {
     if (typeof(data) === "object") {
         let code = data.code;
         if (code && code >= 400 && code < 600) {
-            vscode.window.showErrorMessage(
-            "An unknown error occurred in" + msg.cmd + "!");
+            extn.showExtnWarnMsg(
+                "An unknown error occurred in" + msg.cmd + "!");
         }
     }
     panel.webview.postMessage({
@@ -213,7 +244,7 @@ const extn = {
             extnMsgHandlers[msg.cmd](global, msg);
         }
         else {
-            vscode.window.showErrorMessage(
+            this.showExtnWarnMsg(
                 `Callback method named ${msg.cmd} was not found!`);
         }
     },
