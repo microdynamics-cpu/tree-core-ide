@@ -459,10 +459,10 @@
                 }],
                 homePrjLangModel: "",
                 homePrjLangDisabled: false,
-                homePrjLangItems: ["Verilog", "Chisel"],
-                homePrjLibModel: "",
+                homePrjLangItems: ["verilog", "chisel"],
+                homePrjLibModel: [],
                 homePrjLibDisabled: false,
-                homePrjLibItems: ["Verilator", "Difftest", "NEMU"],
+                homePrjLibItems: ["verilator", "difftest", "nemu"],
                 homePrjNewPrevBtn: false,
                 homePrjNewNextModel: "",
                 homePrjWizardModel: false,
@@ -484,12 +484,12 @@
             homePrjTempModel: function(val) {
                 console.log(val);
                 if (val.value === "ysyx") {
-                    this.homePrjLangModel = "Chisel";
-                    this.homePrjLibModel = ["Verilator", "Difftest"];
+                    this.homePrjLangModel = "chisel";
+                    this.homePrjLibModel = ["verilator", "difftest"];
                     this.homePrjLibDisabled = true;
                 }
                 else {
-                    this.homePrjLangModel = "Verilog";
+                    this.homePrjLangModel = "verilog";
                     this.homePrjLibModel = [];
                     this.homePrjLibDisabled = false;
                 }
@@ -538,7 +538,7 @@
                     this.homePrjDirModel = "",
                     this.homePrjTempModel = "";
                     this.homePrjLangModel = "";
-                    this.homePrjLibModel = "";
+                    this.homePrjLibModel = [];
                     this.homePrjNewModel = true;
                     this.$nextTick(() => {
                         this.$refs.homePrjNewForm1.resetValidation();
@@ -565,7 +565,11 @@
                                        this.homePrjNameModel;
                             view.sendViewMsgToExtn(
                                 "addExtnProjectDir", {
-                                    path: path
+                                    name: this.homePrjNameModel,
+                                    path: path,
+                                    temp: this.homePrjTempModel,
+                                    lang: this.homePrjLangModel,
+                                    libs: this.homePrjLibModel
                                 }, (res) => {
                                     if (res) {
                                         setTimeout(() => {

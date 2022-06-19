@@ -14,7 +14,7 @@ const extnMsgHandlers = {
             recursive: false
         });
         fs.mkdirSync(path + "/src");
-        const fd = fs.openSync(path + "/.gitignore", "w+");
+        let fd = fs.openSync(path + "/.gitignore", "w+");
         fs.writeFileSync(fd, "/build\n");
         const pathTree = path + "/tree";
         fs.mkdirSync(pathTree);
@@ -22,7 +22,19 @@ const extnMsgHandlers = {
         fs.mkdirSync(pathTree + "/lib");
         fs.mkdirSync(pathTree + "/sim");
         fs.mkdirSync(pathTree + "/test");
-        fs.openSync(pathTree + "/project.json", "w+");
+        fd = fs.openSync(pathTree + "/project.json", "w+");
+        // 向配置文件中写入相应的信息
+        let json = {
+            "name": msg.param.name,
+            "path": path,
+            "temp": msg.param.temp,
+            "lang": msg.param.lang,
+            "libs": msg.param.libs
+        }
+        fs.writeFileSync(fd, JSON.stringify(json, null, 4));
+
+        // 从远程服务器端下载第三方库
+
 
         // 将生成的工程目录添加到工作空间中
         // Add the generated project catalog to the workspace
