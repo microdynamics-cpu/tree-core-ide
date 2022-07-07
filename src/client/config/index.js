@@ -31,6 +31,7 @@ const i18nObj = {
         ideHomeShowAtStartup: "是否在启动时显示主页",
         ideRuleFieldNoEmpty: "字段不能为空！",
         ideRuleFieldNameValid: "字段只能是字母、数字、下划线或短横线的组合！",
+        ideRuleFileDirExist: "文件目录已经存在！",
 
         idePrjNew: "新建工程",
         idePrjNewWin: "工程创建窗口",
@@ -46,9 +47,16 @@ const i18nObj = {
         idePrjNewWinHint2A: "请选择标准模板。",
         idePrjNewWinHint2B: "请选择语言类型。",
         idePrjNewWinHint2C: "请选择第三方库。",
-        idePrjWizard: "工程向导窗口",
+        idePrjWizardWin: "工程向导窗口",
         idePrjOpen: "打开工程",
+        idePrjOpenWin: "工程打开窗口",
         idePrjExample: "参考示例",
+        idePrjExampleWin: "工程示例窗口",
+        idePrjExampleWinStep1: "基础信息",
+        idePrjExampleWinLabel1A: "工程示例",
+        idePrjExampleWinLabel1B: "工程目录",
+        idePrjExampleWinHint1A: "请选择工程示例。",
+        idePrjExampleWinHint1B: "请选择工程目录。",
 
         projectWebsite: "项目网站",
         projectForum: "项目论坛",
@@ -86,9 +94,10 @@ const i18nObj = {
         ideHomeShowAtStartup: "Show at startup",
         ideRuleFieldNoEmpty: "Field cannot be empty!",
         ideRuleFieldNameValid: "Field can only be a combination of letters, numbers, underscores or dashes!",
+        ideRuleFileDirExist: "File directory already exists!",
 
         idePrjNew: "New Project",
-        idePrjNewWin: "Project New",
+        idePrjNewWin: "Project New Window",
         idePrjNewWinStep1: "Base Info",
         idePrjNewWinStep2: "Settings",
         idePrjNewWinLabel1A: "Project Name",
@@ -97,13 +106,20 @@ const i18nObj = {
         idePrjNewWinLabel2B: "Language",
         idePrjNewWinLabel2C: "Libraries",
         idePrjNewWinHint1A: "Please input project's name.",
-        idePrjNewWinHint1B: "Please input project's dir.",
+        idePrjNewWinHint1B: "Please select project's dir.",
         idePrjNewWinHint2A: "Please select template.",
         idePrjNewWinHint2B: "Please select languate.",
         idePrjNewWinHint2C: "Please select libraries.",
-        idePrjWizard: "Project Wizard",
+        idePrjWizardWin: "Project Wizard Window",
         idePrjOpen: "Open Project",
+        idePrjOpenWin: "Project Open Window",
         idePrjExample: "Project Examples",
+        idePrjExampleWin: "Project Examples Window",
+        idePrjExampleWinStep1: "Base Info",
+        idePrjExampleWinLabel1A: "Example Name",
+        idePrjExampleWinLabel1B: "Project Dir",
+        idePrjExampleWinHint1A: "Please select example's name.",
+        idePrjExampleWinHint1B: "Please select project's dir.",
 
         projectWebsite: "Project Website",
         projectForum: "Project Forum",
@@ -160,8 +176,9 @@ const baseComp = {
     }]
 }
 
+const webDebug = true;
 // @ts-ignore
-const vscodeLite = false ? {} : acquireVsCodeApi();
+const vscodeLite = webDebug ? {} : acquireVsCodeApi();
 
 export default {
     i18n: i18n,
@@ -208,7 +225,7 @@ export default {
         }]
     },
     flag: {
-        webDebug: false
+        webDebug: webDebug
     },
     code: vscodeLite
 }
