@@ -6,7 +6,6 @@ const ProjectManager = require("./native/modules/manager/ProjectManagerProvider"
 // Triggered when the extension is activated
 function activate(context) {
     console.log("TreeCore IDE extension is active!");
-    console.log(vscode);
 
     home.showHomePage(context);
 

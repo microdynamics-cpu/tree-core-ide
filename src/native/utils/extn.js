@@ -3,24 +3,6 @@ const path   = require("path");
 const vscode = require("vscode");
 
 const extnMsgHandlers = {
-    getExtnConfig: function(global, msg) {
-        const param = msg.param;
-        const data = vscode.workspace.getConfiguration().get(param.key);
-        sendExtnMsgToView(global.panel, msg, data);
-    },
-    setExtnConfig: function(global, msg) {
-        const param = msg.param;
-        vscode.workspace.getConfiguration().update(param.key, param.val, true);
-        extn.showExtnInfoMsg("Update configuration successfully!");
-    },
-    getExtnFileDirPath: async function(global, msg) {
-        const data = await vscode.window.showOpenDialog({
-            canSelectFiles: false,
-            canSelectFolders: true,
-            canSelectMany: false
-        });
-        sendExtnMsgToView(global.panel, msg, data);
-    },
     addExtnProjectDir: async function(global, msg) {
         const path = msg.param.path;
         console.log(path);
@@ -32,17 +14,31 @@ const extnMsgHandlers = {
             recursive: false
         });
         fs.mkdirSync(path + "/src");
-        fs.openSync(path + "/.gitignore", "w+");
+        let fd = fs.openSync(path + "/.gitignore", "w+");
+        fs.writeFileSync(fd, "/build\n");
         const pathTree = path + "/tree";
         fs.mkdirSync(pathTree);
         fs.mkdirSync(pathTree + "/build");
         fs.mkdirSync(pathTree + "/lib");
         fs.mkdirSync(pathTree + "/sim");
         fs.mkdirSync(pathTree + "/test");
-        fs.openSync(pathTree + "/project.json", "w+");
+        fd = fs.openSync(pathTree + "/project.json", "w+");
+        // 向配置文件中写入相应的信息
+        let json = {
+            "name": msg.param.name,
+            "path": path,
+            "temp": msg.param.temp,
+            "lang": msg.param.lang,
+            "libs": msg.param.libs
+        }
+        fs.writeFileSync(fd, JSON.stringify(json, null, 4));
+
+        // 从远程服务器端下载编译环境
+
+        // 从远程服务器端下载第三方库
 
         // 将生成的工程目录添加到工作空间中
-        // Add the generated project catalog to the workspace
+        // Add the generated project directory to the workspace
         let addFlag = false;
         const workspaceFolders = vscode.workspace.workspaceFolders;
         if (workspaceFolders) {
@@ -61,6 +57,97 @@ const extnMsgHandlers = {
 
         sendExtnMsgToView(global.panel, msg, addFlag);
     },
+    getExtnConfig: function(global, msg) {
+        const param = msg.param;
+        const data = vscode.workspace.getConfiguration().get(param.key);
+        sendExtnMsgToView(global.panel, msg, data);
+    },
+    getExtnFileDirPath: async function(global, msg) {
+        const param = msg.param;
+        let data = {
+            flag: true,
+            path: ""
+        }
+
+        if (param.type === "name" && param.path === "") {
+            data.flag = true;
+        }
+        else {
+            let uri = null;
+            if (param.type === "name") {
+                uri = vscode.Uri.file(param.path);
+            }
+            else if (param.type === "dir") {
+                const uris = await vscode.window.showOpenDialog({
+                    canSelectFiles: false,
+                    canSelectFolders: true,
+                    canSelectMany: false
+                });
+                if (uris != undefined && uris.length > 0) {
+                    uri = uris[0];
+                    data.path = uri.path;
+                }
+            }
+            const dirs = await vscode.workspace.fs.readDirectory(uri);
+            const dirsStr = JSON.stringify(dirs);
+            const name = param.name;
+            if (dirsStr.indexOf(name) != -1) {
+                data.flag = false;
+            }
+        }
+
+        sendExtnMsgToView(global.panel, msg, data);
+    },
+    openExtnProjectDir: async function(global, msg) {
+        const uris = await vscode.window.showOpenDialog({
+            canSelectFiles: false,
+            canSelectFolders: true,
+            canSelectMany: false
+        });
+        let path = "";
+        if (uris != undefined && uris.length > 0) {
+            const uri = uris[0];
+            path = uri.path;
+        }
+        console.log(path);
+
+        // 判断当前选择的路径是否为木心工程目录
+        // Judge whether the currently selected path is the project directory
+        // of TreeCore
+        let openFlag = false;
+        if (fs.existsSync(path + "/tree")) {
+            openFlag = true;
+            const workspaceFolders = vscode.workspace.workspaceFolders;
+            if (workspaceFolders) {
+                vscode.workspace.updateWorkspaceFolders(
+                    vscode.workspace.workspaceFolders.length,
+                    null, {
+                        uri: vscode.Uri.file(path)
+                    });
+            }
+            else {
+                await vscode.commands.executeCommand("vscode.openFolder",
+                                                     vscode.Uri.file(path));
+            }
+            vscode.commands.executeCommand("workbench.view.explorer");
+            extn.showExtnInfoMsg("打开成功！");
+        }
+        else {
+            openFlag = false;
+            if (path !== "") {
+                extn.showExtnWarnMsg("打开失败，当前选择的路径不是木心工程目录！");
+            }
+        }
+
+        sendExtnMsgToView(global.panel, msg, openFlag);
+    },
+    setExtnConfig: function(global, msg) {
+        const param = msg.param;
+        vscode.workspace.getConfiguration().update(param.key, param.val, true);
+        if (param.show) {
+            extn.showExtnInfoMsg("更新成功！");
+        }
+    },
 };
 
 function sendExtnMsgToView(panel, msg, data) {
@@ -69,8 +156,8 @@ function sendExtnMsgToView(panel, msg, data) {
     if (typeof(data) === "object") {
         let code = data.code;
         if (code && code >= 400 && code < 600) {
-            vscode.window.showErrorMessage(
-            "An unknown error occurred in" + msg.cmd + "!");
+            extn.showExtnWarnMsg(
+                "An unknown error occurred in" + msg.cmd + "!");
         }
     }
     panel.webview.postMessage({
@@ -172,7 +259,7 @@ const extn = {
             extnMsgHandlers[msg.cmd](global, msg);
         }
         else {
-            vscode.window.showErrorMessage(
+            this.showExtnWarnMsg(
                 `Callback method named ${msg.cmd} was not found!`);
         }
     },
