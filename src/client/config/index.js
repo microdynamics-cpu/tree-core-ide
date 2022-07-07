@@ -176,7 +176,7 @@ const baseComp = {
     }]
 }
 
-const webDebug = false;
+const webDebug = true;
 // @ts-ignore
 const vscodeLite = webDebug ? {} : acquireVsCodeApi();
 
