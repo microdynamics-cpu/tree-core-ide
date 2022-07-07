@@ -33,11 +33,12 @@ const extnMsgHandlers = {
         }
         fs.writeFileSync(fd, JSON.stringify(json, null, 4));
 
+        // 从远程服务器端下载编译环境
+
         // 从远程服务器端下载第三方库
 
-
         // 将生成的工程目录添加到工作空间中
-        // Add the generated project catalog to the workspace
+        // Add the generated project directory to the workspace
         let addFlag = false;
         const workspaceFolders = vscode.workspace.workspaceFolders;
         if (workspaceFolders) {
