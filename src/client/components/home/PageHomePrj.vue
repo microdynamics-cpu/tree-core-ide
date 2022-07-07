@@ -599,21 +599,21 @@
 
                     this.homePrjExampleModel = false;
                     this.homePrjWizardModel = true;
-                    if (!webDebug) {
-                        let path = this.homePrjDirModel + "/" +
-                                   this.homePrjNameModel.value;
-                        view.sendViewMsgToExtn(
-                            "addExtnProjectDir", {
-                                path: path
-                            }, (res) => {
-                                if (res) {
-                                    setTimeout(() => {
-                                        this.homePrjWizardModel = false;
-                                    }, 3000);
-                                }
-                            },
-                            vscodeLite);
-                    }
+                    // if (!webDebug) {
+                    //     let path = this.homePrjDirModel + "/" +
+                    //                this.homePrjNameModel.value;
+                    //     view.sendViewMsgToExtn(
+                    //         "addExtnProjectDir", {
+                    //             path: path
+                    //         }, (res) => {
+                    //             if (res) {
+                    //                 setTimeout(() => {
+                    //                     this.homePrjWizardModel = false;
+                    //                 }, 3000);
+                    //             }
+                    //         },
+                    //         vscodeLite);
+                    // }
                 }
                 else {
                     this.homePrjExampleStepperModel = 1;
