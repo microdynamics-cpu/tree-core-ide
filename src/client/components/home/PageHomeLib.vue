@@ -76,7 +76,7 @@
                 if (status) {
                     that.libChartPieOpts.series[0].data =
                         that.$store.state.libChartPieData;
-                    that.$refs.chartPie.drawChartPieData(that.libChartPieOpts);
+                    that.$refs.chartPie.drawChartData("pie", that.libChartPieOpts);
                 }
             });
         },
@@ -96,7 +96,7 @@
                             };
                             that.libChartBarOpts.series =
                                 that.$store.state.libChartBarData;
-                            that.$refs.chartBar.drawChartBarData(that.libChartBarOpts);
+                            that.$refs.chartBar.drawChartData("bar", that.libChartBarOpts);
                         }
                     });
                 }
