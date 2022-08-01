@@ -42,7 +42,7 @@ module.exports = {
                 // 设置Https协议的SSL证书（如果接受无效证书，则将选项置为false）
                 // Set SSL certificate for HTTPS protocol(set the option to
                 // false if invalid certificate is accepted)
-                secure: false,
+                secure: false
             },
             // 将"http://localhost:8080/client/xxx"代理
             // 到"http://localhost:8082/client/xxx"上
@@ -51,7 +51,7 @@ module.exports = {
             "/client": {
                 target: "http://localhost:8082",
                 chageOrigin: true,
-                secure: false,
+                secure: false
             },
             // 将"http://localhost:8080/github/xxx"代理
             // 到"https://github.com/xxx"上

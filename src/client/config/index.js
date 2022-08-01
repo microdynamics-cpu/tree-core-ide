@@ -132,8 +132,9 @@ const i18n = i18nObj[lang];
 const base = {
     projectWebsiteUrl: "https://treecore.xyz",
     projectLogo: "https://myyerrol-1257317595.cos.ap-beijing.myqcloud.com/project/treecore/logos/treecore_logo_main.svg",
+    projectServerUrl: "http://localhost:8081",
     orgGitHubUrl: "https://github.com/microdynamics-cpu",
-    teamEmail: "microdynamics@126.com",
+    teamEmail: "microdynamics@126.com"
 }
 const baseComp = {
     ideModuleItems: [{

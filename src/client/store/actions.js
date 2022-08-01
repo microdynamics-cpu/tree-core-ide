@@ -1,10 +1,11 @@
 import axios from "axios";
+import config from "../config/index";
 
 export default {
     // 服务端请求函数
     // Server request function
     getLibChartData: function({ commit }, params) {
-        return axios.post("/server/getLibChartData", params).then((res) => {
+        return axios.post(config.base.projectServerUrl + "/server/getLibChartData", params).then((res) => {
             console.log(res);
             if (res && res.status === 200 && !res.data.code) {
                 commit("getLibChartData", {

@@ -11,7 +11,7 @@
         </v-card-title>
         <v-card-text>
             <v-carousel
-                :cycle="false"
+                :cycle="true"
                 :show-arrows="false"
                 height="350px"
                 :hide-delimiter-background="true"
